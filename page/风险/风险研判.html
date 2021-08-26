@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../layuiAdmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../src/all.css" media="all">
+  <style>
+    .margin-top {
+      margin-top: 20px;
+    }
+
+    .h1 {
+      font-size: 20px;
+      /* padding-left: 50px; */
+    }
+
+    .layui-form-label {
+      white-space: nowrap;
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding-left: 3px;
+      padding-right: 3px;
+      text-shadow: none;
+      border-radius: 10px;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
+    .gary {
+      font-size: 11px;
+      font-weight: 600;
+      padding-left: 3px;
+      padding-right: 3px;
+      text-shadow: none;
+      border-radius: 10px;
+      text-align: center;
+      background-color: #d1dade;
+      color: #5e5e5e;
+      border-radius: 10px;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
+
+    .layui-input-block {
+      width: 200px;
+    }
+
+    .layui-icon-transfrom {
+      transform: rotate(180deg);
+      display: inline-block;
+    }
+  </style>
+</head>
+
+
+<body style="background-color: #fff;">
+
+  <div class="layui-fluid">
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+  </div>
+
+  <script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container cl">
+    <button class="layui-btn layui-btn-sm layui-top-add" lay-event="add">
+      <i class="layui-icon layui-icon-addition"></i>添加
+    </button>
+
+    <button class="layui-btn layui-btn-sm" lay-event="setgrade">
+      <i class="layui-icon layui-icon-release "  ></i>设置风险等级
+    </button> 
+
+    <!-- cl-query -->
+    <button class="cl-query   layui-btn-sm  " lay-event="a">
+      <span class="" >重大风险</span>
+    </button>
+    <button class="cl-query  layui-btn-sm " lay-event="b">
+      <span class="" >较大风险</span>
+    </button>
+    <button class="cl-query  layui-btn-sm " lay-event="c">
+      <span class="" >一般风险</span>
+    </button>
+    <button class="cl-query  layui-btn-sm " lay-event="d">
+      <span class="" >低风险</span>
+    </button>
+    <div class="layui-inline ">
+      <label for="" class="layui-form-label">状态</label>
+      <div class="layui-input-inline cl-select">
+        <select  name="interest" lay-filter="aihao">
+          <option value=""></option>
+          <option value="0">以上报</option>
+          <option value="2"  selected="">未上报</option>
+          <option value="2"  selected="">拟上报</option>
+        </select>
+      </div>
+    </div>
+    <div class="layui-inline cl-select">
+        <input type="text" style='width:200px;' class="layui-input" placeholder="请输入关键字">
+      </div>
+    <button class="layui-btn layui-btn-normal  layui-btn-sm  " lay-event="select"> 搜索 </button>
+    <button  class="layui-btn layui-btn-normal layui-btn-sm"  >
+      刷新
+    </button>
+    <!-- end -->
+  </div>
+</script>
+
+  <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs layui-bg-cyan" lay-event="detail">上报明细</a>
+    <a class="layui-btn layui-btn-xs layui-bg-cyan" lay-event="detail">研判详表</a>
+    <a class="layui-btn layui-btn-xs layui-bg-cyan" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs layui-bg-red" lay-event="del">删除</a>
+  </script>
+  <script src="../../layuiAdmin/layui/layui.all.js" charset="utf-8"></script>
+  <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+  <script>
+    layui.config({
+      base: '/layuiAdmin/modules/'
+    }).extend({
+      xmSelect: 'xm-select'
+    }).use(['form', 'layedit', 'laydate', 'table', 'xmSelect'], function () {
+      var table = layui.table
+        , form = layui.form
+        , $ = layui.jquery
+        , layer = layui.layer
+        , layedit = layui.layedit
+        , laydate = layui.laydate
+        , xmSelect = layui.xmSelect
+      const TABLEURL = '/js/yhgl.json'
+
+      //日期范围选择
+      laydate.render({
+        elem: '#date'
+        , range: true //或 range: '~' 来自定义分割字符
+      });
+      // 整改日期
+      laydate.render({
+        elem: '#date2'
+        , min: -3 //7天前
+        , max: 0 //7天后
+      });
+      //检查时间
+      laydate.render({
+        elem: '#date3'
+
+      });
+      // 检查人
+      var demo1 = xmSelect.render({
+        el: '#demo1',
+        tips: '检查人',
+        name: 'people',
+        filterable: true,
+        data: [
+          { name: '生产处管理员', value: 1 },
+          { name: '生产处管理员', value: 2 },
+          { name: '生产处管理员', value: 3 },
+          { name: '生产处管理员', value: 4 },
+          { name: '生产处管理员', value: 5 },
+        ]
+      })
+      // 检查部门
+      xmSelect.render({
+        el: '#bumen',
+        name: 'bumen',
+        model: {
+          label: {
+            type: 'text'
+          }
+        },
+        radio: true,
+        clickClose: true,
+        tree: {
+          show: true,
+          strict: false,
+          expandedKeys: [-1],
+        },
+        height: 'auto',
+        data() {
+          return [
+            {
+              name: '销售员', value: -1, children: [
+                { name: '张三', value: 100, selected: true, children: [] },
+                { name: '李四1', value: 20, },
+                { name: '王五1', value: 3, disabled: true },
+              ]
+            },
+            {
+              name: '奖品', value: -2, children: [
+                {
+                  name: '奖品3', value: -3, children: [
+                    { name: '苹果3', value: 14, },
+                    { name: '香蕉3', value: 15 },
+                    { name: '葡萄3', value: 16 },
+                  ]
+                },
+                { name: '苹果2', value: 4, },
+                { name: '香蕉2', value: 5 },
+                { name: '葡萄2', value: 6 },
+              ]
+            },
+          ]
+        }
+      })
+      let table_data = [];
+      table.render({
+        elem: '#test'
+        , url: TABLEURL
+        , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+        , defaultToolbar: ['filter', 'print']
+        , title: '用户数据表'
+        , height: 'full-200'
+        , cols: [[
+          { type: 'checkbox', fixed: 'left' }
+          , { field: 'data', title: '研判时间', edit: 'text', width: 200, align: 'center' }
+          , {
+            field: 'yhzt', title: '研判专业', width: 100, templet: function (d) {
+              return `<div class='gary' >${d.yhzt}</div>`
+            }
+          }
+          , { field: 'jc', title: '负责领导', align: 'center', width: 200, edit: 'text' }
+          , { field: 'unit', title: '责任部门', edit: 'text', align: 'center' }
+          , {
+            field: 'grade', title: '研判结果', width: 100, templet: function (d) {
+              return `<div class='badge' style="background:#007DFF;color: white;">${d.grade}</div>`
+            }
+          }
+          , { field: 'dwfk', title: '总数', edit: 'text', align: 'center' }
+          , { field: 'dwfk', title: '重大', edit: 'text', align: 'center' }
+          , { field: 'dwfk', title: '较大', edit: 'text', align: 'center' }
+          , { field: 'dwfk', title: '一般', edit: 'text', align: 'center' }
+          , { field: 'dwfk', title: '低', edit: 'text', align: 'center' }
+          , {
+            field: 'zl', title: '研判报告', width: 150, align: 'center', templet: function (d) {
+              let a = ` <a class="layui-btn layui-btn-xs " lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="edit">删除</a>`
+              return a
+            }
+          }
+          , { field: 'yhzt', title: '是否上报', }
+          , { fixed: 'right', title: '操作', width: 300, align: 'center', toolbar: '#barDemo' } //这里的toolbar值是模板元素的选择器
+        ]]
+        , id: 'table'
+        , page: true
+        , done: function (res, curr, count) {
+          //如果是异步请求数据方式，res即为你接口返回的信息。
+          //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+          console.log(res);
+          table_data = res.data
+        }
+        , parseData: function (res) {
+          // 解析数据格式
+          return res
+          // {
+          //   "code": res.res, //解析接口状态
+          //     "msg": res.message, //解析提示文本
+          //       "count": res.total, //解析数据长度
+          //         "data": res.data.item //解析数据列表
+          // };
+        }
+      });
+      function statusABC(a, b, c) {
+        $('.cl-query:eq(' + a + ')').addClass('is-active')
+        $('.cl-query:eq(' + b + ')').removeClass('is-active')
+        $('.cl-query:eq(' + c + ')').removeClass('is-active')
+      }
+      //头工具栏事件
+      table.on('toolbar(test)', function (obj) {
+        var checkStatus = table.checkStatus(obj.config.id);
+        switch (obj.event) {
+          case 'a':
+            table.reload('table', {
+              url: TABLEURL
+              , where: {} //设定异步数据接口的额外参数
+              //,height: 300
+            });
+            statusABC(0, 1, 2, 3)
+            break;
+          case 'b':
+            table.reload('table', {
+              url: TABLEURL
+              , where: {} //设定异步数据接口的额外参数
+              //,height: 300
+            });
+            statusABC(1, 0, 2, 3)
+            break;
+          case 'c':
+            table.reload('table', {
+              url: TABLEURL
+              , where: {} //设定异步数据接口的额外参数
+              //,height: 300
+            });
+            statusABC(2, 1, 0, 3)
+            break;
+          case 'd':
+            table.reload('table', {
+              url: TABLEURL
+              , where: {} //设定异步数据接口的额外参数
+              //,height: 300
+            });
+            statusABC(3, 2, 1, 0)
+            break;
+          case 'add':
+            parent.layer.open({
+              type: 2,
+              anim: 1,
+              zIndex: layer.zIndex, //重点1
+              title: '隐患录入',
+              maxmin: false, //开启最大化最小化按钮
+              area: ['50%', '90%'],
+              content: '/page/风险/辨识评估.html',
+              btn: ['确定'],
+              success: function (layero) {
+                // layer.setTop(layero); //重点2
+              },
+              end: function () {
+                table.reload('table', {
+                  url: TABLEURL
+                  , where: {} //设定异步数据接口的额外参数
+                  //,height: 300
+                });
+              }
+
+            });
+            break;
+          case 'setgrade':
+            parent.layer.open({
+              type: 2,
+              anim: 1,
+              zIndex: layer.zIndex, //重点1
+              title: '风险评级',
+              maxmin: false, //开启最大化最小化按钮
+              area: ['50%', '40%'],
+              content: '/page/风险/风险评级.html',
+              btn: ['确定'],
+              success: function (layero) {
+                // layer.setTop(layero); //重点2
+              },
+              end: function () {
+                table.reload('table', {
+                  url: TABLEURL
+                  , where: {} //设定异步数据接口的额外参数
+                  //,height: 300
+                });
+              }
+
+            });
+            break;
+        };
+      });
+
+      //监听行工具事件
+      table.on('tool(test)', function (obj) {
+        var data = obj.data;
+        //console.log(obj)
+        if (obj.event === 'edit') {
+          // 修改
+          layer.open({
+            type: 2, anim: 2,
+            zIndex: layer.zIndex, //重点1
+            title: '修改',
+            shadeClose: true,
+            maxmin: true, //开启最大化最小化按钮
+            area: ['50%', '90%'],
+            content: '/page/风险/辨识评估.html',
+            success: function (layero) {
+              // layer.setTop(layero); //重点2
+            }
+          });
+        } else if (obj.event === 'detail') {
+          //详情
+          layer.open({
+            type: 2, anim: 2,
+            zIndex: layer.zIndex, //重点1
+            title: '详情',
+            shadeClose: true,
+            maxmin: true, //开启最大化最小化按钮
+            area: ['50%', '90%'],
+            content: '/page/隐患/分步表单.html',
+            success: function (layero) {
+              // layer.setTop(layero); //重点2
+            }
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

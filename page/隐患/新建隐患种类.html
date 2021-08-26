@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../layuiAdmin/layui/css/layui.css" media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+  <style>
+    .margin-top {
+      margin-top: 20px;
+    }
+
+    .h1 {
+      font-size: 20px;
+      /* padding-left: 50px; */
+    }
+
+    .layui-form-label {
+      white-space: nowrap;
+    }
+
+    .height {
+      height: 20px;
+    }
+
+    .btnbox {
+      padding: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+
+<body style="background-color: #fff;">
+
+  <div class="layui-fluid">
+    <div class="layui-card margin-top">
+
+      <!-- layui-card-body -->
+      <div class="height"></div>
+      <div class="">
+        <form class="layui-form" action="">
+          <!-- 行 -->
+          <div class="layui-form-item">
+            <label class="layui-form-label">隐患种类名称</label>
+            <div class="layui-input-block">
+              <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+                class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label">上级隐患种类</label>
+            <div class="layui-input-block">
+              <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+                class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item btnbox">
+            <div class="layui-inline">
+              <button type="button" class="layui-btn layui-btn-sm">
+                <i class="layui-icon">&#xe615;</i> 保存
+              </button>
+            </div>
+            <div class="layui-inline">
+              <button type="button" class="layui-btn layui-btn-sm">
+                <i class="layui-icon">&#xe615;</i> 取消
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+
+  <script src="../../layuiAdmin/layui/layui.all.js" charset="utf-8"></script>
+  <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+
+  <script>
+    layui.use(['form', 'layedit', 'laydate', 'table'], function () {
+
+
+    });
+  </script>
+
+</body>
+
+</html>

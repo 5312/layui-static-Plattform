@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../layuiAdmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../src/all.css" media="all">
+
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+  <style>
+    .margin-top {
+      margin-top: 20px;
+    }
+
+    .h1 {
+      font-size: 20px;
+      /* padding-left: 50px; */
+    }
+
+    .layui-form-label {
+      white-space: nowrap;
+      width: auto !important;
+    }
+
+    .height {
+      height: 20px;
+    }
+  </style>
+</head>
+
+
+<body style="background-color: #fff;">
+
+  <div class="layui-fluid">
+    <div class="layui-card margin-top">
+      <!-- layui-card-body -->
+      <div class="height"></div>
+      <div class="">
+        <form class="layui-form" action="">
+          <!-- 行 -->
+          <div class="layui-form-item">
+            <div class="layui-inline">
+              <label class="layui-form-label">单位罚款默认值</label>
+              <div class="layui-input-inline" style="width:200px;">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+                  class="layui-input">
+              </div>
+            </div>
+
+            <!--  -->
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">主要领导责任者</label>
+              <div class="layui-input-inline" style="width:200px;">
+                <select name="modules" lay-verify="required" lay-search="">
+                  <option value="">直接选择或搜索选择</option>
+                  <option value="1">五矿</option>
+                  <option value="1">采煤战线</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">直接领导责任者</label>
+              <div class="layui-input-inline" style="width:200px;">
+                <select name="modules" id="">
+                  <option value=""></option>
+                  <option value="">张石磊</option>
+                  <option value="">张石磊</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">隐患单位负责人</label>
+              <div class="layui-input-inline" style="width:200px;">
+                <select name="interest" lay-filter="aihao">
+                  <option value=""></option>
+                  <option value="0">张石磊</option>
+                  <option value="1" selected="">张石磊</option>
+                  <option value="2">张石磊</option>
+                </select>
+              </div>
+            </div>
+
+
+            <!--  -->
+            <div class="layui-inline">
+              <label class="layui-form-label">业务主管单位负责人</label>
+              <div class="layui-input-inline" style="width:200px;">
+                <select name="modules" lay-verify="required" lay-search="">
+                  <option value="">搜索选择</option>
+                  <option value="1">张石磊</option>
+                  <option value="1">张石磊</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class="layui-form-label">主要责任者</label>
+              <div class="layui-input-inline" style="width:200px;">
+                <select name="modules" lay-verify="required" lay-search="">
+                  <option value="">搜索选择</option>
+                  <option value="1">张石磊</option>
+                  <option value="1">张石磊</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class="layui-form-label">直接责任者</label>
+              <div class="layui-input-inline" style="width:200px;">
+                <select name="modules" lay-verify="required" lay-search="">
+                  <option value="">搜索选择</option>
+                  <option value="1">张石磊</option>
+                  <option value="1">张石磊</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+  </div>
+
+  <script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+      <button class="layui-btn layui-btn-sm layui-top-add" lay-event="add">新建</button>
+      <button class="layui-btn layui-btn-sm layui-top-warm" lay-event="exit">编辑</button>
+      <button class="layui-btn layui-btn-sm layui-top-danger" lay-event="del">删除</button>
+    </div>
+  </script>
+  <!-- 新建 -->
+  <script type="text/html" id="adds">
+    <form id="dictDataEditForm" lay-filter="dictDataEditForm" class="layui-form model-form" style="padding-left: 10px;">
+      <input name="dictDataId" type="hidden"/>
+      <div class="layui-form-item">
+          <label class="layui-form-label layui-form-required" >罚款类型:</label>
+          <div class="layui-input-block">
+              <input name="dictDataName" placeholder="请输入字典项名称" class="layui-input"
+                      lay-verType="tips" lay-verify="required" required/>
+          </div>
+      </div>
+      <div class="layui-form-item">
+          <label class="layui-form-label layui-form-required" >最大值:</label>
+          <div class="layui-input-block">
+              <input name="dictDataCode" placeholder="请输入字典键值" class="layui-input"
+                      lay-verType="tips" lay-verify="required" required/>
+          </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label layui-form-required">最小值:</label>
+        <div class="layui-input-block">
+          <input name="sortNumber" placeholder="" class="layui-input" type="number"
+                    lay-verType="tips" lay-verify="required" required/>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label layui-form-required">默认值:</label>
+        <div class="layui-input-block">
+          <input name="sortNumber" placeholder="" class="layui-input" type="number"
+                    lay-verType="tips" lay-verify="required" required/>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label layui-form-required">隐患单位:</label>
+        <div class="layui-input-block">
+          <input name="sortNumber" placeholder="" class="layui-input" type="number"
+                    lay-verType="tips" lay-verify="required" required/>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label layui-form-required">主要负责人:</label>
+        <div class="layui-input-block">
+            <input name="sortNumber" placeholder="" class="layui-input" type="number"
+                    lay-verType="tips" lay-verify="required" required/>
+        </div>
+      </div>
+      <div class="layui-form-item">
+          <label class="layui-form-label">备注:</label>
+          <div class="layui-input-block">
+              <textarea name="comments" placeholder="请输入备注" class="layui-textarea"></textarea>
+          </div>
+      </div>
+    </form>
+  </script>
+  <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">显示</a>
+    <!-- <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a> -->
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  </script>
+
+
+  <script src="../../layuiAdmin/layui/layui.all.js" charset="utf-8"></script>
+  <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+
+  <script>
+    layui.use(['form', 'layedit', 'laydate', 'table'], function () {
+      var table = layui.table
+        , form = layui.form
+        , layer = layui.layer
+        , layedit = layui.layedit
+        , $ = layui.jquery
+        , laydate = layui.laydate;
+      //日期
+      laydate.render({
+        elem: '#date'
+      });
+      laydate.render({
+        elem: '#date1'
+      });
+      laydate.render({
+        elem: '#date2'
+      });
+      table.render({
+        elem: '#test'
+        , url: '/js/table.json'
+        , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+        , defaultToolbar: ['filter']
+        , title: '用户数据表'
+        , cols: [
+          [ //标题栏
+            { type: 'checkbox', fixed: 'left', rowspan: 2 }
+            , { field: 'dwfk', title: '单位罚款', colspan: 4, align: 'center' } //rowspan即纵向跨越的单元格数
+            , { field: 'dwfk', title: '个人罚款', colspan: 3, align: 'center' } //rowspan即纵向跨越的单元格数
+            , { field: 'dwfk', title: '个人罚款', colspan: 8, align: 'center' } //rowspan即纵向跨越的单元格数
+            , { field: 'sfdbld', title: '删除', rowspan: 2, align: 'center' } //rowspan即纵向跨越的单元格数
+          ], [
+            { field: 'grfk', title: '最大值', }
+            , { field: 'dwfk', title: '最小值', }
+            , { field: 'dwfk', title: '默认值', }
+            , { field: 'dwfk', title: '采用默认值', }
+            , { field: 'grfk', title: '最大值', }
+            , { field: 'dwfk', title: '最小值', }
+            , { field: 'grfk', title: '采用默认值', }
+            // 
+            , { field: 'jc', title: '主要领导', }
+            , { field: 'pj', title: '直接领导', }
+            , { field: 'verantwortung', title: '隐患单位', }
+            , { field: 'jc', title: '主要负责人', }
+            , { field: 'jc', title: '直接负责人', }
+            , { field: 'jc', title: '区队长', }
+            , { field: 'jc', title: '党支部书记', }
+            , { field: 'jc', title: '当班安全负责人', }
+
+          ]
+        ]
+        , id: 'table'
+        , page: true
+      });
+
+      //头工具栏事件
+      table.on('toolbar(test)', function (obj) {
+        var checkStatus = table.checkStatus(obj.config.id);
+        var count = checkStatus.data.length;
+        switch (obj.event) {
+          case 'add':
+            //新建
+            layer.open({
+              type: 1,
+              title: '新建',
+              shadeClose: true,
+              // shade: true,
+              maxmin: false, //开启最大化最小化按钮
+              area: ['50%', '70%'],
+              btn: ['取消'],
+              content: $('#adds').html(),
+              success: function (layero) {
+                //layer.setTop(layero); //重点2
+              },
+              end: function () {
+                window.location.reload();
+              }
+
+            });
+            break;
+          case 'exit':
+            //新建
+            layer.open({
+              type: 1,
+              title: '新建',
+              shadeClose: true,
+              // shade: true,
+              maxmin: false, //开启最大化最小化按钮
+              area: ['50%', '70%'],
+              btn: ['取消'],
+              content: $('#adds').html(),
+              success: function (layero) {
+                //layer.setTop(layero); //重点2
+              },
+              end: function () {
+                window.location.reload();
+              }
+
+            });
+            break;
+          case 'del':
+            if (count > 0) {
+              layer.confirm('确定删除？', {
+
+              })
+            } else {
+              layer.msg('请选择要删除的数据');
+            }
+            break;
+        };
+      });
+
+      //监听行工具事件
+      table.on('tool(test)', function (obj) {
+        var data = obj.data;
+        //console.log(obj)
+        if (obj.event === 'del') {
+          layer.confirm('真的删除行么', function (index) {
+            obj.del();
+            layer.close(index);
+          });
+        } else if (obj.event === 'edit') {
+          layer.prompt({
+            formType: 2
+            , value: data.email
+          }, function (value, index) {
+            obj.update({
+              email: value
+            });
+            layer.close(index);
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

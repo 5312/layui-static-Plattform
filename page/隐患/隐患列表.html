@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../layuiAdmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../src/all.css" media="all">
+  <style>
+    .margin-top {
+      margin-top: 20px;
+    }
+
+    .h1 {
+      font-size: 20px;
+      /* padding-left: 50px; */
+    }
+
+    .layui-form-label {
+      white-space: nowrap;
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding-left: 3px;
+      padding-right: 3px;
+      text-shadow: none;
+      border-radius: 10px;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
+    .statusgray {
+      width: 60px;
+      font-size: 11px;
+      font-weight: 600;
+      text-shadow: none;
+      background-color: #d1dade;
+      color: #5e5e5e;
+      border-radius: 10px;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
+    .gary {
+      font-size: 11px;
+      font-weight: 600;
+      padding-left: 3px;
+      padding-right: 3px;
+      text-shadow: none;
+      border-radius: 10px;
+      text-align: center;
+      background-color: #d1dade;
+      color: #5e5e5e;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
+
+    .layui-input-block {
+      width: 250px;
+    }
+  </style>
+</head>
+
+
+<body style="background-color: #fff;">
+
+  <div class="layui-fluid">
+    <div class=" margin-top">
+      <form class="layui-form" lay-filter="formDemo" action="">
+        <!-- 行 -->
+        <div class="layui-form-item">
+          <div class="layui-inline">
+            <label for="bumen" class="layui-form-label">检查部门：</label>
+            <div id="bumen" class="layui-input-block">
+            </div>
+          </div>
+          <!--  -->
+          <div class="layui-inline">
+            <label for="" class="layui-form-label">检查人：</label>
+            <div id="demo1" class="xm-select-demo layui-input-block"></div>
+          </div>
+          <div class="layui-inline">
+            <label for="" class="layui-form-label">隐患类型：</label>
+            <div class="layui-input-block">
+              <select name="modules" lay-verify="required" lay-search="">
+                <option value="">直接选择或搜索选择</option>
+                <option value="1">所有</option>
+                <option value="3">采煤</option>
+                <option value="4">冲击地压</option>
+                <option value="2">其他</option>
+              </select>
+            </div>
+          </div>
+          <!--  -->
+          <div class="layui-inline">
+            <label for="" class="layui-form-label">隐患地点：</label>
+            <div class="layui-input-block">
+              <select name="address" lay-verify="required" lay-search="">
+                <option value="">直接选择或搜索选择</option>
+                <option value="1">1304轨道顺槽</option>
+                <option value="1">1304轨道顺槽</option>
+              </select>
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label for="" class="layui-form-label">隐患等级：</label>
+            <div class="layui-input-block">
+              <select name="grade" id="">
+                <option value=""></option>
+                <option value="">一般隐患</option>
+                <option value="">重大隐患</option>
+              </select>
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label for="" class="layui-form-label">检查时间：</label>
+            <div class="layui-input-block">
+              <input type="text" name="date" id="date3" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label for="" class="layui-form-label">整改时间：</label>
+            <div class="layui-input-block">
+              <input type="text" name="date" id="date2" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <!--  -->
+          <div class="layui-inline">
+            <label class="layui-form-label">限改时间：</label>
+            <div class="layui-input-block">
+              <input type="text" name="fxdate" id="date" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+  </div>
+
+  <script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container cl">
+
+    <button  class="layui-btn  layui-btn-sm" lay-event="report" >
+      <i class="layui-icon layui-icon-template-1"></i> 拟上报
+    </button>
+    <button class="layui-btn layui-btn-sm  layui-top-danger" lay-event="batch_del">
+      <i class="layui-icon layui-icon-close" ></i>批量删除
+    </button>
+    <button class="layui-btn layui-btn-sm  layui-top-success" lay-event="batch_import">
+      <i class="layui-icon layui-icon-addition" ></i>批量导入
+    </button>
+    <button class="layui-btn layui-btn-sm  layui-top-warm" lay-event="export">
+      <i class="layui-icon layui-icon-export" ></i>导出
+    </button>
+    <!-- cl-query -->
+    <button class="cl-query   layui-btn-sm " lay-event="a">
+      <span class="" >早班</span>
+    </button>
+    <button class="cl-query  layui-btn-sm " lay-event="b">
+      <span class="" >中班</span>
+    </button>
+    <button class="cl-query  layui-btn-sm  " lay-event="c">
+      <span class="" >晚班</span>
+    </button>
+    <div class="layui-inline ">
+      <label for="" class="layui-form-label">状态</label>
+      <div class="layui-input-inline cl-select">
+        <select  name="interest" id='interest' lay-filter="aihao">
+          <option value="0">请选择</option>
+          <option value="0">未整改</option>
+          <option value="1">退回</option>
+          <option value="2">已下达</option>
+        </select>
+      </div>
+    </div>
+    <div class="layui-inline cl-select">
+        <input type="text" name='keyword' style='width:200px;' class="layui-input" placeholder="请输入关键字">
+     </div>
+    <button class="layui-btn layui-btn-normal  layui-btn-sm  " lay-event="search"> 搜索 </button>
+    <button  class="layui-btn layui-btn-primary layui-btn-sm" lay-event="refresh" >
+      刷新
+    </button>
+    <!-- end -->
+  </div>
+</script>
+
+  <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs layui-bg-gray" lay-event="detail">详情</a>
+    <a class="layui-btn layui-btn-xs layui-bg-gray" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-xs layui-bg-black" lay-event="get">拟上报</a>
+    <a class="layui-btn layui-btn-xs layui-bg-green" lay-event="del">下达</a>
+  </script>
+  <script src="../../layuiAdmin/layui/layui.all.js" charset="utf-8"></script>
+  <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+  <script>
+    layui.config({
+      base: '/layuiAdmin/modules/'
+    }).extend({
+      xmSelect: 'xm-select'
+    }).use(['form', 'layedit', 'laydate', 'table', 'xmSelect'], function () {
+      var table = layui.table
+        , form = layui.form
+        , $ = layui.jquery
+        , layer = layui.layer
+        , layedit = layui.layedit
+        , laydate = layui.laydate
+        , xmSelect = layui.xmSelect
+      const TABLEURL = '/js/yhgl.json'
+
+      //日期范围选择
+      laydate.render({
+        elem: '#date'
+        , range: true //或 range: '~' 来自定义分割字符
+      });
+      // 整改日期
+      laydate.render({
+        elem: '#date2'
+        , min: -3 //7天前
+        , max: 0 //7天后
+      });
+      // 整改日期
+      laydate.render({
+        elem: '#date3'
+
+      });
+
+      // 检查人
+      var demo1 = xmSelect.render({
+        el: '#demo1',
+        tips: '检查人',
+        name: 'people',
+        filterable: true,
+        data: [
+          { name: '生产处管理员', value: 1 },
+          { name: '生产处管理员', value: 2 },
+          { name: '生产处管理员', value: 3 },
+          { name: '生产处管理员', value: 4 },
+          { name: '生产处管理员', value: 5 },
+        ]
+      })
+      // 检查部门
+      xmSelect.render({
+        el: '#bumen',
+        name: 'bumen',
+        model: {
+          label: {
+            type: 'text'
+          }
+        },
+        radio: true,
+        clickClose: true,
+        tree: {
+          show: true,
+          strict: false,
+          expandedKeys: [-1],
+        },
+        height: 'auto',
+        data() {
+          return [
+            {
+              name: '销售员', value: -1, children: [
+                { name: '张三', value: 100, selected: true, children: [] },
+                { name: '李四1', value: 20, },
+                { name: '王五1', value: 3, disabled: true },
+              ]
+            },
+            {
+              name: '奖品', value: -2, children: [
+                {
+                  name: '奖品3', value: -3, children: [
+                    { name: '苹果3', value: 14, },
+                    { name: '香蕉3', value: 15 },
+                    { name: '葡萄3', value: 16 },
+                  ]
+                },
+                { name: '苹果2', value: 4, },
+                { name: '香蕉2', value: 5 },
+                { name: '葡萄2', value: 6 },
+              ]
+            },
+          ]
+        }
+      })
+      let table_data = [];
+      table.render({
+        elem: '#test'
+        , url: TABLEURL
+        , height: 'full-200'
+        , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+        , title: '用户数据表'
+        , cols: [[
+          { type: 'checkbox', fixed: 'left' }
+          , { field: 'jc', title: '检查人', align: 'center' }
+          , { field: 'data', title: '检查时间', }
+          , {
+            field: 'yhzt', title: '隐患状态', width: 100, align: 'center', templet: function (d) {
+              return `<div class='statusgray' >${d.yhzt}</div>`
+            }
+          }
+          , { field: 'address', title: '隐患地点', width: 200, edit: 'text' }
+          , { field: 'content', title: '隐患详细描述', width: 300, }
+          , {
+            field: 'zl', title: '隐患种类', width: 100, templet: function (d) {
+              return `<div class='gary' >${d.zl}</div>`
+            }
+          }
+          , {
+            field: 'grade', title: '隐患等级', width: 100, templet: function (d) {
+              return `<div class='badge' style="background:#007DFF;color: white;">${d.grade}</div>`
+            }
+          }
+          , { field: 'unit', title: '责任部门', unresize: true, sort: true }
+          , { field: 'order', title: '班次', edit: 'text', align: 'center' }
+          , { field: 'data', title: '限改时间' }
+          , { field: 'status', title: '是否上报' }
+          , { fixed: 'right', title: '操作', hide: true, width: 250, align: 'center', toolbar: '#barDemo' } //这里的toolbar值是模板元素的选择器
+
+          , { field: 'id', title: 'ID', unresize: true, sort: true, hide: true }
+          , { field: 'dwfk', title: '单位罚款', edit: 'text', sort: true, hide: true }
+          , { field: 'grfk', title: '个人罚款', edit: 'text', sort: true, hide: true }
+        ]]
+        , id: 'table'
+        , page: true
+        , done: function (res, curr, count) {
+          //如果是异步请求数据方式，res即为你接口返回的信息。
+          //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+          table_data = res.data
+        }
+        , parseData: function (res) {
+          // 解析数据格式
+          return res
+        }
+      });
+      function statusABC(a, b, c) {
+        $('.cl-query:eq(' + a + ')').addClass('is-active')
+        $('.cl-query:eq(' + b + ')').removeClass('is-active')
+        $('.cl-query:eq(' + c + ')').removeClass('is-active')
+      }
+      //头工具栏事件
+      table.on('toolbar(test)', function (obj) {
+        var checkStatus = table.checkStatus(obj.config.id);
+        switch (obj.event) {
+          case 'report':
+            let count = checkStatus.data.length
+            if (count > 0) {
+              layer.confirm('确认对选择的' + count + '条数据拟上报？', function (index) {
+
+              });
+            }
+
+            break;
+          case 'batch_del':
+            if (checkStatus.data.length != 0) {
+              layer.confirm('确认全部删除？', function (index) {
+                $.ajax({
+                  url: "/del",
+                  success(res) {
+                    if (res.msg = 'success') {
+                      obj.del();
+                      layer.close(index);
+                    } else {
+                      layui.msg('删除失败')
+                    }
+                  }
+                })
+
+              });
+            } else {
+              layer.msg('请选择')
+            }
+            break;
+          case 'batch_import':
+            layer.alert('这是导入按钮');
+            break;
+          case 'a':
+            table.reload('table', {
+              where: {
+                banCi: "早班"
+
+              }, page: {
+                curr: 1 //重新从第 1 页开始
+              }
+            }, true)
+            statusABC(0, 1, 2)
+            break;
+          case 'b':
+            table.reload('table', {
+              where: {
+                banCi: "中班"
+
+              }, page: {
+                curr: 1 //重新从第 1 页开始
+              }
+            }, true)
+            statusABC(1, 0, 2)
+            break;
+          case 'c':
+            table.reload('table', {
+              where: {
+                banCi: "晚班"
+
+              }, page: {
+                curr: 1 //重新从第 1 页开始
+              }
+            }, true)
+            statusABC(2, 1, 0)
+            break;
+          case 'refresh':
+            table.reload('table', {
+              page: {
+                curr: 1 //重新从第 1 页开始
+              }
+            }, true)
+            break;
+          case 'search':
+            var data1 = form.val("formDemo");
+            data1.interest = $('#interest').val()
+            data1.keyword = $('input[name=keyword]:eq(0)').val()
+            console.log(data1)
+            break;
+          case 'export':
+            table.exportFile(obj.config.id, table_data, 'xls'); //data 为该实例中的任意数量的数据
+            break;
+        };
+      });
+
+      //监听行工具事件
+      table.on('tool(test)', function (obj) {
+        var data = obj.data;
+
+      });
+    });
+  </script>
+
+</body>
+
+</html>

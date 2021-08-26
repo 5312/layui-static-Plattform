@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../layuiAdmin/layui/css/layui.css" media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+  <style>
+    .margin-top {
+      margin-top: 20px;
+    }
+
+    .h1 {
+      font-size: 20px;
+      /* padding-left: 50px; */
+    }
+
+    .layui-form-label {
+      white-space: nowrap;
+    }
+
+    .height {
+      height: 20px;
+    }
+
+    .layui-textarea {
+      height: 30px !important;
+    }
+
+    .btnbox {
+      padding: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+
+<body style="background-color: #fff;">
+
+  <div class="layui-fluid">
+    <div class="height"></div>
+    <fieldset class="layui-elem-field">
+      <legend>追究信息</legend>
+      <div class="layui-field-box">
+        <form action="" class="layui-form">
+          <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">隐患内容</label>
+            <div class="layui-input-block">
+              <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+            </div>
+          </div>
+          <div class="layui-form-item layui-form-text">
+            <div class="layui-inline">
+              <label class="layui-form-label">责任人</label>
+              <div class="layui-input-block">
+                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input">
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class="layui-form-label">责任部门</label>
+              <div class="layui-input-block">
+                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input">
+              </div>
+            </div>
+          </div>
+          <div class="layui-form-item layui-form-text">
+            <div class="layui-inline">
+              <label class="layui-form-label">追责时间</label>
+              <div class="layui-input-block">
+                <input type="text" name="" id="date" placeholder="请输入" autocomplete="off" class="layui-input">
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class="layui-form-label">追责地点</label>
+              <div class="layui-input-block">
+                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input">
+              </div>
+            </div>
+          </div>
+          <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">追责经过</label>
+            <div class="layui-input-block">
+              <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+            </div>
+          </div>
+          <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">防范措施</label>
+            <div class="layui-input-block">
+              <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+            </div>
+          </div>
+          <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">原因及责任划分</label>
+            <div class="layui-input-block">
+              <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+            </div>
+          </div>
+          <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">处理意见</label>
+            <div class="layui-input-block">
+              <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+            </div>
+          </div>
+          <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">主持人</label>
+            <div class="layui-input-block">
+              <select name="interest" lay-filter="aihao">
+                <option value="0">请选择</option>
+                <option value="1">阅读</option>
+              </select>
+            </div>
+          </div>
+          <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">记录人</label>
+            <div class="layui-input-block">
+              <select name="interest" lay-filter="aihao">
+                <option value="0">请选择</option>
+                <option value="1">阅读</option>
+              </select>
+            </div>
+          </div>
+          <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">追责人员</label>
+            <div class="layui-input-block">
+              <select name="interest" lay-filter="aihao">
+                <option value="0">请选择</option>
+                <option value="1">阅读</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+    </fieldset>
+    <br>
+    <fieldset class="layui-elem-field">
+      <legend>隐患责任追究条款</legend>
+      <div class="layui-field-box">
+        <table class="layui-hide" id="test" lay-filter="test"></table>
+      </div>
+    </fieldset>
+    <div class="btnbox">
+      <button type="button" class="layui-btn  layui-btn-sm"><i class="layui-icon">&#xe655;</i>保存</button>
+      <button type="button" class="layui-btn  layui-btn-sm"><i class="layui-icon">&#xe609;</i>保存并提交</button>
+      <button type="button" class="layui-btn  layui-btn-sm"><i class="layui-icon">&#x1006;</i>取消</button>
+    </div>
+  </div>
+
+  <script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">添加隐患责任追究条款</button>
+    <button class="layui-btn layui-btn-sm" lay-event="add">删除隐患责任追究条款</button>
+  </div>
+</script>
+  <script src="../../layuiAdmin/layui/layui.all.js" charset="utf-8"></script>
+  <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+
+  <script>
+    layui.use(['form', 'table'], function () {
+      var table = layui.table
+        , form = layui.form
+        , layer = layui.layer
+        , laydate = layui.laydate;
+      laydate.render({
+        elem: '#date'
+      });
+      table.render({
+        elem: '#test'
+        // , height: '200px'
+        , url: '/js/table.json'
+        , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+        , defaultToolbar: ['exports']
+        , title: '用户数据表'
+        , cols: [[
+          { type: 'checkbox', fixed: 'left' }
+          , { field: 'lai', title: '来源' }
+          , { field: 'tiao', title: '条款' }
+
+        ]]
+        , page: {
+          limit: 1
+          , limits: [1, 10, 20]
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

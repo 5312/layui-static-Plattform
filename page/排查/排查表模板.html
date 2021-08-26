@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Layui</title>
+  <meta name="renderer" content="webkit" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <link rel="stylesheet" href="../../layuiAdmin/layui/css/layui.css" media="all" />
+  <link rel="stylesheet" href="../../src/all.css" media="all" />
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+  <style>
+    .margin-top {
+      margin-top: 20px;
+    }
+
+    .h1 {
+      font-size: 20px;
+      /* padding-left: 50px; */
+    }
+
+    .layui-form-label {
+      white-space: nowrap;
+    }
+
+    .height {
+      height: 20px;
+    }
+  </style>
+</head>
+
+<body style="background-color: #fff">
+  <div class="layui-fluid">
+    <div class="layui-card margin-top">
+      <div class="">
+        <form class="layui-form" action="">
+          <!-- 行 -->
+          <div class="layui-form-item">
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">排查编码</label>
+              <div class="layui-input-block">
+                <input type="text" class="layui-input" />
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">排查名称</label>
+              <div class="layui-input-block">
+                <input type="text" class="layui-input" />
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">排查名称</label>
+              <div class="layui-input-block">
+                <input type="text" class="layui-input" />
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">排查部门</label>
+              <div class="layui-input-block">
+                <input type="text" class="layui-input" />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+  </div>
+
+  <script type="text/html" id="toolbarDemo">
+      <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm layui-top-add" lay-event="add">
+          <i class="layui-icon">&#xe615;</i> 新建
+        </button>
+        <button
+          class="layui-btn layui-btn-sm layui-top-warm"
+          lay-event="edit"
+        >
+          <i class="layui-icon">&#xe615;</i> 编辑
+        </button>
+        <button
+          class="layui-btn layui-btn-sm layui-top-danger"
+          lay-event="del"
+        >
+          <i class="layui-icon">&#xe615;</i> 删除
+        </button>
+      </div>
+    </script>
+
+  <script type="text/html" id="barDemo">
+      <a class="layui-link layui-btn-sm layui-btn-xs" lay-event="sel"
+        >配置排查项</a
+      >
+    </script>
+  <!-- 新建 -->
+  <script type="text/html" id='add'>
+    <form id="dictDataEditForm" lay-filter="dictDataEditForm" class="layui-form model-form" style="padding-left: 10px;">
+      <input name="dictDataId" type="hidden"/>
+      <div class="layui-form-item">
+          <label class="layui-form-label layui-form-required" style="padding-left: 0;width: 95px;">字典项名称:</label>
+          <div class="layui-input-block">
+              <input name="dictDataName" placeholder="请输入字典项名称" class="layui-input"
+                     lay-verType="tips" lay-verify="required" required/>
+          </div>
+      </div>
+      <div class="layui-form-item">
+          <label class="layui-form-label layui-form-required" style="padding-left: 0;width: 95px;">字典项代码:</label>
+          <div class="layui-input-block">
+              <input name="dictDataCode" placeholder="请输入字典键值" class="layui-input"
+                     lay-verType="tips" lay-verify="required" required/>
+          </div>
+      </div>
+      <div class="layui-form-item">
+          <label class="layui-form-label layui-form-required">排序号:</label>
+          <div class="layui-input-block">
+              <input name="sortNumber" placeholder="请输入排序号" class="layui-input" type="number"
+                     lay-verType="tips" lay-verify="required" required/>
+          </div>
+      </div>
+      <div class="layui-form-item">
+          <label class="layui-form-label">备注:</label>
+          <div class="layui-input-block">
+              <textarea name="comments" placeholder="请输入备注" class="layui-textarea"></textarea>
+          </div>
+      </div>
+      <div class="layui-form-item text-right">
+          <button class="layui-btn" lay-filter="dictDataEditSubmit" lay-submit>保存</button>
+          <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+      </div>
+  </form>
+</script>
+  <!-- end -->
+  <script src="../../layuiAdmin/layui/layui.all.js" charset="utf-8"></script>
+  <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+
+  <script>
+    layui.use(['form', 'layedit', 'laydate', 'table'], function () {
+      var table = layui.table,
+        form = layui.form,
+        layer = layui.layer,
+        layedit = layui.layedit,
+        $ = layui.jquery,
+        laydate = layui.laydate
+      //日期
+      laydate.render({
+        elem: '#date',
+      })
+      table.render({
+        elem: '#test',
+        url: '/js/table.json',
+        toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板
+        defaultToolbar: ['filter', 'exports', 'print'], //{ //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+        title: '用户数据表',
+        cols: [
+          [
+            { type: 'numbers', fixed: 'left' },
+            { type: 'checkbox', fixed: 'left' },
+            {
+              field: 'id',
+              title: 'ID',
+              width: 80,
+              fixed: 'left',
+              unresize: true,
+              sort: true,
+              hide: true,
+            },
+            {
+              field: 'card',
+              title: '档案卡名称',
+              width: 120,
+              fixed: 'left',
+              unresize: true,
+              sort: true,
+            },
+            { field: 'unit', title: '负责人', width: 120, edit: 'text' },
+            { field: 'data', title: '排查日期', width: 100 },
+            { field: 'address', title: '地点', edit: 'text' },
+            { field: 'content', title: '排查状态', edit: 'text', sort: true },
+            { field: 'sfdbld', title: '是否删除', edit: 'text', sort: true },
+            {
+              fixed: 'right',
+              title: '配置排查项',
+              width: 200,
+              align: 'center',
+              toolbar: '#barDemo',
+            },
+          ],
+        ],
+        page: true,
+      })
+      /* 显示表单弹窗 */
+      function showEditModel(mData, obj) {
+        layer.open({
+          type: 1,
+          title: mData,
+          area: ['40%', '50%'],
+          content: $('#add').html(),
+          success: function (layero, dIndex) {
+
+          },
+        })
+      }
+      /* 头工具栏事件 */
+      table.on('toolbar(test)', function (obj) {
+        var checkStatus = table.checkStatus(obj.config.id)
+        switch (obj.event) {
+          case 'add':
+            //新建
+            showEditModel('新建')
+            break
+          case 'edit':
+            showEditModel('编辑')
+            break
+          case 'del':
+            var data = checkStatus.data
+            layer.msg('选中了：' + data.length + ' 个')
+            break
+        }
+      })
+
+      //监听行工具事件
+      table.on('tool(test)', function (obj) {
+        var data = obj.data
+        if (obj.event === 'sel') {
+          //排查
+          layer.open({
+            type: 2,
+            zIndex: layer.zIndex, //重点1
+            title: '排查',
+            shadeClose: true,
+            // shade: true,
+            maxmin: false, //开启最大化最小化按钮
+            area: ['100%', '100%'],
+            content: '/page/排查/排查.html',
+            success: function (layero) {
+              //layer.setTop(layero); //重点2
+            },
+            end: function () {
+              // window.location.reload();
+            },
+          })
+        }
+      })
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+  <link rel="stylesheet" href="../../src/all.css">
+  <title>Document</title>
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    .xm-select-demo {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body style="background: #fff;">
+  <div class="main layui-fluid">
+    <form class="layui-form" action="">
+      <hr>
+      <div class="layui-form-item">
+        <div class="layui-inline">
+          <label class="layui-form-label">责任部门</label>
+          <div class="layui-input-block">
+            <div id="bumen" class="xm-select-demo" style="width:500px;">
+            </div>
+            <!-- <input type="text" name="date" id="layer-open" autocomplete="off" class="layui-input"> -->
+          </div>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-inline">
+          <label class="layui-form-label">检查地点</label>
+          <div class="layui-input-inline">
+            <select name="mudoles" lay-search="">
+              <option value="">直接选择或搜索选择</option>
+              <option value=" 1">五矿/已17-23042采面</option>
+              <option value="1">五矿/已17-23160采面</option>
+              <option value="1">五矿/已17-23240采面</option>
+              <option value="1">五矿/已17-23322采面</option>
+            </select>
+          </div>
+        </div>
+        <div class="layui-inline">
+          <label class="layui-form-label">详细地点</label>
+          <div class="layui-input-inline">
+            <select name="modules" lay-verify="required" lay-search="">
+              <option value=""></option>
+              <option value="1">1304轨道顺槽</option>
+              <option value="1">1304轨道顺槽</option>
+              <option value="1">1304轨道顺槽</option>
+              <option value="1">1304轨道顺槽</option>
+              <option value="1">1304轨道顺槽</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-inline">
+          <label class="layui-form-label">检查日期</label>
+          <div class="layui-input-inline">
+            <input type="text" name="date" id="date" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class=" layui-inline">
+          <label class="layui-form-label">班次</label>
+          <div class="layui-input-inline" style="width:300px;">
+            <input type="radio" name="class" value="早班" title="早班">
+            <input type="radio" name="class" value="中班" title="中班" checked>
+            <input type="radio" name="class" value="晚班" title="晚班" checked>
+          </div>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-inline">
+          <label class="layui-form-label">检查人</label>
+          <div class="layui-input-inline">
+            <select name="interest" lay-filter="aihao">
+              <option value="">请选择</option>
+              <option value="0">001</option>
+              <option value="1">007</option>
+              <option value="1">管理员</option>
+            </select>
+          </div>
+        </div>
+        <div class="layui-inline">
+          <label class="layui-form-label">陪检人</label>
+          <div class="layui-input-inline">
+            <select name="interest" lay-filter="aihao">
+              <option value="">请选择</option>
+              <option value="0">管理员</option>
+              <option value="1">管理员</option>
+              <option value="1">管理员</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="layui-form-item">
+        <label for="" class="layui-form-label">隐患内容</label>
+        <div class="layui-input-block">
+          <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label for="" class="layui-form-label">整改要求</label>
+        <div class="layui-input-block">
+          <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-inline">
+          <label for="" class="layui-form-label">隐患等级</label>
+          <div class="layui-input-block">
+            <select name="modules" id="">
+              <option value=""></option>
+              <option value="">一般隐患</option>
+              <option value="">重大隐患</option>
+            </select>
+          </div>
+        </div>
+        <div class="layui-inline">
+          <label for="" class="layui-form-label">隐患种类</label>
+          <div class="layui-input-block">
+            <select name="modules" id="">
+              <option value=""></option>
+              <option value="">所有</option>
+              <option value="">采煤</option>
+              <option value="">一通三防</option>
+            </select>
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label for="" class="layui-form-label">标准条款</label>
+          <div class="layui-input-block">
+            <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-inline">
+          <label for="" class="layui-form-label">单位罚款</label>
+          <div class="layui-input-block">
+            <input type="text" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+          <label for="" class="layui-form-label">个人罚款</label>
+          <div class="layui-input-block">
+            <input type="text" class="layui-input">
+          </div>
+        </div>
+      </div>
+
+      <div class="layui-form-item">
+        <div class="layui-inline">
+          <label for="" class="layui-form-label">单位罚款范围</label>
+          <div class="layui-input-block">
+            <input type="text" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+          <label for="" class="layui-form-label">个人罚款范围</label>
+          <div class="layui-input-block">
+            <input type="text" class="layui-input">
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <script src="../../layuiadmin/layui/layui.js"></script>
+  <script>
+    layui.config({
+      base: '/layuiAdmin/modules/'
+    }).extend({
+      xmSelect: 'xm-select'
+    }).use(['form', 'layedit', 'laydate', 'jquery', 'upload', 'xmSelect'], function () {
+      var form = layui.form
+        , layer = layui.layer
+        , layedit = layui.layedit
+        , laydate = layui.laydate
+        , $ = layui.jquery
+        , upload = layui.upload
+      const BUMEN = '/js/bumentree.json'
+      //日期
+      laydate.render({
+        elem: '#date'
+        , min: -3 //7天前
+        , max: 0 //7天后
+      });
+      laydate.render({
+        elem: '#date1'
+      });
+      $.ajax({
+        url: BUMEN,
+        success(res) {
+          xmSelect.render({
+            el: '#bumen',
+            prop: {
+              name: 'name',
+              value: 'id',
+            },
+            name: 'bumen',
+            radio: false,
+            clickClose: false,
+            model: { label: { type: 'text' } },
+            tree: {
+              show: true,
+              strict: false,
+              expandedKeys: [-1],
+            },
+            filterable: true,
+            height: 'auto',
+            data: res.data
+          })
+        }
+      })
+
+
+      // 关键词
+      xmSelect.render({
+        el: '#keyword',
+        name: 'keyword',
+        filterable: true,
+        data: [
+          { name: '采煤', value: 1 },
+          { name: '采煤', value: 2 },
+          { name: '采煤', value: 3 },
+          { name: '采煤', value: 4 },
+        ]
+      })
+
+
+
+    });
+  </script>
+</body>
+
+</html>

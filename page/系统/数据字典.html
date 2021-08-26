@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../layuiAdmin/layui/css/layui.css" media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+  <style>
+    .margin-top {
+      margin-top: 20px;
+    }
+
+    .h1 {
+      font-size: 20px;
+      /* padding-left: 50px; */
+    }
+
+    .layui-form-label {
+      white-space: nowrap;
+    }
+
+    .height {
+      height: 20px;
+    }
+  </style>
+</head>
+
+
+<body style="background-color: #fff;">
+
+  <div class="layui-fluid">
+    <div class="layui-card margin-top">
+      <!-- layui-card-body -->
+      <div class="">
+        <form class="layui-form" action="">
+          <!-- 行 -->
+          <div class="layui-form-item">
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">角色名称</label>
+              <div class="layui-input-block" style="width:150px;">
+                <select name="d" lay-verify="required" lay-search="">
+                  <option value="">请选择</option>
+                  <option value="1">管理员</option>
+                  <option value="1">马冬梅</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">角色状态</label>
+              <div class="layui-input-block">
+                <select name="modules" lay-verify="required">
+                  <option value="">所用</option>
+                  <option value="1">正常</option>
+                  <option value="1">停用</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class="layui-form-label">创建时间</label>
+              <div class="layui-input-inline" style="width: 100px;">
+                <input type="text" name="date" id="date1" autocomplete="off" class="layui-input">
+              </div>
+              <div class="layui-form-mid">-</div>
+              <div class="layui-input-inline" style="width: 100px;">
+                <input type="text" name="date" id="date" autocomplete="off" class="layui-input">
+              </div>
+
+            </div>
+            <div class="layui-inline">
+              <button type="button" class="layui-btn layui-btn-sm layui-btn-radius">
+                <i class="layui-icon">&#xe615;</i> 搜索
+              </button>
+            </div>
+            <div class="layui-inline">
+              <button type="button" class="layui-btn layui-btn-sm layui-btn-radius  layui-btn-warm">
+                <i class="layui-icon">&#xe615;</i> 重置
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+  </div>
+
+  <script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="add"><i class="layui-icon layui-icon-addition" style=""></i> 新增</button>
+    <button class="layui-btn layui-btn-sm" lay-event="chakan"> <i class="layui-icon layui-icon-edit" style=""></i>修改</button>
+    <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="dttz"><i class='layui-icon'>&#x1006;</i>删除</button>
+    <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="dttz"><i class='layui-icon'>&#xe624;</i>导出</button>
+
+    <!--  <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button> -->
+  </div>
+</script>
+
+  <script src="../../layuiAdmin/layui/layui.all.js" charset="utf-8"></script>
+  <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+
+  <script>
+    layui.use(['form', 'layedit', 'laydate', 'table'], function () {
+      var table = layui.table
+        , form = layui.form
+        , layer = layui.layer
+        , layedit = layui.layedit
+        , laydate = layui.laydate;
+      //日期
+      laydate.render({
+        elem: '#date'
+      });
+      laydate.render({
+        elem: '#date1'
+      });
+      laydate.render({
+        elem: '#date2'
+      });
+      table.render({
+        elem: '#test'
+        , url: '/js/table.json'
+        , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+        , defaultToolbar: ['']
+        , title: '用户数据表'
+        , cols: [[
+          { type: 'checkbox', fixed: 'left' }
+          , { field: 'id', title: '主键名称 ', fixed: 'left', unresize: true, sort: true }
+          , { field: 'grfk', title: '主键值 ', edit: 'text' }
+          , { field: 'data', title: '子类型 ', }
+          , { field: 'data', title: '录入时间 ', align: 'center', }
+          , { field: 'sfdbld', title: '启用标识', align: 'center', }
+
+
+        ]]
+        , page: true
+      });
+
+      //头工具栏事件
+      table.on('toolbar(test)', function (obj) {
+        var checkStatus = table.checkStatus(obj.config.id);
+        switch (obj.event) {
+          case 'add':
+            parent.layer.open({
+              type: 2,
+              zIndex: layer.zIndex, //重点1
+              title: '信息操作',
+              shadeClose: true,
+              shade: true,
+              maxmin: false, //开启最大化最小化按钮
+              area: ['90%', '90%'],
+              content: './page/系统/数据字典新增.html',
+              success: function (layero) {
+                //layer.setTop(layero); //重点2
+              },
+              end: function () {
+                window.location.reload();
+              }
+
+            });
+            break;
+          case 'zhuijiu':
+            break;
+          case 'exportFile':
+            table.exportFile('test', checkStatus.data, 'xls'); //data 为该实例中的任意数量的数据
+            break;
+
+        };
+      });
+
+      //监听行工具事件
+      table.on('tool(test)', function (obj) {
+        var data = obj.data;
+        //console.log(obj)
+        if (obj.event === 'del') {
+          layer.confirm('真的删除行么', function (index) {
+            obj.del();
+            layer.close(index);
+          });
+        } else if (obj.event === 'edit') {
+          layer.prompt({
+            formType: 2
+            , value: data.email
+          }, function (value, index) {
+            obj.update({
+              email: value
+            });
+            layer.close(index);
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

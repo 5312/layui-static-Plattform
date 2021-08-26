@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../layuiAdmin/layui/css/layui.css" media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+  <style>
+    .margin-top {
+      margin-top: 20px;
+    }
+
+    .h1 {
+      font-size: 20px;
+      /* padding-left: 50px; */
+    }
+
+    .layui-form-label {
+      white-space: nowrap;
+    }
+
+    .height {
+      height: 20px;
+    }
+
+    .center {
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+
+
+<body style="background-color: #fff;">
+
+  <div class="layui-fluid">
+    <div class="layui-card margin-top">
+      <form class="layui-form" action="">
+        <!-- 行 -->
+
+        <div class="layui-form-item">
+          <label for="" class="layui-form-label">隐患详细描述：</label>
+          <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+              class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label for="" class="layui-form-label">整改措施：</label>
+          <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+              class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label for="" class="layui-form-label">隐患地点：</label>
+          <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+              class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label for="" class="layui-form-label">责任人：</label>
+          <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+              class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label for="" class="layui-form-label">整改人：</label>
+          <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+              class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label for="" class="layui-form-label">整改情况：</label>
+          <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+              class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label for="" class="layui-form-label">责任部门：</label>
+          <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+              class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label for="" class="layui-form-label">限改时间：</label>
+          <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+              class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label for="" class="layui-form-label">整改时间：</label>
+          <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+              class="layui-input">
+          </div>
+        </div>
+        <!--  -->
+
+      </form>
+    </div>
+  </div>
+
+
+
+
+  <script src="../../layuiAdmin/layui/layui.all.js" charset="utf-8"></script>
+  <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+
+  <script>
+    layui.use(['form', 'table', 'layer'], function () {
+      var form = layui.form
+        , layer = layui.layer
+        , table = layui.table;
+      //自定义验证规则
+      form.verify({
+        title: function (value) {
+
+        }
+        , pass: [
+          /^[\S]{6,12}$/
+          , '密码必须6到12位，且不能出现空格'
+        ]
+        , content: function (value) {
+
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

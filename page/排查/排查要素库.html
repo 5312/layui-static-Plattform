@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Layui</title>
+  <meta name="renderer" content="webkit" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <link rel="stylesheet" href="../../layuiAdmin/layui/css/layui.css" media="all" />
+  <link rel="stylesheet" href="../../src/all.css" media="all" />
+
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+  <style>
+    .margin-top {
+      margin-top: 20px;
+    }
+
+    .h1 {
+      font-size: 20px;
+      /* padding-left: 50px; */
+    }
+
+    .layui-form-label {
+      white-space: nowrap;
+    }
+
+    .height {
+      height: 20px;
+    }
+  </style>
+</head>
+
+<body style="background-color: #fff">
+  <div class="layui-fluid">
+    <div class="layui-card margin-top">
+      <div class="">
+        <form class="layui-form" action="">
+          <!-- 行 -->
+          <div class="layui-form-item">
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">排查要素</label>
+              <div class="layui-input-block">
+                <input type="text" class="layui-input" />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+  </div>
+
+  <script type="text/html" id="toolbarDemo">
+      <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm layui-top-add" lay-event="add">
+          <i class="layui-icon">&#xe624;</i> 新建
+        </button>
+        <button class="layui-btn layui-btn-sm layui-top-warm" lay-event="edit">
+          <i class="layui-icon">&#xe642;</i> 编辑
+        </button>
+        <button class="layui-btn layui-btn-sm layui-top-danger" lay-event="del">
+          <i class="layui-icon">&#x1006;</i> 删除
+        </button>
+ 
+      </div>
+    </script>
+
+  <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-sm layui-btn-xs" lay-event="sel">配置隐患排查要素</a>
+  </script>
+  <script type="text/html" id="form">
+    <form
+      id="dictDataEditForm"
+      lay-filter="dictDataEditForm"
+      class="layui-form model-form"
+      style="padding-left: 10px;"
+    >
+      <input name="dictDataId" type="hidden" />
+      <div class="layui-form-item">
+        <label
+          class="layui-form-label layui-form-required"
+          style="padding-left: 0;width: 95px;"
+          >字典项名称:</label
+        >
+        <div class="layui-input-block">
+          <input
+            name="dictDataName"
+            placeholder="请输入字典项名称"
+            class="layui-input"
+            lay-verType="tips"
+            lay-verify="required"
+            required
+          />
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label
+          class="layui-form-label layui-form-required"
+          style="padding-left: 0;width: 95px;"
+          >字典项代码:</label
+        >
+        <div class="layui-input-block">
+          <input
+            name="dictDataCode"
+            placeholder="请输入字典键值"
+            class="layui-input"
+            lay-verType="tips"
+            lay-verify="required"
+            required
+          />
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label layui-form-required">排序号:</label>
+        <div class="layui-input-block">
+          <input
+            name="sortNumber"
+            placeholder="请输入排序号"
+            class="layui-input"
+            type="number"
+            lay-verType="tips"
+            lay-verify="required"
+            required
+          />
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">备注:</label>
+        <div class="layui-input-block">
+          <textarea
+            name="comments"
+            placeholder="请输入备注"
+            class="layui-textarea"
+          ></textarea>
+        </div>
+      </div>
+      <div class="layui-form-item text-right">
+        <button class="layui-btn" lay-filter="dictDataEditSubmit" lay-submit>
+          保存
+        </button>
+        <button
+          class="layui-btn layui-btn-primary"
+          type="button"
+          ew-event="closeDialog"
+        >
+          取消
+        </button>
+      </div>
+    </form>
+  </script>
+
+  <script src="../../layuiAdmin/layui/layui.all.js" charset="utf-8"></script>
+  <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+
+  <script>
+    layui.use(["form", "layedit", "laydate", "table"], function () {
+      var table = layui.table,
+        form = layui.form,
+        layer = layui.layer,
+        layedit = layui.layedit,
+        $ = layui.jquery,
+        laydate = layui.laydate;
+      //日期
+      laydate.render({
+        elem: "#date",
+      });
+      table.render({
+        elem: "#test",
+        url: "/js/table.json",
+        toolbar: "#toolbarDemo", //开启头部工具栏，并为其绑定左侧模板
+        defaultToolbar: ["filter", "exports", "print"],
+        title: "用户数据表",
+        cols: [
+          [
+            { type: "numbers" },
+            { type: "checkbox" },
+            { field: "content", title: "排查要素", align: "center" },
+            { field: "a", title: "专业" },
+            { fixed: "right", title: "备注", align: "center" }, //这里的toolbar值是模板元素的选择器
+            { field: "sfdbld", title: "删除", sort: true },
+          ],
+        ],
+        id: "lists",
+        page: true,
+      });
+
+      //头工具栏事件
+      table.on("toolbar(test)", function (obj) {
+        var checkStatus = table.checkStatus(obj.config.id);
+        switch (obj.event) {
+          case "add":
+            //新建
+            opener('新建')
+
+            break;
+          case "edit":
+            opener('编辑')
+
+            break;
+          case "del":
+            var data = checkStatus.data;
+            layer.msg("选中了：" + data.length + " 个");
+            break;
+        }
+      });
+      function opener(mData) {
+        layer.open({
+          type: 1,
+          title: mData,
+          shadeClose: true,
+          area: ["60%", "80%"],
+          content: $("#form").html(),
+          success: function (layero) {
+            //layer.setTop(layero); //重点2
+          },
+          end: function () {
+            // window.location.reload();
+          },
+        });
+      }
+
+    });
+  </script>
+</body>
+
+</html>

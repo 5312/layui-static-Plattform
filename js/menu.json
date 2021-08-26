@@ -1,0 +1,97 @@
+{
+  "code": 0,
+  "msg": "成功",
+  "count": 6,
+  "data": [
+    {
+      "id": 1,
+      "parentid": 0,
+      "name": "隐患管理",
+      "sort": 1
+    },
+    {
+      "id": 2,
+      "parentid": 0,
+      "name": "风险分级管控",
+      "sort": 0
+    },
+    {
+      "id": 3,
+      "parentid": 0,
+      "name": "风险研判",
+      "sort": 2
+    },
+    {
+      "id": 301,
+      "parentid": 3,
+      "name": "风险研判",
+      "sort": 2
+    },
+    {
+      "id": 101,
+      "parentid": 1,
+      "name": "隐患清单",
+      "sort": 0
+    },
+    {
+      "id": 102,
+      "parentid": 1,
+      "name": "排查录入",
+      "sort": 1
+    },
+    {
+      "id": 103,
+      "parentid": 1,
+      "name": "隐患下达",
+      "sort": 1
+    },
+    {
+      "id": 104,
+      "parentid": 1,
+      "name": "隐患消息",
+      "sort": 1
+    },
+    {
+      "id": 105,
+      "parentid": 1,
+      "name": "隐患查询",
+      "sort": 1
+    },
+    {
+      "id": 106,
+      "parentid": 1,
+      "name": "隐患抽查",
+      "sort": 1
+    },
+    {
+      "id": 107,
+      "parentid": 1,
+      "name": "带班查询",
+      "sort": 1
+    },
+    {
+      "id": 108,
+      "parentid": 1,
+      "name": "隐患统计",
+      "sort": 5
+    },
+    {
+      "id": 109,
+      "parentid": 108,
+      "name": "隐患统计",
+      "sort": 0
+    },
+    {
+      "id": 201,
+      "parentid": 2,
+      "name": "风险清单",
+      "sort": 1
+    },
+    {
+      "id": 202,
+      "parentid": 2,
+      "name": "风险分级",
+      "sort": 1
+    }
+  ]
+}

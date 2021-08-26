@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../layuiAdmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../src/all.css" media="all">
+
+  <style>
+    .margin-top {
+      margin-top: 20px;
+    }
+
+    .h1 {
+      font-size: 20px;
+      /* padding-left: 50px; */
+    }
+
+    .layui-form-label {
+      white-space: nowrap;
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding-left: 3px;
+      padding-right: 3px;
+      text-shadow: none;
+      border-radius: 10px;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
+    .gary {
+      font-size: 11px;
+      font-weight: 600;
+      padding-left: 3px;
+      padding-right: 3px;
+      text-shadow: none;
+      border-radius: 10px;
+      text-align: center;
+      background-color: #d1dade;
+      color: #5e5e5e;
+      border-radius: 10px;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
+    .layui-input-block {
+      width: 150px;
+    }
+  </style>
+</head>
+
+
+<body style="background-color: #fff;">
+
+  <div class="layui-fluid">
+    <div class="layui-card margin-top">
+      <div class="">
+        <form class="layui-form" action="">
+          <!-- 行 -->
+          <div class="layui-form-item">
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">检查部门</label>
+              <div class="layui-input-block">
+                <select name="modules" lay-verify="required" lay-search="">
+                  <option value="">直接选择或搜索选择</option>
+                  <option value="1">机电技术科</option>
+                  <option value="1">安全质量管理科</option>
+                </select>
+              </div>
+            </div>
+
+            <!--  -->
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">检查人</label>
+              <div class="layui-input-block">
+                <select name="modules" lay-verify="required" lay-search="">
+                  <option value="">直接选择或搜索选择</option>
+                  <option value="1">管理员-guanliyuan</option>
+                  <option value="1">管理员-guanliyuan</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">检查类别</label>
+              <div class="layui-input-block">
+                <select name="address" lay-verify="required">
+                  <option value="">所有</option>
+                  <option value="1">每半年事故隐含排查</option>
+                  <option value="1">每季度事故隐含排查</option>
+                  <option value="1">专项事故隐患排查</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class="layui-form-label">责任部门</label>
+              <div class="layui-input-block">
+                <select name="modules" lay-verify="required" lay-search="">
+                  <option value="">搜索选择</option>
+                  <option value="1">机电技术科</option>
+                  <option value="1">机电技术科</option>
+                </select>
+              </div>
+            </div>
+
+            <!--  -->
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">隐患描述</label>
+              <div class="layui-input-block">
+                <input type="text" class="layui-input">
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">隐患地点</label>
+              <div class="layui-input-block">
+                <select name="modules" lay-verify="required" lay-search="">
+                  <option value="">直接选择或搜索选择</option>
+                  <option value="1">1304轨道顺槽</option>
+                  <option value="1">1304轨道顺槽</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">隐患等级</label>
+              <div class="layui-input-block">
+                <select name="modules" id="">
+                  <option value=""></option>
+                  <option value="">一般隐患</option>
+                  <option value="">重大隐患</option>
+                </select>
+              </div>
+            </div>
+            <!--  -->
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">隐患类型</label>
+              <div class="layui-input-block">
+                <select name="modules" lay-verify="required" lay-search="">
+                  <option value="">直接选择或搜索选择</option>
+                  <option value="1">所有</option>
+                  <option value="3">采煤</option>
+                  <option value="4">冲击地压</option>
+                  <option value="2">其他</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">检查时间</label>
+              <div class="layui-input-block">
+                <input type="text" name="date" id="date3" autocomplete="off" class="layui-input">
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">整改日期</label>
+              <div class="layui-input-block">
+                <input type="text" name="date" id="date2" autocomplete="off" class="layui-input">
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class="layui-form-label">限改时间</label>
+              <div class="layui-input-block">
+                <input type="text" name="date" id="date1" autocomplete="off" class="layui-input">
+              </div>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+  </div>
+
+  <script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container cl">
+    <button  class="layui-btn layui-btn-normal layui-btn-sm" lay-event="fc" >
+      <i class="layui-icon">&#xe615;</i> 复查
+    </button>
+    <button class="layui-btn layui-btn-sm layui-top-add" lay-event="xiangqing">
+      <i class="layui-icon layui-icon-addition"></i>详情
+    </button>
+    <button  class="layui-btn  layui-btn-sm  layui-btn-primary layui-border-blue" lay-event="history" >
+      <i class="layui-icon layui-icon-transfer"></i> 历史追溯
+    </button>
+    <button class="layui-btn layui-btn-sm  layui-top-warm" lay-event="export">
+      <i class="layui-icon layui-icon-export" ></i>导出
+    </button>
+    <button class="layui-btn layui-btn-sm  layui-top-danger" lay-event="del">
+      <i class="layui-icon layui-icon-close" ></i>复查预警
+    </button>
+     <!-- cl-query -->
+     <button class="cl-query   layui-btn-sm  " lay-event="a">
+      <span class="" >早班</span>
+    </button>
+    <button class="cl-query  layui-btn-sm " lay-event="b">
+      <span class="" >中班</span>
+    </button>
+    <button class="cl-query  layui-btn-sm " lay-event="c">
+      <span class="" >晚班</span>
+    </button>
+    <div class="layui-inline ">
+      <label for="" class="layui-form-label">状态</label>
+      <div class="layui-input-inline cl-select">
+        <select  name="interest" lay-filter="aihao">
+          <option value=""></option>
+          <option value="0">新排查</option>
+          <option value="2"  selected="">已下达</option>
+        </select>
+      </div>
+    </div>
+    <div class="layui-inline cl-select">
+        <input type="text" style='width:200px;' class="layui-input" placeholder="请输入关键字">
+      </div>
+    <button class="layui-btn layui-btn-normal  layui-btn-sm  " > 搜索 </button>
+    <button  class="layui-btn layui-btn-primary layui-btn-sm" lay-event="select" >
+      刷新
+    </button>
+    <!-- end -->
+  </div>
+
+  </div>
+</script>
+
+  <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">详情</a>
+    <!-- <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a> -->
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  </script>
+
+
+  <script src="../../layuiAdmin/layui/layui.all.js" charset="utf-8"></script>
+  <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+
+  <script>
+    layui.use(['form', 'layedit', 'laydate', 'table'], function () {
+      var table = layui.table
+        , form = layui.form
+        , layer = layui.layer
+        , layedit = layui.layedit
+        , laydate = layui.laydate;
+      //日期
+      laydate.render({
+        elem: '#date1',
+        range: '-'
+      });
+      laydate.render({
+        elem: '#date2'
+      });
+      laydate.render({
+        elem: '#date3'
+      });
+      table.render({
+        elem: '#test'
+        , url: '/js/yhgl.json'
+        , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+        , defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+          title: '提示'
+          , layEvent: 'LAYTABLE_TIPS'
+          , icon: 'layui-icon-tips'
+        }],
+        height: "full-230"
+        , title: '用户数据表'
+        , cols: [[
+          { type: 'checkbox', fixed: 'left' }
+          , { field: 'jc', title: '检查人', align: 'center' }
+          , { field: 'data', title: '检查时间', edit: 'text', align: 'center' }
+          // , { field: 'unit', title: '责任单位', unresize: true, sort: true }
+          , {
+            field: 'yhzt', title: '隐患状态', width: 100, templet: function (d) {
+              return `<div class='gary' >${d.yhzt}</div>`
+            }
+          }
+          , { field: 'address', title: '隐患地点', align: 'center', width: 200, edit: 'text' }
+          , { field: 'content', title: '隐患详细', width: 250, }
+          , {
+            field: 'zl', title: '隐患种类', width: 100, templet: function (d) {
+              return `<div class='gary' >${d.zl}</div>`
+            }
+          }
+          , {
+            field: 'grade', title: '隐患等级', width: 100, templet: function (d) {
+              return `<div class='badge' style="background:#007DFF;color: white;">${d.grade}</div>`
+            }
+          }
+          , { field: 'data', title: '限改时间', align: 'center' }
+
+          , { field: 'order', title: '责任部门', align: 'center' }
+          , { field: 'unit', title: '业务科室', }
+          , { field: 'yhzt', title: '是否上报', }
+          , { fixed: 'right', title: '操作', width: 130, align: 'center', toolbar: '#barDemo' } //这里的toolbar值是模板元素的选择器
+        ]]
+        , page: true
+      });
+
+      //头工具栏事件
+      table.on('toolbar(test)', function (obj) {
+        var checkStatus = table.checkStatus(obj.config.id);
+        switch (obj.event) {
+          case 'history':
+            //新建
+            parent.layer.open({
+              type: 2,
+              zIndex: layer.zIndex, //重点1
+              title: '隐患录入',
+              shadeClose: true,
+              // shade: true,
+              maxmin: false, //开启最大化最小化按钮
+              area: ['60%', '90%'],
+              content: '/page/隐患/历史追溯.html',
+              success: function (layero) {
+                //layer.setTop(layero); //重点2
+              },
+              end: function () {
+                window.location.reload();
+              }
+
+            });
+            break;
+          case 'xiangqing':
+            //新建
+            parent.layer.open({
+              type: 2,
+              zIndex: layer.zIndex, //重点1
+              title: '隐患录入',
+              shadeClose: true,
+              // shade: true,
+              maxmin: false, //开启最大化最小化按钮
+              area: ['60%', '90%'],
+              content: '/page/隐患/yhadd.html',
+              success: function (layero) {
+                //layer.setTop(layero); //重点2
+              },
+              end: function () {
+                window.location.reload();
+              }
+
+            });
+            break;
+          case 'fc':
+            //新建
+            parent.layer.open({
+              type: 2,
+              zIndex: layer.zIndex, //重点1
+              title: '隐患录入',
+              shadeClose: true,
+              // shade: true,
+              maxmin: false, //开启最大化最小化按钮
+              area: ['60%', '90%'],
+              content: '/page/隐患/复查.html',
+              btn: ['确定', '取消'],
+              success: function (layero) {
+                //layer.setTop(layero); //重点2
+              },
+              end: function () {
+                window.location.reload();
+              }
+
+            });
+            break;
+          case 'isAll':
+            layer.msg(checkStatus.isAll ? '全选' : '未全选');
+            break;
+
+          //自定义头工具栏右侧图标 - 提示
+          case 'LAYTABLE_TIPS':
+            layer.alert('这是工具栏右侧自定义的一个图标按钮');
+            break;
+        };
+      });
+
+      //监听行工具事件
+      table.on('tool(test)', function (obj) {
+        var data = obj.data;
+        //console.log(obj)
+        if (obj.event === 'del') {
+          layer.confirm('真的删除行么', function (index) {
+            obj.del();
+            layer.close(index);
+          });
+        } else if (obj.event === 'edit') {
+          layer.prompt({
+            formType: 2
+            , value: data.email
+          }, function (value, index) {
+            obj.update({
+              email: value
+            });
+            layer.close(index);
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../layuiAdmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../src/all.css" media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+  <style>
+    .margin-top {
+      margin-top: 20px;
+    }
+
+    .h1 {
+      font-size: 20px;
+      /* padding-left: 50px; */
+    }
+
+    .layui-form-label {
+      white-space: nowrap;
+    }
+
+    .height {
+      height: 20px;
+    }
+  </style>
+</head>
+
+
+<body style="background-color: #fff;">
+
+  <div class="layui-fluid">
+    <div class="layui-card margin-top">
+      <!-- layui-card-body -->
+      <div class="">
+        <form class="layui-form" action="">
+          <!-- 行 -->
+          <div class="layui-form-item">
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">风险点</label>
+              <div class="layui-input-block" style="width:150px;">
+                <select name="d" lay-verify="required" lay-search="">
+                  <option value="">直接选择</option>
+                  <option value="1">机电技术科</option>
+                  <option value="1">安全质量管理科</option>
+                </select>
+              </div>
+            </div>
+            <!-- <div class="layui-inline">
+              <label for="" class="layui-form-label">信息来源</label>
+              <div class="layui-input-block">
+                <select name="modules" lay-verify="required">
+                  <option value="">请选择</option>
+                  <option value="1">机电技术科</option>
+                  <option value="1">安全质量管理科</option>
+                </select>
+              </div>
+            </div> -->
+            <div class="layui-inline">
+              <div class="layui-input-block">
+                <input type="radio" name="sex" value="待审核" title="待审核" checked="">
+                <input type="radio" name="sex" value="已审核" title="已审核">
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+  </div>
+
+  <script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm layui-top-info" lay-event="chakan"> <i class='layui-icon'>&#xe60b;</i>查看</button>
+    <button class="layui-btn layui-btn-sm layui-top-add" lay-event="dttz"><i class='layui-icon'>&#xe624;</i>审批</button>
+    <button class="layui-btn layui-btn-sm" lay-event="adminEdit"><i class='layui-icon'>&#xe615;</i>批量审批</button>
+    <button class="layui-btn layui-btn-sm layui-top-warm" lay-event="adminEdit"><i class='layui-icon'>&#xe6b2;</i>管理员编辑</button>
+    <button class="layui-btn layui-btn-sm layui-top-danger" lay-event="adminDel"><i class='layui-icon'>&#x1006;</i>管理员删除</button>
+    <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="adminDel"><i class='layui-icon'>&#xe615;</i>查询</button>
+
+    <!--  <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button> -->
+  </div>
+</script>
+
+  <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="start">开始辨识</a>
+    <!-- <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a> -->
+    <a class="layui-btn layui-btn-xs" lay-event="over">结束辨识</a>
+    <a class="layui-btn layui-btn-xs" lay-event="show">查看进度</a>
+    <a class="layui-btn layui-btn-xs" lay-event="gameover">结束任务</a>
+    <a class="layui-btn layui-btn-xs" lay-event="addition">追加人员</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  </script>
+
+  <script src="../../layuiAdmin/layui/layui.all.js" charset="utf-8"></script>
+  <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+
+  <script>
+    layui.use(['form', 'layedit', 'laydate', 'table'], function () {
+      var table = layui.table
+        , form = layui.form
+        , layer = layui.layer
+        , layedit = layui.layedit
+        , laydate = layui.laydate;
+      const TABLEURL = '/js/table.json'
+      //日期
+      laydate.render({
+        elem: '#date'
+      });
+      laydate.render({
+        elem: '#date1'
+      });
+      laydate.render({
+        elem: '#date2'
+      });
+      table.render({
+        elem: '#test'
+        , url: '/js/table.json'
+        , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+        , defaultToolbar: ['']
+        , title: '用户数据表'
+        , cols: [[
+          { type: 'checkbox', fixed: 'left' }
+          , { field: 'id', title: 'ID', width: 80, fixed: 'left', unresize: true, sort: true, hide: true }
+          , { field: 'bst', title: '辨识活动类型 ', fixed: 'left', unresize: true, sort: true }
+          , { field: 'name', title: '辨识活动名称 ', edit: 'text' }
+          , {
+            field: 'data', title: '开始日期 ', edit: 'text'
+          }
+          , { field: 'data', title: '结束日期 ', edit: 'text', align: 'center', }
+          , { field: 'jc', title: '组织人员 ', align: 'center', }
+          , { field: 'pj', title: '参与人员 ', }
+          , { field: 'status', title: '任务状态 ', edit: 'text', sort: true }
+          , { title: '操作 ', templet: '#barDemo', width: 500, align: 'center', }
+
+        ]]
+        , id: 'table'
+        , page: true
+      });
+
+      //头工具栏事件
+      table.on('toolbar(test)', function (obj) {
+        var checkStatus = table.checkStatus(obj.config.id);
+        switch (obj.event) {
+          case 'chakan':
+            let length = checkStatus.data.length;
+            if (length > 0) {
+              layer.open({
+                type: 2,
+                anim: 1,
+                zIndex: layer.zIndex, //重点1
+                title: '查看',
+                maxmin: false, //开启最大化最小化按钮
+                area: ['50%', '90%'],
+                content: '/page/风险/辨识评估.html',
+                btn: ['确定'],
+                success: function (layero) {
+                  // layer.setTop(layero); //重点2
+                },
+                end: function () {
+                  table.reload('table', {
+                    url: TABLEURL
+                    , where: {} //设定异步数据接口的额外参数
+                    //,height: 300
+                  });
+                }
+              })
+            } else {
+              layer.msg('请选择一条数据')
+            }
+            break;
+          case 'adminEdit':
+            let count = checkStatus.data.length;
+            if (count > 0) {
+              layer.open({
+                type: 2,
+                anim: 1,
+                zIndex: layer.zIndex, //重点1
+                title: '查看',
+                maxmin: false, //开启最大化最小化按钮
+                area: ['50%', '90%'],
+                content: '/page/风险/辨识评估.html',
+                btn: ['确定'],
+                success: function (layero) {
+                  // layer.setTop(layero); //重点2
+                },
+                end: function () {
+                  table.reload('table', {
+                    url: TABLEURL
+                    , where: {} //设定异步数据接口的额外参数
+                    //,height: 300
+                  });
+                }
+              })
+            } else {
+              layer.msg('请选择一条数据')
+            }
+            break;
+          case 'exportFile':
+            table.exportFile('test', checkStatus.data, 'xls'); //data 为该实例中的任意数量的数据
+            break;
+
+        };
+      });
+
+      //监听行工具事件
+      table.on('tool(test)', function (obj) {
+        var data = obj.data;
+        //console.log(obj)
+        switch (obj.event) {
+          case 'addition':
+            break;
+          case 'start':
+            layer.msg('辨识活动以结束')
+            break;
+          case 'over':
+            layer.msg('辨识活动以结束')
+            break;
+          case 'show':
+            layer.open({
+              type: 2,
+              anim: 1,
+              zIndex: layer.zIndex, //重点1
+              title: '查看',
+              maxmin: false, //开启最大化最小化按钮
+              area: ['50%', '50%'],
+              content: '/page/风险/辨识_查看进度.html',
+              btn: ['确定'],
+              success: function (layero) {
+                // layer.setTop(layero); //重点2
+              },
+              end: function () {
+                table.reload('table', {
+                  url: TABLEURL
+                  , where: {} //设定异步数据接口的额外参数
+                  //,height: 300
+                });
+              }
+            })
+            break;
+          case 'gameover':
+            break;
+          case 'del':
+            layer.confirm('真的删除行么', function (index) {
+              obj.del();
+              layer.close(index);
+            });
+            break;
+        }
+        // if (obj.event === 'del') {
+        //   layer.confirm('真的删除行么', function (index) {
+        //     obj.del();
+        //     layer.close(index);
+        //   });
+        // } else if (obj.event === 'edit') {
+        //   layer.msg('辨识活动以结束')
+        //   // layer.prompt({
+        //   //   formType: 2
+        //   //   , value: data.email
+        //   // }, function (value, index) {
+        //   //   obj.update({
+        //   //     email: value
+        //   //   });
+        //   //   layer.close(index);
+        //   // });
+        // }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

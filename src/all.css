@@ -1,0 +1,169 @@
+.layui-sel-inline{
+  float: left;
+  display: block;
+  padding: 0px 15px;
+  width: 80px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: right;
+  
+}
+.vertop{
+  vertical-align: top;
+}
+.layui-form-label{
+  white-space: nowrap;
+}
+.text-align-right{
+  text-align: right;
+}
+
+.layui-active-left {
+  padding-right: 10px;
+  display: inline-block;
+  vertical-align: top;
+  width: 300px;
+  position: relative;
+  float: left;
+}
+.cursor{
+  cursor:pointer;
+}
+.layui-table-tool{
+  background-color: #fff;
+}
+/** 增删改查 **/
+.cl>.cl-query{
+    border: 0;
+    background-color: #Fff;
+    font-size: 12px;
+    outline: none;
+    cursor: pointer;
+    color: #666;
+    white-space: nowrap;
+    padding:0;
+}
+.cl>.cl-query>span{
+  padding: 0 15px;
+  border-right: 1px solid #ddd;
+}
+.cl-query:last-child span {
+  border: 0;
+}
+.cl-query.is-active {
+  color: #409eff;
+}
+.cl-select{
+  padding: 6px 0px;
+}
+.cl-select .layui-input{
+  height:30px;
+}
+
+/** 增删改查end **/
+.layui-active-after {
+  float: left;
+  position: absolute;
+  right: 10px;
+  top: -20px;
+  height: calc(100% + 5px);
+  width: 2px;
+  background-color: #ddd;
+  cursor: w-resize;
+}
+.layui-btn-container {
+  font-size: 12px;
+
+}
+.layui-link {
+  color: #4165d7;
+  cursor:pointer;
+}
+.layui-active-right {
+  float: left;
+  width: calc(100% - 320px);
+}
+.red {
+  color: red;
+}
+.layui-btn-container .layui-btn{
+  margin-bottom: 0;
+}
+/* 新增颜色 */
+/* 头工具 element */
+/* 导入颜色 */
+.layui-top-success{
+  color: #fff;
+  background-color: #67c23a;
+  border-color: #67c23a;
+}
+/* 导出颜色 */
+.layui-top-warm{
+  color: #fff;
+  background-color: #e6a23c;
+  border-color: #e6a23c;
+}
+/* 删除颜色 */
+.layui-top-danger{
+  color: #fff;
+    background-color: #f56c6c;
+    border-color: #f56c6c;
+}
+/* 灰色 */
+.layui-top-info{
+  color: #fff;
+    background-color: #909399;
+    border-color: #909399;
+}
+/* 添加颜色 */
+.layui-top-add{
+  color:#fff;
+  background-color: #5FB878;
+  border-color:#5FB878 ;
+}
+.fade-enter-active,.fade-leave-active{
+  -webkit-transition:opacity .28s;transition:opacity .28s
+}
+.fade-enter,.fade-leave-active{
+  opacity:0
+}
+.fade-transform-enter-active,.fade-transform-leave-active{
+  -webkit-transition:all .5s;transition:all .5s
+}
+.fade-transform-enter{
+  opacity:0;-webkit-transform:translateX(-30px);transform:translateX(-30px)
+}
+.fade-transform-leave-to{
+  opacity:0;-webkit-transform:translateX(30px);transform:translateX(30px)
+}
+#dictTable+.layui-table-view .layui-table-tool-temp {
+  padding-right: 0;
+}
+
+#dictTable+.layui-table-view .layui-table-body tbody>tr td {
+  cursor: pointer;
+}
+
+#dictTable+.layui-table-view .layui-table-body tbody>tr.layui-table-click {
+  background-color: #fff3e0;
+}
+
+#dictTable+.layui-table-view .layui-table-body tbody>tr.layui-table-click td:last-child>div:before {
+  position: absolute;
+  right: 6px;
+  content: "\e602";
+  font-size: 12px;
+  font-style: normal;
+  font-family: layui-icon !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.model-form {
+  padding: 25px 30px 0 0;
+}
+
+.text-right {
+  text-align: right;
+  padding-right: 20px;
+}

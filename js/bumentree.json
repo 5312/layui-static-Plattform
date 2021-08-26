@@ -1,0 +1,47 @@
+{
+  "code": 0,
+  "msg": "成功",
+  "count": 6,
+  "data": [
+    {
+      "name": "平煤神马集团",
+      "id": 0,
+      "field": "name1",
+      "children": [
+        {
+          "name": "管理员",
+          "id": 8,
+          "field": "name11"
+        }
+      ]
+    },
+    {
+      "name": "五矿",
+      "id": 1,
+      "field": "name1",
+      "children": [
+        {
+          "name": "采煤战线",
+          "id": 3,
+          "field": "name11",
+          "children": [
+            {
+              "name": "综机办",
+              "id": 4
+            },
+            {
+              "name": "技术科",
+              "id": 5,
+              "children": [
+                {
+                  "name": "综采一队",
+                  "id": 6
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

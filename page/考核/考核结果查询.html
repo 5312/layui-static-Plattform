@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../layuiAdmin/layui/css/layui.css" media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+  <style>
+    .margin-top {
+      margin-top: 20px;
+    }
+
+    .h1 {
+      font-size: 20px;
+      /* padding-left: 50px; */
+    }
+
+    .layui-form-label {
+      white-space: nowrap;
+    }
+
+    .height {
+      height: 20px;
+    }
+  </style>
+</head>
+
+
+<body style="background-color: #fff;">
+
+  <div class="layui-fluid">
+    <div class="layui-card margin-top">
+
+      <!-- layui-card-body -->
+      <div class="height"></div>
+      <div class="">
+        <form class="layui-form" action="">
+          <!-- 行 -->
+          <div class="layui-form-item">
+            <div class="layui-inline">
+              <label class="layui-form-label">部门</label>
+              <div class="layui-input-inline" style="width:200px;">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+                  class="layui-input">
+              </div>
+            </div>
+
+            <!--  -->
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">人员</label>
+              <div class="layui-input-inline" style="width:200px;">
+                <select name="modules" lay-verify="required" lay-search="">
+                  <option value="">直接选择或搜索选择</option>
+                  <option value="1">一般隐患</option>
+                  <option value="1">重大隐患</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-inline">
+              <button type="button" class="layui-btn layui-btn-sm  layui-btn-radius layui-btn-normal">
+                <i class="layui-icon">&#xe615;</i> 查询
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+  </div>
+
+  <script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm  layui-btn-normal" lay-event="add">新建</button>
+    <button class="layui-btn layui-btn-sm  layui-btn-danger" lay-event="exit">编辑</button>
+  </div>
+</script>
+
+  <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">显示</a>
+    <!-- <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a> -->
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  </script>
+
+
+  <script src="../../layuiAdmin/layui/layui.all.js" charset="utf-8"></script>
+  <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+
+  <script>
+    layui.use(['form', 'layedit', 'laydate', 'table'], function () {
+      var table = layui.table
+        , form = layui.form
+        , layer = layui.layer
+        , layedit = layui.layedit
+        , laydate = layui.laydate;
+      //日期
+      laydate.render({
+        elem: '#date'
+      });
+      laydate.render({
+        elem: '#date1'
+      });
+      laydate.render({
+        elem: '#date2'
+      });
+      table.render({
+        elem: '#test'
+        , url: '/js/table.json'
+        , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+        , defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+          title: '提示'
+          , layEvent: 'LAYTABLE_TIPS'
+          , icon: 'layui-icon-tips'
+        }]
+        , title: '用户数据表'
+        , cols: [[
+          { type: 'checkbox', fixed: 'left' }
+          , { field: 'id', title: 'ID', fixed: 'left', unresize: true, sort: true, hide: true }
+          , { field: 'bst', title: '考核项目', edit: 'text', sort: true }
+          , { field: 'bumen', title: '考核部门', edit: 'text', sort: true }
+          , { field: 'jc', title: '考核人', edit: 'text', sort: true }
+          , { field: 'erhalten', title: '被考核部门', edit: 'text', sort: true }
+          , { field: 'yhs', title: '考核状态', edit: 'text', sort: true }
+          , { field: '', title: '考核方式', edit: 'text', sort: true }
+
+          , { field: 'content', title: '打分依据', edit: 'text', sort: true }
+          , { field: 'grfk', title: '领导打分', edit: 'text', sort: true }
+          , { field: 'grfk', title: '单位领导', edit: 'text', sort: true }
+
+        ]]
+        , page: true
+      });
+
+      //头工具栏事件
+      table.on('toolbar(test)', function (obj) {
+        var checkStatus = table.checkStatus(obj.config.id);
+        switch (obj.event) {
+          case 'add':
+            //新建
+            parent.layer.open({
+              type: 2,
+              zIndex: layer.zIndex, //重点1
+              title: '隐患录入',
+              shadeClose: true,
+              // shade: true,
+              maxmin: false, //开启最大化最小化按钮
+              area: ['60%', '90%'],
+              content: '/page/隐患/隐患录入.html',
+              success: function (layero) {
+                //layer.setTop(layero); //重点2
+              },
+              end: function () {
+                window.location.reload();
+              }
+
+            });
+            break;
+          case 'exit':
+            var data = checkStatus.data;
+            layer.msg('选中了：' + data.length + ' 个');
+            break;
+          case 'del':
+            layer.msg(checkStatus.isAll ? '全选' : '未全选');
+            break;
+          case 'and':
+            layer.msg(checkStatus.isAll ? '全选' : '未全选');
+            break;
+          case 'show':
+            layer.msg(checkStatus.isAll ? '全选' : '未全选');
+            break;
+          //自定义头工具栏右侧图标 - 提示
+          case 'LAYTABLE_TIPS':
+            layer.alert('这是工具栏右侧自定义的一个图标按钮');
+            break;
+        };
+      });
+
+      //监听行工具事件
+      table.on('tool(test)', function (obj) {
+        var data = obj.data;
+        //console.log(obj)
+        if (obj.event === 'del') {
+          layer.confirm('真的删除行么', function (index) {
+            obj.del();
+            layer.close(index);
+          });
+        } else if (obj.event === 'edit') {
+          layer.prompt({
+            formType: 2
+            , value: data.email
+          }, function (value, index) {
+            obj.update({
+              email: value
+            });
+            layer.close(index);
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>主页</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+  <style>
+    @-webkit-keyframes shake {
+      0% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.2;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes shake {
+      0% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.2;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .shake {
+      -webkit-animation: shake 500ms infinite;
+      animation: shake 500ms infinite;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+      <!--第一行start-->
+      <div class="layui-col-sm6 layui-col-md3">
+        <div class="layui-card">
+          <div class="layui-card-header">
+            数量
+            <span class="layui-badge  layui-bg-blue layuiadmin-badge">点</span>
+          </div>
+          <div class="layui-card-body layuiadmin-card-list">
+            <p class="layuiadmin-big-font">41个</p>
+
+          </div>
+        </div>
+      </div>
+      <div class="layui-col-sm6 layui-col-md3"
+        onclick='window.parent.layui.index.openTabsPage("/index/Hjob.ashx?type=ajaxshow&T=省级汇总分析-销售","贵州省销售数据分析");'>
+        <div class="layui-card">
+          <div class="layui-card-header">
+            营业额
+            <span class="layui-badge layui-bg-green layuiadmin-badge">销售</span>
+          </div>
+          <div class="layui-card-body layuiadmin-card-list">
+            <p class="layuiadmin-big-font layui-inline" id="year_money">￥11,095.51</p><span class="layui-inline">
+              万元</span>
+          </div>
+        </div>
+      </div>
+      <div class="layui-col-sm6 layui-col-md3"
+        onclick='window.parent.layui.index.openTabsPage("/index/Hjob.ashx?type=ajaxshow&T=省级汇总分析-税收","贵州省税收数据分析");'>
+        <div class="layui-card">
+          <div class="layui-card-header">
+            税收
+            <span class="layui-badge layui-bg-orange layuiadmin-badge">税收</span>
+          </div>
+          <div class="layui-card-body layuiadmin-card-list">
+            <p class="layuiadmin-big-font layui-inline" id="year_tax">￥1,360.11</p><span class="layui-inline"> 万元</span>
+          </div>
+        </div>
+      </div>
+      <div class="layui-col-sm6 layui-col-md3"
+        onclick='window.parent.layui.index.openTabsPage("/index/Hjob.ashx?type=ajaxshow&T=省级汇总分析-售油量","贵州省售油量数据分析");'>
+        <div class="layui-card">
+          <div class="layui-card-header">
+            本年度
+            <span class="layui-badge layui-bg-cyan layuiadmin-badge">油量</span>
+          </div>
+          <div class="layui-card-body layuiadmin-card-list">
+            <p class="layuiadmin-big-font layui-inline" id="year_sum">19,298.13</p><span class="layui-inline"> 千升</span>
+
+          </div>
+        </div>
+      </div>
+
+      <!--第一行end-->
+
+      <!--第二行start-->
+      <div class="layui-col-sm6 layui-col-md3">
+        <form class="layui-form">
+          <div class="layui-card">
+            <div class="layui-card-header">报警信息<span class="layui-badge  layui-bg-red layuiadmin-badge">报警</span></div>
+            <div class="layui-card-body">
+              <div class="layui-carousel layadmin-carousel layadmin-backlog">
+                <ul class="layui-row layui-col-space10">
+                  <li class="layui-col-xs6"
+                    onclick='window.parent.layui.index.openTabsPage("/index/Hjob.ashx?type=ajaxshow&T=设备异常报警列表","设备异常报警");'>
+                    <span class="layadmin-backlog-body">
+                      <h3>异常报警</h3>
+                      <p id="yichangalarmdiv" class="shake">
+                        <cite style="color: #FF5722;" id="yichang0">383</cite>
+                        <cite>/</cite>
+                        <cite style="color: #666666;" id="yichang1">470</cite>
+                      </p>
+                    </span>
+                  </li>
+                  <li class="layui-col-xs6"
+                    onclick='window.parent.layui.index.openTabsPage("/index/Hjob.ashx?type=ajaxshow&T=离线报警列表","设备离线报警");'>
+                    <span class="layadmin-backlog-body">
+                      <h3>离线报警</h3>
+                      <p id="offalarmdiv" class="shake"><cite style="color: #FF5722;"
+                          id="off0">68</cite><cite>/</cite><cite style="color: #666666;" id="off1">125</cite></p>
+                    </span>
+                  </li>
+                  <li class="layui-col-xs6">
+                    <span class="layadmin-backlog-body">
+                      <h3>非法罐车</h3>
+                      <p><cite>0</cite></p>
+                    </span>
+                  </li>
+                  <li class="layui-col-xs6">
+                    <span class="layadmin-backlog-body">
+                      <h3>火警报警</h3>
+                      <p><cite>0</cite></p>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="layui-col-sm6 layui-col-md3">
+        <div class="layui-card">
+          <div class="layui-card-header">今日统计<span class="layui-badge  layui-bg-blue layuiadmin-badge">今日</span></div>
+          <div class="layui-card-body">
+            <div class="layui-carousel layadmin-carousel layadmin-backlog">
+              <ul class="layui-row layui-col-space10">
+                <li class="layui-col-xs6">
+                  <span class="layadmin-backlog-body">
+                    <h3>油量(千升)</h3>
+                    <p><cite id="oil_sum">0.00</cite></p>
+                  </span>
+                </li>
+                <li class="layui-col-xs6">
+                  <span class="layadmin-backlog-body">
+                    <h3>笔数</h3>
+                    <p><cite id="oil_count">0</cite></p>
+                  </span>
+                </li>
+                <li class="layui-col-xs6">
+                  <span class="layadmin-backlog-body">
+                    <h3>销售额(万元)</h3>
+                    <p><cite id="oil_money">0.00</cite></p>
+                  </span>
+                </li>
+                <li class="layui-col-xs6">
+                  <span class="layadmin-backlog-body">
+                    <h3>预测税收(万元)</h3>
+                    <p><cite style="color: #FF5722;" id="oil_tax">0.00</cite></p>
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="layui-col-sm6 layui-col-md3">
+        <div class="layui-card">
+          <div class="layui-card-header">昨日统计<span class="layui-badge  layui-bg-green layuiadmin-badge">昨日</span>
+          </div>
+          <div class="layui-card-body">
+            <div class="layui-carousel layadmin-carousel layadmin-backlog">
+              <ul class="layui-row layui-col-space10">
+                <li class="layui-col-xs6">
+                  <span class="layadmin-backlog-body">
+                    <h3>油量(千升)</h3>
+                    <p><cite id="oil_sum2"></cite></p>
+                  </span>
+                </li>
+                <li class="layui-col-xs6">
+                  <span class="layadmin-backlog-body">
+                    <h3>笔数</h3>
+                    <p><cite id="oil_count2"></cite></p>
+                  </span>
+                </li>
+                <li class="layui-col-xs6">
+                  <span class="layadmin-backlog-body">
+                    <h3>销售额(万元)</h3>
+                    <p><cite id="oil_money2"></cite></p>
+                  </span>
+                </li>
+                <li class="layui-col-xs6">
+                  <span class="layadmin-backlog-body">
+                    <h3>预测税收(万元)</h3>
+                    <p><cite style="color: #FF5722;" id="oil_tax2"></cite></p>
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="layui-col-sm6 layui-col-md3">
+        <div class="layui-card">
+          <div class="layui-card-header">7日统计<span class="layui-badge  layui-bg-orange layuiadmin-badge">7日</span>
+          </div>
+          <div class="layui-card-body">
+            <div class="layui-carousel layadmin-carousel layadmin-backlog">
+              <ul class="layui-row layui-col-space10">
+                <li class="layui-col-xs6">
+                  <span class="layadmin-backlog-body">
+                    <h3>油量(千升)</h3>
+                    <p><cite id="oil_sum3"></cite></p>
+                  </span>
+                </li>
+                <li class="layui-col-xs6">
+                  <span class="layadmin-backlog-body">
+                    <h3>笔数</h3>
+                    <p><cite id="oil_count3"></cite></p>
+                  </span>
+                </li>
+                <li class="layui-col-xs6">
+                  <span class="layadmin-backlog-body">
+                    <h3>销售额(万元)</h3>
+                    <p><cite id="oil_money3"></cite></p>
+                  </span>
+                </li>
+                <li class="layui-col-xs6">
+                  <span class="layadmin-backlog-body">
+                    <h3>预测税收(万元)</h3>
+                    <p><cite style="color: #FF5722;" id="oil_tax3"></cite></p>
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--第二行end-->
+
+    </div>
+  </div>
+  </div>
+
+  <script src="../../layuiadmin/layui/layui.js"></script>
+
+  <script>
+    //注意：折叠面板 依赖 element 模块，否则无法进行功能性操作
+    layui.config({
+      base: 'layuiadmin/' //静态资源所在路径
+    }).use(['element', 'echarts', 'carousel'], function () {
+      var element = layui.element,
+        $ = layui.jquery,
+        carousel = layui.carousel,
+        echarts = layui.echarts;
+
+
+    });
+  </script>
+
+
+</body>
+
+</html>

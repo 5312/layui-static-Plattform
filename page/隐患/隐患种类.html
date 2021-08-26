@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../layuiAdmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../src/all.css" media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+  <style>
+    .margin-top {
+      margin-top: 20px;
+    }
+
+    .h1 {
+      font-size: 20px;
+      /* padding-left: 50px; */
+    }
+
+    .layui-form-label {
+      white-space: nowrap;
+      width: auto !important;
+    }
+
+    .height {
+      height: 20px;
+    }
+  </style>
+</head>
+
+
+<body style="background-color: #fff;">
+
+  <div class="layui-fluid">
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+  </div>
+
+  <script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm layui-top-add" lay-event="add">新建</button>
+    <button class="layui-btn layui-btn-sm layui-top-warm" lay-event="edit">编辑</button>
+    <button class="layui-btn layui-btn-sm layui-top-danger" lay-event="del">删除</button>
+  </div>
+</script>
+  <script type="text/html" id="opener">
+    <form id="dictDataEditForm" lay-filter="dictDataEditForm" class="layui-form model-form" style="padding-left: 10px;">
+      <input name="dictDataId" type="hidden"/>
+      <div class="layui-form-item"> 
+        <label class="layui-form-label layui-form-required" >名称:</label>
+        <div class="layui-input-block">
+            <input name="dictDataName" placeholder="请输入字典项名称" class="layui-input"
+                    lay-verType="tips" lay-verify="required" required/>
+        </div>
+      </div>
+      <div class="layui-form-item"> 
+        <label class="layui-form-label layui-form-required" >层级:</label>
+        <div class="layui-input-block">
+            <input name="dictDataName" placeholder="请输入字典项名称" class="layui-input"
+                    lay-verType="tips" lay-verify="required" required/>
+        </div>
+      </div>
+    </form>
+  </script>
+  <script src="../../layuiAdmin/layui/layui.all.js" charset="utf-8"></script>
+  <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+
+  <script>
+    layui.config({
+      base: '/layuiAdmin/modules/'
+    }).use(['form', 'treeTable',], function () {
+      var form = layui.form
+        , layer = layui.layer
+        , $ = layui.jquery
+        , treeTable = layui.treeTable;//很重要
+      const BASEURL = '/js/getData.json'
+      // 本组件用到的参数, 组件内部有默认值,与此一致,因此您可以只声明不一致的配置项
+      var insTb = treeTable.render({
+        id: 'treeid'
+        , elem: '#test',
+        height: 'full-20'
+        , toolbar: '#toolbarDemo'
+        , url: BASEURL
+        , tree: {
+          iconIndex: 1,
+          isPidData: true,
+          idName: 'id',
+          pidName: 'pid',
+          getIcon: '',
+          openName: 'open',   // 自定义默认展开的字段名
+        }
+        , cols: [
+          [ //标题栏
+            { type: 'checkbox' },
+            { field: 'name', title: '名称' },
+            { field: 'id', title: 'ID' },
+            { field: 'pid', title: '上级ID' },
+            { field: 'level', title: '层级' },
+            { field: 'agent_id', title: '代理ID' },
+          ]
+        ]
+        , page: false
+        , parseData: function (res) {
+          //url方式加载数据自定义格式化数据
+          if (!res.data) return;
+          res.data.forEach(element => {
+            element.open = false
+          });
+          return res
+        }
+      });
+      //头工具栏事件
+      treeTable.on('toolbar(test)', function (obj) {
+        var checkStatus = insTb.checkStatus(false);
+        console.log(checkStatus)
+        // var checkStatus = treeTable.checkStatus('treeid');
+        switch (obj.event) {
+          case 'add':
+            opener('添加')
+            break;
+          case 'edit':
+            opener('编辑')
+            break;
+          case 'del':
+            layer.msg('已删除')
+            break;
+        };
+      });
+      function opener(mData) {
+        layer.open({
+          type: 1,
+          title: mData,
+          area: ['40%', '50%'],
+          content: $('#opener').html(),
+          success: function (layero, dIndex) {
+
+          }
+        });
+      }
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../layuiAdmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../src/all.css" media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+  <style>
+    .margin-top {
+      margin-top: 20px;
+    }
+
+    .h1 {
+      font-size: 20px;
+      /* padding-left: 50px; */
+    }
+
+    .layui-form-label {
+      white-space: nowrap;
+      width: auto !important;
+    }
+
+    .height {
+      height: 20px;
+    }
+  </style>
+</head>
+
+
+<body style="background-color: #fff;">
+
+  <div class="layui-fluid">
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+  </div>
+
+  <script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm  layui-btn-normal" lay-event="reset"><i class="layui-icon layui-icon-refresh" ></i>刷新</button>
+    <button class="layui-btn layui-btn-sm layui-top-add"  lay-event="add"><i class="layui-icon layui-icon-addition" ></i>新增</button>
+  </div>
+</script>
+
+  <script src="../../layuiAdmin/layui/layui.all.js" charset="utf-8"></script>
+  <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+
+  <script>
+    var layer;
+    layui.config({
+      base: '/layuiAdmin/modules/'
+    }).use(['form', 'treeTable', 'util', 'layer'], function () {
+      var form = layui.form
+        , layer = layui.layer
+        , $ = layui.jquery
+        , util = layui.util
+        , layer = layui.layer
+        , treeTable = layui.treeTable;//很重要
+      const BASEURL = 'http://127.0.0.1:3000/api/xt/menulist';// '/js/menu.json' //
+      var insTb = treeTable.render({
+        id: 'treeid'
+        , elem: '#test',
+        height: 'full-20'
+        , toolbar: '#toolbarDemo'
+        , url: BASEURL
+        , tree: {
+          iconIndex: 0,
+          isPidData: true,
+          idName: 'id',
+          pidName: 'parentid',
+          getIcon: '',
+          openName: 'open',   // 自定义默认展开的字段名
+        }
+        , cols: [
+          [ //标题栏
+            // { type: 'checkbox' },
+            { field: 'name', title: '名称', width: 200 },
+            {
+              title: '图标', align: 'center', templet: function (e) {
+                var addBtn = ` <i class="layui-icon ${e.icon}"></i>`;
+                return addBtn;
+              }
+            },
+            {
+              field: 'type', align: 'center', title: '类型', templet: function (d) {
+                var html = '';
+                if (d.type == 'menu') {
+                  return '<a class="layui-btn layui-btn-xs layui-top-add" style="border-radius:3px;" lay-event="add">菜单</a>';
+                } else {
+                  return '<a class="layui-btn  layui-btn-xs layui-top-warm"  style="border-radius:3px;" lay-event="add">目录</a>';
+                }
+              }
+            },
+            { field: 'router', title: '节点路由' },
+            { field: 'keepAlive', title: '路由缓存' },
+            { field: 'viewPath', title: '文件路径', width: 200 },
+            { field: 'perms', title: '权限' },
+            { field: 'orderNum', title: '排序号' },
+            {
+              field: 'updatedAt', width: 200, title: '更新时间', templet: function (d) {
+                return util.toDateString(d.updatedAt, 'yyyy-MM-dd HH:mm:ss')
+              }
+            },
+            {
+              title: '操作', width: 160, align: 'center', templet: function (d) {
+                var html = '';
+                var addBtn = '<a class="layui-link layui-btn-xs" lay-event="add">添加</a>';
+                var delBtn = '<a class="layui-link layui-btn-xs" lay-event="del">删除</a>';
+                var editBtn = '<a class="layui-link layui-btn-xs" lay-event="edit">编辑</a>';
+                return addBtn + editBtn + delBtn;
+              }
+            },
+          ]
+        ]
+        , page: false
+        , parseData: function (res) {
+          //url方式加载数据自定义格式化数据
+          if (!res.data) return;
+          res.data.forEach(element => {
+            element.open = false
+          });
+          return res
+        }
+      });
+
+      // 行事件
+      treeTable.on('tool(test)', function (obj) {
+        let trdata = obj.data;
+        if (obj.event === 'del') {//删除行
+          if (trdata.children && trdata.children.length != 0) {
+            layer.alert('请删除子节点后操作！');
+            return
+          }
+          layer.confirm("你确定删除数据吗？", { icon: 3, title: '提示' },
+            function (index) {//确定回调
+              parent.axios({
+                method: 'get',
+                url: '/xt/delelem',
+                params: {
+                  id: obj.data.id
+                }
+              }).then(res => {
+                treeTable.reload('test', {})
+                // insTb.del(obj.data.id);   // 根据id删除
+              })
+              // obj.del();
+              layer.close(index);
+            }, function (index) {//取消回调
+              layer.close(index);
+            }
+          );
+        } else if (obj.event === "add") {//添加行
+          layer.open({
+            type: 2,
+            zIndex: layer.zIndex, //重点1
+            title: '新建',
+            shadeClose: true,
+            resize: true,
+            // shade: true,
+            maxmin: false, //开启最大化最小化按钮
+            area: ['40%', '70%'],
+            content: '/page/系统/addmenu.html',
+            success: function (index, layero) {
+              let data = obj.data;
+              //获取子页面 iframe对象
+              var iframeWindow = window['layui-layer-iframe' + layero]
+              // 从window对象调用方法
+              iframeWindow.addCol(data)
+            },
+            end: function () {
+              insTb.refresh();
+            }
+
+          });
+        } else if (obj.event === "edit") {
+          layer.open({
+            type: 2,
+            zIndex: layer.zIndex, //重点1
+            title: '编辑',
+            shadeClose: true,
+            resize: true,
+            // shade: true,
+            maxmin: false, //开启最大化最小化按钮
+            area: ['40%', '60%'],
+            content: '/page/系统/addmenu.html?type=edit',
+            success: function (index, layero) {
+              let data = obj.data;
+              //获取子页面 iframe对象
+              var iframeWindow = window['layui-layer-iframe' + layero]
+              // 从window对象调用方法
+              iframeWindow.edit(data)
+            },
+            end: function () {
+              insTb.refresh();
+              // insTb.update(obj.data.id, fields);  // 根据id更新
+            }
+
+          });
+        }
+      });
+
+      //头工具栏事件
+      treeTable.on('toolbar(test)', function (obj) {
+        // var checkStatus = treeTable.checkStatus('treeid');
+        switch (obj.event) {
+          case 'add':
+            parent.layer.open({
+              type: 2,
+              resize: true,
+              zIndex: layer.zIndex, //重点1
+              title: '新建',
+              shadeClose: true,
+              // shade: true,
+              maxmin: false, //开启最大化最小化按钮
+              area: ['40%', '60%'],
+              content: '/page/系统/addmenu.html',
+              success: function (index, layero) {
+                //获取子页面 iframe对象
+                var iframeWindow = window['layui-layer-iframe' + layero]
+                // 从window对象调用方法
+                iframeWindow.addCol(obj)
+              },
+              end: function () {
+                insTb.refresh();
+              }
+
+            });
+            break;
+          case 'reset':
+            insTb.refresh();
+            break;
+        };
+      });
+
+    });
+  </script>
+
+</body>
+
+</html>

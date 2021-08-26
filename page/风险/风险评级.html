@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+  <link rel="stylesheet" href="../../src/all.css">
+  <title>Document</title>
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+    }
+
+    .xm-select-demo {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body style="background: #fff;">
+  <div class="main layui-fluid" style="
+  text-align: center;
+">
+    <form class="layui-form" action="">
+
+      <div class="layui-form-item">
+        <div class=" layui-inline">
+          <label class="layui-form-label">评估方法</label>
+          <div class="layui-input-inline" style="width:400px;">
+            <input type="radio" name="class" value="LEC评估" title="LEC评估">
+            <input type="radio" name="class" value="直接定级" title="直接定级" checked>
+            <input type="radio" name="class" value="矩阵评估法" title="矩阵评估法" checked>
+          </div>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-inline">
+          <label class="layui-form-label">评估结果：</label>
+          <div class="layui-input-inline">
+            <select name="interest" lay-filter="aihao">
+              <option value="">重大风险</option>
+              <option value="0">较大风险</option>
+              <option value="1">一般风险</option>
+              <option value="1">低风险</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+  <script src="../../layuiadmin/layui/layui.js"></script>
+  <script>
+    layui.config({
+      base: '/layuiAdmin/modules/'
+    }).extend({
+      xmSelect: 'xm-select'
+    }).use(['form', 'layedit', 'laydate', 'jquery', 'upload', 'xmSelect'], function () {
+      var form = layui.form
+        , layer = layui.layer
+        , layedit = layui.layedit
+        , laydate = layui.laydate
+        , $ = layui.jquery
+        , upload = layui.upload
+      const BUMEN = '/js/bumentree.json'
+      //日期
+      laydate.render({
+        elem: '#date'
+        , min: -3 //7天前
+        , max: 0 //7天后
+      });
+      laydate.render({
+        elem: '#date1'
+      });
+      $.ajax({
+        url: BUMEN,
+        success(res) {
+          xmSelect.render({
+            el: '#bumen',
+            prop: {
+              name: 'name',
+              value: 'id',
+            },
+            name: 'bumen',
+            radio: false,
+            clickClose: false,
+            model: { label: { type: 'text' } },
+            tree: {
+              show: true,
+              strict: false,
+              expandedKeys: [-1],
+            },
+            filterable: true,
+            height: 'auto',
+            data: res.data
+          })
+        }
+      })
+
+
+      // 关键词
+      xmSelect.render({
+        el: '#keyword',
+        name: 'keyword',
+        filterable: true,
+        data: [
+          { name: '采煤', value: 1 },
+          { name: '采煤', value: 2 },
+          { name: '采煤', value: 3 },
+          { name: '采煤', value: 4 },
+        ]
+      })
+
+
+
+    });
+  </script>
+</body>
+
+</html>

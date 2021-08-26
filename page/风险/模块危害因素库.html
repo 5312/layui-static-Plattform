@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../layuiAdmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../layuiAdmin/style/admin.css">
+  <link rel="stylesheet" href="../../src/all.css" media="all">
+
+  <link rel="stylesheet" href="../../src/all.css" media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+  <style>
+    .layui-card {
+      padding: 10px;
+      margin: 10px;
+    }
+
+    .layui-row>div {
+      height: 100%;
+    }
+  </style>
+</head>
+
+
+<body class=" h100">
+
+  <div class="layui-fluid ">
+    <div class="layui-row">
+      <div class="layui-col-md6">
+        <div class="layui-card">
+          <table class="layui-hide" id="left" lay-filter="left"></table>
+        </div>
+      </div>
+      <div class="layui-col-md6">
+        <div class="layui-card">
+          <table class="layui-hide" id="right" lay-filter="right"></table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- 录入 - 查看 -->
+  <script type="text/html" id='leftDialog'>
+    <form id="dictDataEditForm" lay-filter="dictDataEditForm" class="layui-form model-form" style="padding-left: 10px;">
+      <input name="dictDataId" type="hidden"/>
+      <div class="layui-form-item">
+          <label class="layui-form-label layui-form-required" style="padding-left: 0;width: 95px;">字典项名称:</label>
+          <div class="layui-input-block">
+              <input name="dictDataName" placeholder="请输入字典项名称" class="layui-input"
+                     lay-verType="tips" lay-verify="required" required/>
+          </div>
+      </div>
+      <div class="layui-form-item">
+          <label class="layui-form-label layui-form-required" style="padding-left: 0;width: 95px;">字典项代码:</label>
+          <div class="layui-input-block">
+              <input name="dictDataCode" placeholder="请输入字典键值" class="layui-input"
+                     lay-verType="tips" lay-verify="required" required/>
+          </div>
+      </div>
+      <div class="layui-form-item">
+          <label class="layui-form-label layui-form-required">排序号:</label>
+          <div class="layui-input-block">
+              <input name="sortNumber" placeholder="请输入排序号" class="layui-input" type="number"
+                     lay-verType="tips" lay-verify="required" required/>
+          </div>
+      </div>
+      <div class="layui-form-item">
+          <label class="layui-form-label">备注:</label>
+          <div class="layui-input-block">
+              <textarea name="comments" placeholder="请输入备注" class="layui-textarea"></textarea>
+          </div>
+      </div>
+      <div class="layui-form-item text-right">
+          <button class="layui-btn" lay-filter="dictDataEditSubmit" lay-submit>保存</button>
+          <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+      </div>
+  </form>
+  </script>
+  <!-- 未关联危害因素 -->
+  <script type="text/html" id='addAssoc'>
+    <table  class="layui-hide" id="tableadd" lay-filter="open"></table>
+  </script>
+  <script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container" >
+    <button class="layui-btn layui-btn-sm layui-top-add" lay-event="add"><i class='layui-icon'>&#xe624;</i>   录入</button>
+    <button class="layui-btn layui-btn-sm layui-top-info" lay-event="look"> <i class='layui-icon'>&#xe60b;</i>查看</button>
+    <!-- <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="adminEdit"><i class='layui-icon'>&#xe615;</i>查询</button> -->
+    <!-- <button class="layui-btn layui-btn-sm layui-btn-primary" lay-event="adminDel"><i class='layui-icon'>&#xe669;</i>重置</button> -->
+  </div>
+</script>
+  <script type="text/html" id="toolbarDemo1">
+  <div class="layui-btn-container" >
+    <button class="layui-btn layui-btn-sm layui-top-add" lay-event="AddAssociation"><i class='layui-icon'>&#xe691;</i>添加关联</button>
+    <button class="layui-btn layui-btn-sm layui-top-danger" lay-event="chakan"> <i class='layui-icon'>&#x1006;</i>删除关联</button>
+    
+
+    <!--  <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button> -->
+  </div>
+</script>
+  <script type="text/html" id="barDemo">
+    <a class="layui-link layui-btn-xs" lay-event="right">危害因素</a>
+  </script>
+
+  <script src="../../layuiAdmin/layui/layui.all.js" charset="utf-8"></script>
+  <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+
+  <script>
+    layui.use(['form', 'layedit', 'laydate', 'table', 'tree', 'util'], function () {
+      var table = layui.table
+        , form = layui.form
+        , layer = layui.layer
+        , layedit = layui.layedit
+        , $ = layui.jquery
+      table.render({
+        elem: '#left'
+        , url: '/js/table.json'
+        , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+        , height: 'full-100'
+        , defaultToolbar: ['']
+        , title: '用户数据表'
+        , cols: [[
+          { type: 'checkbox', fixed: 'left' }
+          , { field: 'id', title: 'ID', fixed: 'left', unresize: true, sort: true, hide: true }
+          , { field: 'fxtype', title: '风险点类型  ', fixed: 'left', unresize: true, sort: true, }
+          , { field: 'fx', title: '风险类型  ', edit: 'text' }
+          , { field: 'name', title: '模块名称  ', }
+          , { title: '操作  ', templet: '#barDemo', align: 'center' }
+        ]]
+        , id: 'left'
+        , page: true
+      });
+      table.render({
+        elem: '#right'
+        , url: '/js/table.json'
+        , height: 'full-100'
+        , toolbar: '#toolbarDemo1' //开启头部工具栏，并为其绑定左侧模板
+        , defaultToolbar: ['']
+        , title: '用户数据表'
+        , cols: [[
+          { type: 'checkbox', fixed: 'left' }
+          , { field: 'id', title: 'ID', fixed: 'left', unresize: true, sort: true, hide: true }
+          , { field: 'fx', title: '风险类型  ', edit: 'text' }
+          , { field: 'gw', title: '岗位  ', }
+          , { field: 'id', title: '危害因素等级', }
+          , { field: 'content', title: '危害因素', }
+        ]]
+        , id: 'right'
+        , page: true
+      });
+      //头工具栏事件
+      table.on('toolbar(left)', function (obj) {
+        var checkStatus = table.checkStatus(obj.config.id);
+        switch (obj.event) {
+          case 'add':
+            layer.open({
+              type: 1,
+              title: '添加',
+              area: ['40%', '50%'],
+              content: $('#leftDialog').html(),
+              success: function (layero) {
+
+              }
+            })
+            break;
+          case 'look':
+            layer.open({
+              type: 1,
+              title: '添加',
+              area: ['40%', '50%'],
+              content: $('#leftDialog').html(),
+              success: function (layero) {
+
+              }
+            })
+            break;
+          case 'exportFile':
+            table.exportFile('test', checkStatus.data, 'xls'); //data 为该实例中的任意数量的数据
+            break;
+
+        };
+      });
+
+      //监听行工具事件
+      table.on('tool(left)', function (obj) {
+        var data = obj.data;
+        //console.log(obj)
+        if (obj.event === 'right') {
+
+          table.reload('right', {
+            where: { //设定异步数据接口的额外参数，任意设
+              aaaaaa: 'xxx'
+              , bbb: 'yyy'
+              //…
+            }
+            , page: {
+              curr: 1 //重新从第 1 页开始
+            }
+          })
+        }
+      });
+
+      //头工具栏事件
+      table.on('toolbar(right)', function (obj) {
+        var checkStatus = table.checkStatus(obj.config.id);
+        switch (obj.event) {
+          case 'AddAssociation':
+            layer.open({
+              type: 1,
+              title: '未关联危害因素列表',
+              area: ['50%', '60%'],
+              btn: ['取消'],
+              content: $('#addAssoc').html(),
+              success: function (layero) {
+                // 未关联
+                table.render({
+                  elem: '#tableadd'
+                  , url: '/js/table.json'
+                  , toolbar: ['<p>',
+                    '<button lay-event="and" class="layui-btn layui-btn-sm layui-top-success"><i class="layui-icon">&#xe654;</i>添加关联</button>&nbsp;',
+                    '</p>'].join('') //开启头部工具栏，并为其绑定左侧模板
+                  , defaultToolbar: ['']
+                  , title: '用户数据表'
+                  , cols: [[
+                    { type: 'checkbox', fixed: 'left' }
+                    , { field: 'id', title: 'ID', fixed: 'left', unresize: true, sort: true, hide: true }
+                    , { field: 'fx', title: '风险类型  ', edit: 'text' }
+                    , { field: 'gw', title: '岗位  ', }
+                    , { field: 'id', title: '危害因素等级', }
+                    , { field: 'content', title: '危害因素', }
+                  ]]
+                  , id: 'open'
+                  , page: true
+                });
+                table.on('toolbar(open)', function (obj) {
+                  var checkStatus = table.checkStatus(obj.config.id);
+                  switch (obj.event) {
+                    case 'and':
+                      layer.msg('关联成功')
+                      break;
+                  }
+                })
+                // 
+              }
+            })
+            break;
+          case 'exportFile':
+            table.exportFile('test', checkStatus.data, 'xls'); //data 为该实例中的任意数量的数据
+            break;
+
+        };
+      });
+
+    });
+  </script>
+
+</body>
+
+</html>

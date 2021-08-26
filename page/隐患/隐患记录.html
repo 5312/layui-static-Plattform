@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../layuiAdmin/layui/css/layui.css" media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+  <style>
+    .margin-top {
+      margin-top: 20px;
+    }
+
+    .h1 {
+      font-size: 20px;
+      /* padding-left: 50px; */
+    }
+
+    .layui-form-label {
+      padding-left: 0;
+      white-space: nowrap;
+    }
+
+    .height {
+      height: 20px;
+    }
+
+    .layui-form-item .layui-form-checkbox[lay-skin=primary] {
+      margin-top: 0px;
+    }
+  </style>
+</head>
+
+
+<body style="background-color: #fff;">
+
+  <div class="layui-fluid">
+    <!--  -->
+    <div class="height"></div>
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+  </div>
+  <script type="text/html" id="all">
+    <!-- 这里的 checked 的状态只是演示 -->
+  <a class="layui-table-link" style="cursor:pointer;">{{ d.dwfk }}</a>
+  </script>
+
+
+
+
+  <script src="../../layuiAdmin/layui/layui.all.js" charset="utf-8"></script>
+  <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+
+  <script>
+    layui.use(['form', 'layedit', 'laydate', 'table'], function () {
+      var table = layui.table
+        , form = layui.form
+        , layer = layui.layer
+        , layedit = layui.layedit
+        , laydate = layui.laydate
+        , $ = layui.jquery;
+      //日期
+      laydate.render({
+        elem: '#date'
+      });
+      laydate.render({
+        elem: '#date1'
+      });
+
+
+      //test
+      table.render({
+        elem: '#test'
+        , url: '/js/table.json'
+        , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+        , title: '用户数据表'
+        , cols: [[
+          { type: 'numbers' },
+          { type: 'checkbox' },
+          , { field: 'id', title: 'ID', width: 80, fixed: 'left', unresize: true, sort: true, hide: true }
+          , { field: 'verantwortung', title: '检查单位', minWidth: 69 }
+          , { field: 'erhalten', title: '责任单位' }
+          , { field: 'jc', title: '检查人' }
+          , { field: 'data', title: '检查日期', }
+          , { field: 'order', title: '班次', event: 'all', }
+          , { field: 'address', title: '隐患地点', event: 'all', }
+          , { field: 'content', title: '隐患内容', event: 'all', }
+
+        ]]
+        , page: true
+      });
+
+      //头工具栏事件
+      table.on('toolbar(test)', function (obj) {
+        var checkStatus = table.checkStatus(obj.config.id);
+        switch (obj.event) {
+          case 'openshow':
+
+            break;
+          case 'goBack':
+            var data = checkStatus.data;
+            layer.msg('选中了：' + data.length + ' 个');
+            break;
+          //自定义头工具栏右侧图标 - 提示
+          case 'LAYTABLE_TIPS':
+            layer.alert('这是工具栏右侧自定义的一个图标按钮');
+            break;
+        };
+      });
+
+      //监听行工具事件
+      table.on('tool(test)', function (obj) {
+        var data = obj.data;
+        console.log(obj)
+        switch (obj.event) {
+          case "all":
+            layer.open({
+              type: 2,
+              zIndex: layer.zIndex, //重点1
+              title: '隐患录入',
+              shadeClose: true,
+              // shade: true,
+              maxmin: false, //开启最大化最小化按钮
+              area: ['60%', '90%'],
+              content: '/page/隐患/隐患录入.html',
+              success: function (layero) {
+                //layer.setTop(layero); //重点2
+              },
+              end: function () {
+                // window.location.reload();
+              }
+
+            });
+            break
+          case 'jieshou':
+
+            break;
+          case 'chaosong':
+
+            break;
+
+        };
+
+      });
+    });
+  </script>
+
+</body>
+
+</html>

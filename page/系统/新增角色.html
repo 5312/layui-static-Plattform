@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../layuiAdmin/layui/css/layui.css" media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+  <style>
+    .margin-top {
+      margin-top: 20px;
+    }
+
+    .h1 {
+      font-size: 20px;
+      /* padding-left: 50px; */
+    }
+
+    .layui-form-label {
+      white-space: nowrap;
+    }
+
+    .height {
+      height: 20px;
+    }
+
+    .btnbox {
+      padding: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+
+<body style="background-color: #fff;">
+
+  <div class="layui-fluid">
+    <div class="layui-card margin-top">
+      <!-- layui-card-body -->
+      <div class="height"></div>
+      <form class="layui-form" action="" lay-filter='form'>
+        <!-- 行 -->
+        <div class="layui-form-item">
+          <label class="layui-form-label">角色名称</label>
+          <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+              class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">显示顺序</label>
+          <div class="layui-input-block">
+            <input type="text" name="title" id="layer-open" lay-verify="title" autocomplete="off" placeholder="点击选择"
+              class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">状态</label>
+          <div class="layui-input-block">
+            <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="ON|OFF">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">备注</label>
+          <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+              class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">菜单权限</label>
+          <div class="layui-input-block">
+            <div id="test12" class="demo-tree-more"></div>
+          </div>
+        </div>
+        <div class="layui-form-item btnbox">
+          <div class="layui-inline">
+            <button type="button" lay-submit lay-filter='layajax_add' class="layui-btn layui-btn-sm">
+              <i class="layui-icon">&#xe615;</i> 保存
+            </button>
+          </div>
+          <div class="layui-inline">
+            <button type="button" class="layui-btn layui-btn-sm " id='LAY-btn-close'>
+              <i class="layui-icon">&#xe615;</i> 取消
+            </button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <script src="../../layuiAdmin/layui/layui.all.js" charset="utf-8"></script>
+  <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+
+  <script>
+    layui.use(['form', 'layedit', 'laydate', 'table', 'tree'], function () {
+      let $ = layui.jquery, form = layui.form
+      var tree = layui.tree
+        , data = [{
+          title: '平煤神马集团'
+          , id: 1
+          , field: 'name1'
+          , checked: false
+          , spread: false
+          , children: [{
+            title: '管理员'
+            , id: 3
+            , field: 'name11'
+            , href: 'https://www.layui.com/'
+
+          }, {
+            title: '二级1-2'
+            , id: 4
+            , spread: true
+
+          }, {
+            title: '二级1-3'
+            , id: 20
+            , field: ''
+
+          }]
+        }, {
+          title: '一级2'
+          , id: 2
+          , field: ''
+          , spread: false
+          , children: [{
+            title: '二级2-1'
+            , id: 5
+            , field: ''
+            , spread: true
+
+          }, {
+            title: '二级2-2'
+            , id: 6
+            , field: ''
+
+          }]
+        }, {
+          title: '一级3'
+          , id: 16
+          , field: ''
+          , children: [{
+            title: '二级3-1'
+            , id: 17
+            , field: ''
+            , fixed: true
+            , children: [{
+              title: '三级3-1-1'
+              , id: 18
+              , field: ''
+            }, {
+              title: '三级3-1-2'
+              , id: 19
+              , field: ''
+            }]
+          }, {
+            title: '二级3-2'
+            , id: 27
+            , field: ''
+            , children: [{
+              title: '三级3-2-1'
+              , id: 28
+              , field: ''
+            }, {
+              title: '三级3-2-2'
+              , id: 29
+              , field: ''
+            }]
+          }]
+        }]
+
+      //基本演示
+      tree.render({
+        elem: '#test12'
+        , data: data
+        , showCheckbox: true  //是否显示复选框
+        , id: 'demoId1'
+        , isJump: false //是否允许点击节点时弹出新窗口跳转
+        , click: function (obj) {
+
+        }
+      });
+      form.val('form', {
+        open: false
+      })
+      //监听提交
+      form.on('submit(layajax_add)', function (data) {
+        console.log(data.field.open)
+        if (data.field.open) {
+
+        }
+        return false;
+      });
+    });
+  </script>
+
+</body>
+
+</html>

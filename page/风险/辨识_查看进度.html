@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="layuiadmin/style/admin1.css" media="all">
+  <link rel="stylesheet" href="src/all.css" media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+
+<body>
+
+  <form class="layui-form" action="" lay-filter='form'>
+
+    <div class="layui-fluid" style="margin-top: 10px;">
+      <div class="layui-card">
+        <div class="layui-card-body">
+          <!--是否第一次添加 0第一次 1不是第一次-->
+          <input name="isadd" type="hidden" value="$!isadd" />
+          <!-- 关联年度辨识id -->
+          <input name="add" type="hidden" value="nd_fx_ps_pid" />
+          <input name="nd_fx_ps_pid" type="hidden" value="$!nd_fx_ps_pid" />
+          <!--  -->
+          <div class="layui-row">
+            <div class="layui-col-md6">
+              <div class="layui-form-item">
+                <!-- 辨识部门id -->
+                <input name="add" type="hidden" value="nd_d_ps_detpid" />
+                <input name="nd_d_ps_detpid" type="hidden" value="$!nd_d_ps_detpid" />
+                <!-- name -->
+                <input name="add" type="hidden" value="nd_d_ps_detp" />
+                <label class="layui-form-label layui-form-required">辨识部门</label>
+                <div class="layui-input-block">
+                  <input type="text" name="nd_d_ps_detp" readonly lay-verify="required" autocomplete="off"
+                    placeholder="请输入辨识部门" class="layui-input" value="$!nd_d_ps_detp">
+                </div>
+              </div>
+            </div>
+            <div class="layui-col-md6">
+              <div class="layui-form-item">
+                <input name="add" type="hidden" value="nd_d_bassis" />
+                <label class="layui-form-label layui-form-required">评估指标</label>
+                <div class="layui-input-block">
+                  <input type="text" name="nd_d_bassis" lay-verify="required" autocomplete="off" placeholder="请输入评估指标"
+                    class="layui-input" value="$!nd_d_bassis">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="layui row">
+            <!-- <div class="layui-col-md6">
+                            <div class="layui-form-item">
+                                <input name="add" type="hidden" value="nd_d_hazard_source" />
+                                <label class="layui-form-label layui-form-required">危险源</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="nd_d_hazard_source" lay-verify="required"
+                                        autocomplete="off" placeholder="请输入危险源" class="layui-input"
+                                        value="$!nd_d_hazard_source">
+                                </div>
+                            </div>
+                        </div> -->
+            <div class="layui-col-md6">
+              <div class="layui-form-item">
+                <input name="add" type="hidden" value="nd_d_type" />
+                <label class="layui-form-label layui-form-required">风险类型</label>
+                <div class="layui-input-block">
+                  <select id="nd_d_type979" name="nd_d_type" lay-filter="aihao">
+                    <option value="人">人</option>
+                    <option value="机">机</option>
+                    <option value="管">管</option>
+                    <option value="环">环</option>
+                  </select>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="layui row">
+            <div class="layui-col-md12">
+              <div class="layui-form-item">
+                <input name="add" type="hidden" value="nd_d_address" />
+                <label class="layui-form-label layui-form-required">风险点</label>
+                <div class="layui-input-block">
+                  <input type="text" name="nd_d_address" lay-verify="required" autocomplete="off" placeholder="请输入风险点"
+                    class="layui-input" value="$!nd_d_address">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="layui row">
+            <div class="layui-col-md12">
+              <div class="layui-form-item">
+                <input name="add" type="hidden" value="nd_d_mark" />
+                <label class="layui-form-label layui-form-required">风险描述</label>
+                <div class="layui-input-block">
+                  <textareas type="text" name="nd_d_mark" lay-verify="required" autocomplete="off" id='miaoshu'
+                    placeholder="请输入风险点" class="layui-textareas"></textareas>
+                </div>
+              </div>
+              <script>
+                document.getElementById('miaoshu').value = '$!nd_d_mark'
+              </script>
+            </div>
+          </div>
+          <div class="layui row">
+            <div class="layui-col-md6">
+              <div class="layui-form-item">
+                <input name="add" type="hidden" value="nd_d_result" />
+                <label class="layui-form-label layui-form-required">评估结果</label>
+                <div class="layui-input-block">
+                  <select name="nd_d_result" lay-verify="required" lay-filter="aihao111">
+                    <option value="重大风险">重大风险</option>
+                    <option value="较大风险">较大风险</option>
+                    <option value="一般风险">一般风险</option>
+                    <option value="低风险">低风险</option>
+                  </select>
+                  <!-- <input type="text" name="nd_d_result" lay-verify="required" autocomplete="off"
+                                        placeholder="请输入评估结果" class="layui-input" value="$!nd_d_result"> -->
+                </div>
+              </div>
+            </div>
+            <div class="layui-col-md6">
+              <div class="layui-form-item">
+                <input name="add" type="hidden" value="nd_d_time" />
+                <label class="layui-form-label">评估时间</label>
+                <div class="layui-input-inline">
+                  <input type="text" class="layui-input date_lay" name="nd_d_time" id="nd_d_time" readonly="true"
+                    placeholder="yyyy-MM-dd" value="$!nd_d_time">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="layui row">
+            <div class="layui-col-md6">
+              <div class="layui-form-item">
+                <input name="add" type="hidden" value="nd_d_accident" />
+                <label class="layui-form-label layui-form-required">事故类别</label>
+                <div class="layui-input-block">
+                  <input type="text" name="nd_d_accident" lay-verify="required" autocomplete="off" placeholder="请输入事故类别"
+                    class="layui-input" value="$!nd_d_accident">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="layui row">
+            <div class="layui-col-md6">
+              <div class="layui-form-item">
+                <input name="add" type="hidden" value="nd_d_consequence" />
+                <label class="layui-form-label layui-form-required">事故后果</label>
+                <div class="layui-input-block">
+                  <input type="text" name="nd_d_consequence" lay-verify="required" autocomplete="off"
+                    placeholder="请输入事故后果" class="layui-input" value="$!nd_d_consequence">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="layui-row">
+            <div class="layui-col-md12">
+              <div class="layui-form-item layui-form-text">
+                <input name="add" type="hidden" value="nd_d_remarks" />
+                <label class="layui-form-label layui-form-required">备注</label>
+                <div class="layui-input-block">
+                  <textareas placeholder="请输入内容" id="nd_d_remarks" class="layui-textareas" name="nd_d_remarks">
+                  </textareas>
+                </div>
+              </div>
+              <script>
+                document.getElementById('nd_d_remarks').value = '$!nd_d_remarks'
+              </script>
+            </div>
+          </div>
+          <div class="layui-row layui-hide">
+            <div class="layui-col-md6">
+              <div class="layui-form-item">
+                <input name="add" type="hidden" value="nd_d_fxstatus" />
+
+                <label class="layui-form-label layui-form-required">风险状态</label>
+                <div class="layui-input-block">
+                  <input type="text" name="nd_d_fxstatus" autocomplete="off" placeholder="请输入风险状态" class="layui-input"
+                    value="$!nd_d_fxstatus">
+                </div>
+              </div>
+            </div>
+            <div class="layui-col-md6">
+              <!-- 管控部门id -->
+              <input name="nd_d_controlid" type="hidden" value="$!nd_d_controlid" />
+              <input name="add" type="hidden" value="nd_d_controlid" />
+              <!--  -->
+              <input name="add" type="hidden" value="nd_d_control" />
+              <div class="layui-form-item">
+                <label class="layui-form-label layui-form-required">管控部门</label>
+                <div class="layui-input-block">
+                  <input type="text" name="nd_d_control" autocomplete="off" placeholder="请输入管控部门" class="layui-input"
+                    value="$!nd_d_control">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="layui-row">
+            <div class="layui-col-md12">
+              <div class="layui-form-item btnbox" style="text-align:center;">
+                <button type="submit" class="layui-btn submit layui-btn-normal" lay-submit=""
+                  lay-filter="layajax_add">立即提交</button>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <script src="layuiadmin/modules/axios.min.js"></script>
+  <script src="layuiadmin/layui/layui.js"></script>
+  <script>
+    layui.config({
+      base: 'layuiadmin/modules/'
+    }).use(['form', 'layedit', 'laydate', 'main'], function () {
+      var form = layui.form,
+        $ = layui.jquery,
+        jq = layui.jquery,
+        layer = layui.layer,
+        layedit = layui.layedit,
+        axios = layui.main,
+        laydate = layui.laydate;
+      let url = layui.url().search;
+      let ndid = url.ndid;
+      // 新建编辑判断
+      if ('$!nd_fx_ps_pid' != '' && '$!nd_fx_ps_pid' != null) {
+        // 已有不填
+      } else {
+        $('input[name=nd_fx_ps_pid]:eq(0)').val(ndid)
+      }
+      if ('$!nd_d_time' != '' && '$!nd_d_time' != 'null') {
+        //日期
+        laydate.render({
+          elem: '.date_lay',
+          value: '$!nd_d_time'
+        });
+        form.val('form', {
+          nd_d_type: "$!nd_d_type",
+          nd_d_result: "$!nd_d_result"
+        })
+
+      } else {
+        laydate.render({
+          elem: '.date_lay',
+          value: new Date()
+        });
+      }
+      /**
+       * @description: 选择部门
+       * @param {*}
+       * @return {*} nd_d_ps_detp
+       */
+      $('input[name=nd_d_ps_detp]:eq(0)').on('click', function (d) {
+        layer.open({
+          type: 2,
+          zIndex: layer.zIndex, //重点1
+          title: '选择所属部门',
+          shadeClose: true,
+          shade: true,
+          maxmin: false, //开启最大化最小化按钮
+          area: ['60%', '90%'],
+          btn: ['确定', '取消'],
+          content: '$cls.getrooturl()?type=ajaxshow&T=研判选择部门',
+          success: function (layero, index) {
+            layer.setTop(layero); //重点2
+            var iframeWindow = window['layui-layer-iframe' + index]
+            iframeWindow.addEventListener('dblclick', () => {
+              var el = iframeWindow.layui.el;
+              if (el) {
+                let data = el.getRadioChecked();
+                assignment(data, index);
+              }
+            })
+          },
+          yes: function (index) {
+            var iframeWindow = window['layui-layer-iframe' + index]
+            let data = iframeWindow.layui.el.getRadioChecked();
+            assignment(data, index);
+          }
+
+        })
+      })
+      /**
+       * @description: 
+       * @param {*} data
+       * @param {*} index 弹窗index
+       * @return {*}
+       */
+      function assignment(data, index) {
+        if (data.length > 0) {
+          let ids = [];
+          let names = [];
+          jq.each(data, function (d, item) {
+            let id = item.id;
+            ids.push(id)
+            let name = item.bumen_name;
+            names.push(name)
+          })
+          $('input[name=nd_d_ps_detpid]:eq(0)').val(ids.join(','))
+          $('input[name=nd_d_ps_detp]:eq(0)').val(names.join(','))
+          layer.close(index)
+        }
+      }
+      //监听提交
+      form.on('submit(layajax_add)', function (data) {
+        axios({
+          method: 'post',
+          url: '$cls.getrooturl()?type=add&id=$!{id}&mid=$!{mid}&tabid=$!{tabid}&job=${job}&tbname=${tbname}',
+          data: $("form").serialize(),
+        }).then(res => {
+          parent.layer.closeAll();
+        })
+        return false;
+      });
+
+    });
+  </script>
+</body>
+
+</html>

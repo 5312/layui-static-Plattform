@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../../layuiAdmin/layui/css/layui.css" media="all">
+  <style>
+    .layui-fluid {
+      padding: 20px;
+    }
+
+    .layui-title {
+      color: #000;
+      margin-bottom: 30px;
+      font-size: 15px;
+    }
+  </style>
+</head>
+
+
+<body style="background-color: #fff;">
+  <div class="layui-panel layui-fluid">
+    <div class="layui-title"> 基本信息 </div>
+    <form action="" class="layui-form">
+      <div class="layui-form-item">
+        <label for="" class="layui-form-label">头像</label>
+        <div class="layui-input-block">
+          <select name="modules" lay-verify="required" lay-search="">
+            <option value="">直接选择或搜索选择</option>
+            <option value="1">机电技术科</option>
+            <option value="1">安全质量管理科</option>
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+  <script src="../../layuiAdmin/layui/layui.all.js" charset="utf-8"></script>
+
+  <script>
+    layui.use(['form', 'layedit', 'laydate', 'table'], function () {
+
+    })
+  </script>
+
+</body>
+
+</html>

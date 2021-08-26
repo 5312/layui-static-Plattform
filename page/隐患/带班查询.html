@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../layuiAdmin/layui/css/layui.css" media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+  <style>
+    .margin-top {
+      margin-top: 20px;
+    }
+
+    .h1 {
+      font-size: 20px;
+      /* padding-left: 50px; */
+    }
+
+    .layui-form-label {
+      white-space: nowrap;
+    }
+
+    .height {
+      height: 20px;
+    }
+  </style>
+</head>
+
+
+<body style="background-color: #fff;">
+
+  <div class="layui-fluid">
+    <div class="layui-card margin-top">
+
+      <!-- layui-card-body -->
+      <div class="height"></div>
+      <div class="">
+        <form class="layui-form" action="">
+          <!-- 行 -->
+          <div class="layui-form-item">
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">检查部门</label>
+              <div class="layui-input-block" style="width:150px;">
+                <select name="modules" lay-verify="required" lay-search="">
+                  <option value="">直接选择或搜索选择</option>
+                  <option value="1">机电技术科</option>
+                  <option value="1">安全质量管理科</option>
+                </select>
+              </div>
+            </div>
+            <!--  -->
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">检查人</label>
+              <div class="layui-input-block">
+                <select name="modules" lay-verify="required" lay-search="">
+                  <option value="">直接选择或搜索选择</option>
+                  <option value="1">管理员-guanliyuan</option>
+                  <option value="1">管理员-guanliyuan</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="layui-inline">
+              <label class="layui-form-label">检查日期</label>
+              <div class="layui-input-inline" style="width: 100px;">
+                <input type="text" name="date" id="date1" autocomplete="off" class="layui-input">
+              </div>
+              <div class="layui-form-mid">-</div>
+              <div class="layui-input-inline" style="width: 100px;">
+                <input type="text" name="date" id="date" autocomplete="off" class="layui-input">
+              </div>
+            </div>
+            <!-- <div class="layui-inline">
+              <button type="button" class="layui-btn layui-btn-sm">
+                <i class="layui-icon">&#xe615;</i> 查询
+              </button>
+            </div> -->
+          </div>
+          <!-- 行 -->
+          <div class="layui-form-item">
+
+            <!--  -->
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">隐患地点</label>
+              <div class="layui-input-block" style="width: 150px;">
+                <select name="modules" lay-verify="required" lay-search="">
+                  <option value="">直接选择或搜索选择</option>
+                  <option value="1">1304轨道顺槽</option>
+                  <option value="1">1304轨道顺槽</option>
+                </select>
+              </div>
+            </div>
+            <!--  -->
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">隐患等级</label>
+              <div class="layui-input-block">
+                <select name="modules" id="">
+                  <option value=""></option>
+                  <option value="">一般隐患</option>
+                  <option value="">重大隐患</option>
+                </select>
+              </div>
+            </div>
+
+            <!--  -->
+            <div class="layui-inline">
+              <label class="layui-form-label">班次</label>
+              <div class="layui-input-block">
+                <select name="interest" lay-filter="aihao">
+                  <option value=""></option>
+                  <option value="0">早班</option>
+                  <option value="1" selected="">中班</option>
+                  <option value="2">晚班</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">隐患类型</label>
+              <div class="layui-input-block">
+                <select name="modules" lay-verify="required" lay-search="">
+                  <option value="">直接选择或搜索选择</option>
+                  <option value="1"> 机电运输</option>
+                  <option value="1">采煤</option>
+                  <option value="1">其他</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-inline">
+              <button type="button" class="layui-btn layui-btn-sm">
+                <i class="layui-icon">&#xe615;</i> 查询
+              </button>
+            </div>
+            <!--  -->
+          </div>
+        </form>
+      </div>
+    </div>
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+  </div>
+
+  <script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="zhuijiu">隐患追究</button>
+    <button class="layui-btn layui-btn-sm" lay-event="daochu">导出</button>
+
+    <!--  <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button> -->
+  </div>
+</script>
+
+  <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">显示</a>
+    <!-- <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a> -->
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  </script>
+
+
+  <script src="../../layuiAdmin/layui/layui.all.js" charset="utf-8"></script>
+  <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+
+  <script>
+    layui.use(['form', 'layedit', 'laydate', 'table'], function () {
+      var table = layui.table
+        , form = layui.form
+        , layer = layui.layer
+        , layedit = layui.layedit
+        , laydate = layui.laydate;
+      //日期
+      laydate.render({
+        elem: '#date'
+      });
+      laydate.render({
+        elem: '#date1'
+      });
+      laydate.render({
+        elem: '#date2'
+      });
+      table.render({
+        elem: '#test'
+        , url: '/js/table.json'
+        , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+        , defaultToolbar: ['']
+        , title: '用户数据表'
+        , cols: [[
+          { type: 'checkbox', fixed: 'left' }
+          , { field: 'id', title: 'ID', fixed: 'left', unresize: true, sort: true, hide: true }
+          , { field: 'unit', title: '责任单位', fixed: 'left', unresize: true, sort: true }
+          , { field: 'address', title: '检查地点', edit: 'text' }
+          , {
+            field: 'data', title: '检查日期', edit: 'text'
+          }
+          , { field: 'order', title: '班次', edit: 'text' }
+          , { field: 'jc', title: '检查人', }
+          , { field: 'pj', title: '陪检人', }
+          , { field: 'content', title: '隐患内容', width: 200, edit: 'text', sort: true }
+          , { field: 'grade', title: '隐患等级', edit: 'text', sort: true }
+          , { field: 'yq', title: '整改要求', edit: 'text', sort: true, hide: true }
+          , { field: 'zl', title: '隐患种类', edit: 'text', sort: true }
+          , { field: 'dwfk', title: '单位罚款', edit: 'text', sort: true, hide: true }
+          , { field: 'grfk', title: '个人罚款', edit: 'text', sort: true, hide: true }
+          , { field: 'sfdbld', title: '是否带班领导', edit: 'text', sort: true }
+          // , { fixed: 'right', title: '操作', width: 200, align: 'center', toolbar: '#barDemo' } //这里的toolbar值是模板元素的选择器
+        ]]
+        , page: true
+      });
+
+      //头工具栏事件
+      table.on('toolbar(test)', function (obj) {
+        var checkStatus = table.checkStatus(obj.config.id);
+        switch (obj.event) {
+          case 'zhuijiu':
+            //新建
+            layer.open({
+              type: 2,
+              zIndex: layer.zIndex, //重点1
+              title: '隐患录入',
+              shadeClose: true,
+              // shade: true,
+              maxmin: false, //开启最大化最小化按钮
+              area: ['100%', '100%'],
+              content: '/page/隐患/隐患追究.html',
+              success: function (layero) {
+                //layer.setTop(layero); //重点2
+              },
+              end: function () {
+                window.location.reload();
+              }
+            });
+            break;
+          case 'daochu':
+            console.log(1)
+            table.exportFile('test', checkStatus.data, 'xls'); //data 为该实例中的任意数量的数据
+            break;
+
+        };
+      });
+
+      //监听行工具事件
+      table.on('tool(test)', function (obj) {
+        var data = obj.data;
+        //console.log(obj)
+        if (obj.event === 'del') {
+          layer.confirm('真的删除行么', function (index) {
+            obj.del();
+            layer.close(index);
+          });
+        } else if (obj.event === 'edit') {
+          layer.prompt({
+            formType: 2
+            , value: data.email
+          }, function (value, index) {
+            obj.update({
+              email: value
+            });
+            layer.close(index);
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../layuiAdmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../src/all.css" media="all">
+  <link rel="stylesheet" href="../../src/global.css" media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+  <style>
+    .margin-top {
+      margin-top: 20px;
+    }
+
+    .h1 {
+      font-size: 20px;
+      /* padding-left: 50px; */
+    }
+
+    .layui-form-label {
+      white-space: nowrap;
+    }
+
+    .height {
+      height: 20px;
+    }
+
+    .btnbox {
+      padding: 10px;
+      text-align: center;
+    }
+
+    .layui-btn-container {
+      padding: 12px;
+    }
+  </style>
+</head>
+
+
+<body style="background-color: #fff;">
+
+  <div class="layui-fluid">
+    <div class="layui-card margin-top">
+      <!-- layui-card-body -->
+      <div class="" lay-filter='box'>
+        <!-- 行 -->
+        <div class="layui-form" lay-filter='tabheader'>
+          <div class="layui-form-item">
+            <label class="layui-form-label">节点类型</label>
+            <div class="layui-input-block" id="tabHeader">
+              <input type="radio" name="type" value="list" lay-id='1' title="目录">
+              <input type="radio" name="type" value="menu" lay-id='2' title="菜单">
+              <!-- <input type="radio" name="type" value="2" title="权限"> -->
+            </div>
+          </div>
+        </div>
+        <div id="tabBody" lay-filter="tab">
+          <div class="element layui-tab-item"> </div>
+          <div class="element layui-tab-item layui-show" lay-id='list'>
+            <form class="layui-form" action="" lay-filter='list'>
+              <input type="hidden" name="type" value='list'>
+              <input type="hidden" name="id">
+              <div class="layui-form-item">
+                <label class="layui-form-label"><i class="red"> * </i>节点名称</label>
+                <div class="layui-input-block">
+                  <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="请输入节点名称"
+                    class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">上级节点</label>
+                <div class="layui-input-block">
+                  <div id="el"></div>
+                  <!-- <input type="hidden" name="parentid" value="一级菜单" autocomplete="off" placeholder="请输入标题"class="layui-input">-->
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">是否显示</label>
+                <div class="layui-input-block">
+                  <input type="checkbox" checked="" name="isShow" lay-skin="switch" lay-filter="switchTest"
+                    lay-text="ON|OFF">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">节点图标</label>
+                <div class="layui-input-block">
+                  <div id="layui-open"></div>
+                  <!-- <input type="hidden" name="icon" autocomplete="off" placeholder="请选择" class="layui-input"> -->
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">排序号</label>
+                <div class="layui-input-block">
+                  <input type="number" name="orderNum" value="1" autocomplete="off" placeholder="请填写排序号"
+                    class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item btnbox">
+                <div class="layui-inline">
+                  <button type="button" lay-submit lay-filter="list" class="layui-btn layui-btn-sm">
+                    <i class="layui-icon">&#xe615;</i> 保存
+                  </button>
+                </div>
+                <div class="layui-inline">
+                  <button type="button" class="layui-btn layui-btn-sm " id='LAY-btn-close'
+                    onclick="parent.layer.closeAll()">
+                    <i class="layui-icon">&#xe615;</i> 取消
+                  </button>
+                </div>
+              </div>
+            </form>
+
+          </div>
+
+          <div class="element layui-tab-item"> </div>
+          <div class="element layui-tab-item" lay-id='menu'>
+            <form action="" class="layui-form" lay-filter='menu'>
+              <input type="hidden" name='type' value="menu">
+              <input type="hidden" name="id">
+              <div class="layui-form-item">
+                <label class="layui-form-label"><i class="red"> * </i>节点名称</label>
+                <div class="layui-input-block">
+                  <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="请输入节点名称"
+                    class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">上级节点</label>
+                <div class="layui-input-block">
+                  <div id="elmenu"></div>
+                  <!-- <input type="hidden" name="parentid" value="一级菜单" autocomplete="off" placeholder="请输入标题"class="layui-input">-->
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">节点路由</label>
+                <div class="layui-input-block">
+                  <input type="text" name="router" autocomplete="off" placeholder="请输入节点名称" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">是否显示</label>
+                <div class="layui-input-block">
+                  <input type="checkbox" checked="" name="isShow" lay-skin="switch" lay-filter="switchTest1"
+                    lay-text="ON|OFF">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">文件路径</label>
+                <div class="layui-input-block">
+                  <div id='select-file'></div>
+                </div>
+
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">节点图标</label>
+                <div class="layui-input-block">
+                  <div id="layui-open1"></div>
+                  <!-- <input type="hidden" name="icon" autocomplete="off" placeholder="请选择" class="layui-input"> -->
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">排序号</label>
+                <div class="layui-input-block">
+                  <input type="number" name="orderNum" value="1" autocomplete="off" placeholder="请填写排序号"
+                    class="layui-input">
+                </div>
+              </div>
+              <!-- <div class="layui-form-item">
+                <label class="layui-form-label">菜单权限</label>
+                <div class="layui-input-block">
+                  <div id="test12" class="demo-tree-more"></div>
+                </div>
+              </div> -->
+              <div class="layui-form-item btnbox">
+                <div class="layui-inline">
+                  <button type="button" lay-submit lay-filter='menu' class="layui-btn layui-btn-sm">
+                    <i class="layui-icon">&#xe615;</i> 保存
+                  </button>
+                </div>
+                <div class="layui-inline">
+                  <button type="button" class="layui-btn layui-btn-sm " id='LAY-btn-close1'
+                    onclick="parent.layer.closeAll()">
+                    <i class="layui-icon">&#xe615;</i> 取消
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="element layui-tab-item"> </div>
+          <div class="element layui-tab-item">
+            <!-- 权限 -->
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script src="../../layuiAdmin/layui/layui.all.js" charset="utf-8"></script>
+  <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+
+  <script>
+    layui.config({
+      base: '/layuiAdmin/modules/'
+    }).extend({
+      xmSelect: 'xm-select'
+    }).use(['form', 'layedit', 'layer', 'laydate', 'table', 'tree', 'element', 'xmSelect'], function () {
+      let $ = layui.jquery;
+      var tree = layui.tree
+        , element = layui.element
+        , form = layui.form
+        , layer = layui.layer
+        , xmSelect = layui.xmSelect
+      let type = 'add'
+      let parentid = -1;
+      let viewPaths = ''
+      // 选项卡
+      element.tab({
+        headerElem: '#tabHeader>.layui-form-radio' //指定tab头元素项
+        , bodyElem: '#tabBody>.element' //指定tab主体元素项
+      });
+      // $($('#tabHeader>.layui-form-radio')[1]).addClass('layui-this')
+      // 初始默认 目录
+      form.val('tabheader', {
+        type: 'list'
+      })
+      // 目录 上级节点 
+      let topel = xmSelect.render({
+        el: '#el',
+        tips: '',
+        name: 'parentid',
+        value: -1,
+        prop: {
+          name: 'name',
+          value: 'id',
+        },
+        filterable: true,
+        //单选模式
+        radio: true,
+        model: { label: { type: 'text' } },
+        tree: {
+          // 是否显示树状结构
+          show: true,
+          //是否展示三角图标
+          showFolderIcon: true,
+          //非严格模式
+          strict: false,
+          //是否显示虚线
+          showLine: false,
+        },
+        clickClose: true,
+        height: 'auto',
+        direction: 'auto',
+        data: [{ name: '上级节点', id: -1, selected: true, }],
+      })
+      // 菜单 上级节点 
+      let topelmenu = xmSelect.render({
+        el: '#elmenu',
+        tips: '',
+        name: 'parentid',
+        value: -1,
+        prop: {
+          name: 'name',
+          value: 'id',
+        },
+        filterable: true,
+        clickClose: true,
+        //单选模式
+        radio: true,
+        model: { label: { type: 'text' } },
+        tree: {
+          // 是否显示树状结构
+          show: true,
+          //是否展示三角图标
+          showFolderIcon: true,
+          //非严格模式
+          strict: false,
+          //是否显示虚线
+          showLine: false,
+        },
+        height: 'auto',
+        direction: 'auto',
+        data: [{ name: '上级节点', id: -1 }],
+      })
+      var file = xmSelect.render({
+        el: '#select-file',
+        direction: 'down',// 下拉方向
+        name: 'viewPath',
+        data: [],
+        radio: true,
+        filterable: true,// 搜索
+        clickClose: true,// 点击关闭
+        height: '150px',// 高
+        model: { icon: 'hidden', label: { type: 'text' } },// 显示方式
+        create: function (val, arr) {
+          if (arr.length === 0) {
+            return {
+              name: '创建-' + val,
+              value: val
+            }
+          }
+        },
+      })
+      // 文件路径
+      parent.parent.axios({
+        url: '/read/readfile',
+        method: 'get'
+      }).then(res => {
+        file.update({
+          data: res.data
+        })
+        viewPath(viewPaths)
+      })
+      // 请求数据
+      parent.parent.axios({
+        url: '/xt/treemenu',
+        method: 'get'
+      }).then(res => {
+        let list = res.data
+        let top = [];
+        for (let i = 0; i < list.length; i++) {
+          const element = list[i];
+          if (element.parentid == -1) {
+            top.push(element)// 顶级节点
+          }
+        }
+        let arr = child(top);
+
+        function child(array) {
+          let newArr = []
+          for (let index = 0; index < array.length; index++) {
+            const tops = array[index];
+            let topchild = [] // 子集
+            // 补充子集
+            for (let i = 0; i < list.length; i++) {
+              const element = list[i];
+              if (element.parentid == tops.id) {
+                topchild.push(element);
+              }
+            }
+            child(topchild)
+            tops.children = topchild
+            newArr.push(tops);
+          }
+          return newArr;
+        }
+
+        let data = [
+          { name: '上级节点', id: -1, selected: true, children: arr }
+        ]
+        topel.update({
+          data: data,
+          autoRow: true,
+        })
+        topelmenu.update({
+          data: data,
+          autoRow: true,
+        })
+        setParentid(parentid)
+      })
+
+      // 图标1
+      var icon = xmSelect.render({
+        el: '#layui-open',
+        tips: '请选择图标',
+        direction: 'down',
+        model: { label: { type: 'text' } },
+        name: 'icon',
+        clickClose: true,
+        content: `
+        <div class="layui-btn-container" id='iconbtn'>
+         
+    </div>
+	`,
+        height: 'auto',
+        on: function (data) {
+          console.log(data)
+        }
+      })
+      // 图标2
+      var icon2 = xmSelect.render({
+        el: '#layui-open1',
+        tips: '请选择图标',
+        direction: 'down',
+        clickClose: true,
+        model: { label: { type: 'text' } },
+        name: 'icon',
+        content: `
+        <div class="layui-btn-container" id='iconbtn1'>
+         
+    </div>
+	`,
+        height: 'auto',
+      })
+
+      // icon 图标
+      let array = ['layui-icon-heart-fill', 'layui-icon-email', 'layui-icon-logout', 'layui-icon-snowflake', 'layui-icon-app', 'layui-icon-form', 'layui-icon-console', 'layui-icon-chart', 'layui-icon-survey', 'layui-icon-home', 'layui-icon-engine', 'layui-icon-read'];
+      for (let index = 0; index < array.length; index++) {
+        const element = array[index];
+        $('#iconbtn').append(` <button type="button" class="layui-btn layui-btn-sm layui-btn-primary">
+          <i class="layui-icon ${element}"></i>
+        </button>`)
+      }
+      $('#iconbtn').on('click', '.layui-btn', function (ev) {
+        $('#iconbtn>button').each((x, y) => {
+          $(y).removeClass('layui-border-blue')
+        })
+        // 选中
+        $(this).addClass('layui-border-blue')
+        var iconfont = $(this).children().attr('class').split(' ')[1]
+        icon.setValue([
+          { name: iconfont, value: iconfont }
+        ])
+        icon.closed();
+      })
+      // icon2 图标
+      let array1 = ['layui-icon-heart-fill', 'layui-icon-email', 'layui-icon-logout', 'layui-icon-snowflake', 'layui-icon-app', 'layui-icon-form', 'layui-icon-console', 'layui-icon-chart', 'layui-icon-survey', 'layui-icon-home', 'layui-icon-engine', 'layui-icon-read'];
+      for (let index = 0; index < array1.length; index++) {
+        const element = array1[index];
+        $('#iconbtn1').append(` <button type="button" class="layui-btn layui-btn-sm layui-btn-primary">
+          <i class="layui-icon ${element}"></i>
+        </button>`)
+      }
+      $('#iconbtn1').on('click', '.layui-btn', function (ev) {
+        $('#iconbtn>button').each((x, y) => {
+          $(y).removeClass('layui-border-blue')
+        })
+        // 选中
+        $(this).addClass('layui-border-blue')
+        var iconfont = $(this).children().attr('class').split(' ')[1]
+        icon2.setValue([
+          { name: iconfont, value: iconfont }
+        ])
+        icon2.closed();
+      })
+      // 提交
+      // 提交按钮
+      form.on('submit(list)', function (data) {
+
+        if (data.field.parentid == '') {
+          data.field.parentid = -1
+        }
+        if (!data.field.isShow) {
+          data.field.isShow = false
+        }
+        // 提交类型
+        let url = {
+          'add': '/xt/addmenu',
+          'edit': '/xt/updatemenu',
+        }
+        parent.parent.axios({
+          url: url[type], //'/xt/addmenu',
+          method: 'POST',
+          data: data.field
+        }).then(res => {
+          parent.layer.msg(res.msg, { icon: 6 })
+          var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+          parent.layer.close(index)
+
+        }).catch(err => {
+          console.log(err)
+        })
+
+        return false
+      })
+      // 提交按钮
+      form.on('submit(menu)', function (data) {
+
+        if (data.field.parentid == '') {
+          data.field.parentid = -1
+        }
+        if (!data.field.isShow) {
+          data.field.isShow = false
+        }
+        // 提交类型
+        let url = {
+          'add': '/xt/addmenu',
+          'edit': '/xt/updatemenu',
+        }
+        parent.parent.axios({
+          url: url[type],
+          method: 'POST',
+          data: data.field
+        }).then(res => {
+          parent.layer.msg(res.msg, { icon: 6 })
+          var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+          parent.layer.close(index)
+        }).catch(err => {
+          console.log(err)
+        })
+        return false
+      })
+      // 页面编辑
+      window.edit = function (data) {
+        //设置上级 节点  防止节点数据异步加载
+        parentid = data.parentid;
+        type = 'edit'
+        form.val('tabheader', {
+          type: data.type
+        })
+        // 1 ,3
+        if (data.type == 'list') {
+          $('.element:eq(1)').addClass('layui-show')
+          $('.element:eq(3)').removeClass('layui-show')
+        } else {
+          $('.element:eq(1)').removeClass('layui-show')
+          $('.element:eq(3)').addClass('layui-show')
+        }
+        // 设置上级节点
+        setParentid(parentid)
+        // 设置路径
+        viewPath(data.viewPath || '')
+        // 图标
+        icon.setValue([
+          { name: data.icon, value: data.icon }
+        ])
+        icon2.setValue([
+          { name: data.icon, value: data.icon }
+        ])
+        //给表单赋值
+        form.val('menu', { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
+          "name": data.name// "name": "value"
+          , "isShow": data.isShow
+          , "orderNum": data.orderNum
+          , "icon": data.icon
+          , "parentid": data.parentid
+          , "id": data.id
+          , "router": data.router
+          , 'viewPath': data.viewPath
+        });
+        //给表单赋值
+        form.val('list', { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
+          "name": data.name// "name": "value"
+          , "isShow": data.isShow
+          , "orderNum": data.orderNum
+          , "icon": data.icon
+          , "parentid": data.parentid
+          , "id": data.id
+        });
+      }
+
+      window.addCol = function (data) {
+        type = 'add'
+        parentid = data.id || -1;// 行添加时，这里是当前行的id
+
+        setParentid(data.id || -1)
+      }
+      function setParentid(pid) {
+        // 应该在数据加载完成后设置
+        // 清空
+        topel.setValue([])
+        topelmenu.setValue([])
+        // 设置
+        topel.setValue([pid])
+        topelmenu.setValue([pid])
+      }
+
+      function viewPath(path) {
+        file.setValue([path])
+      }
+
+    });
+  </script>
+
+</body>
+
+</html>

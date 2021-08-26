@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../layuiAdmin/layui/css/layui.css" media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+  <style>
+    .margin-top {
+      margin-top: 20px;
+    }
+
+    .h1 {
+      font-size: 20px;
+      /* padding-left: 50px; */
+    }
+
+    .layui-form-label {
+      padding-left: 0;
+      white-space: nowrap;
+    }
+
+    .height {
+      height: 20px;
+    }
+
+    .layui-form-item .layui-form-checkbox[lay-skin=primary] {
+      margin-top: 0px;
+    }
+  </style>
+</head>
+
+
+<body style="background-color: #fff;">
+
+  <div class="layui-fluid">
+    <!--  -->
+    <div class="layui-tab layui-tab-card">
+      <ul class="layui-tab-title">
+        <li class="layui-this">接受消息</li>
+        <li>发送消息</li>
+        <li>过滤消息</li>
+      </ul>
+      <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+          <!--  -->
+          <div class="layui-card margin-top">
+            <div class="layui-card-header h1">接收消息</div>
+            <!-- layui-card-body -->
+            <div class="height"></div>
+            <div class="">
+              <form class="layui-form" action="">
+                <!-- 行 -->
+                <div class="layui-form-item">
+                  <div class="layui-inline">
+                    <label for="" class="layui-form-label">标题</label>
+                    <div class="layui-input-block" style="width: 210px;">
+                      <input type="text" class="layui-input">
+                    </div>
+                  </div>
+                  <div class="layui-inline">
+                    <label class="layui-form-label">接收时间</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input type="text" id="date" name="price_min" placeholder="" autocomplete="off"
+                        class="layui-input">
+                    </div>
+                    <div class="layui-form-mid">至</div>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input type="text" id="date1" name="price_max" placeholder="" autocomplete="off"
+                        class="layui-input">
+                    </div>
+                  </div>
+                  <!--  -->
+                  <div class="layui-inline">
+                    <label for="" class="layui-form-label">消息状态</label>
+                    <div class="layui-input-block">
+                      <select name="modules" lay-verify="required" lay-search="">
+                        <option value="">直接选择或搜索选择</option>
+                        <option value="1">已读</option>
+                        <option value="1">未读</option>
+                      </select>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="layui-form-item">
+                  <div class="layui-inline">
+                    <label for="" class="layui-form-label">消息类型</label>
+                    <div class="layui-input-block">
+                      <select name="modules" lay-verify="required" lay-search="">
+                        <option value="">直接选择或搜索选择</option>
+                        <option value="1">整改</option>
+                        <option value="1">退回</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="layui-inline vertop">
+                    <input type="checkbox" name="like1[write]" lay-skin="primary" title="包含删除" checked="">
+                    <button type="button" class="layui-btn layui-btn-sm">
+                      <i class="layui-icon">&#xe615;</i> 查询
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <table class="layui-hide" id="test" lay-filter="test"></table>
+        </div>
+        <div class="layui-tab-item">
+          <!--  -->
+          <div class="layui-card margin-top">
+            <div class="layui-card-header h1">发送消息</div>
+            <!-- layui-card-body -->
+            <div class="height"></div>
+            <div class="">
+              <form class="layui-form" action="">
+                <!-- 行 -->
+                <div class="layui-form-item">
+                  <div class="layui-inline">
+                    <label for="" class="layui-form-label">标题</label>
+                    <div class="layui-input-block" style="width: 100px;">
+                      <input type="text" class="layui-input">
+                    </div>
+                  </div>
+                  <div class="layui-inline">
+                    <label for="" class="layui-form-label">消息类型</label>
+                    <div class="layui-input-block" style="width: 100px;">
+                      <select name="modules" lay-verify="required" lay-search="">
+                        <option value="">隐患整改</option>
+                        <option value="1">整改</option>
+                        <option value="1">退回</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="layui-inline">
+                    <label for="" class="layui-form-label">创建日期</label>
+                    <div class="layui-input-block" style="width: 100px;">
+                      <input type="text" id="date2" class="layui-input">
+                    </div>
+                  </div>
+                  <!--  -->
+                  <div class="layui-inline">
+                    <label for="" class="layui-form-label">状态</label>
+                    <div class="layui-input-block" style="width: 100px;">
+                      <select name="modules" lay-verify="required" lay-search="">
+                        <option value="">直接选择或搜索选择</option>
+                        <option value="1">已读</option>
+                        <option value="1">未读</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="layui-inline">
+                    <label for="" class="layui-form-label">申请单号</label>
+                    <div class="layui-input-block " style="width: 100px;">
+                      <input type="text" class="layui-input">
+                    </div>
+                  </div>
+                  <div class="layui-inline vertop" style="margin-left:10px;">
+                    <input type="checkbox" name="like1[write]" lay-skin="primary" title="包含删除" checked="">
+                    <button type="button" class="layui-btn layui-btn-sm">
+                      <i class="layui-icon">&#xe615;</i> 查询
+                    </button>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+          <table class="layui-hide" id="test1" lay-filter="test1"></table>
+        </div>
+        <div class="layui-tab-item">
+          <!--  -->
+          <div class="layui-card margin-top">
+            <div class="layui-card-header h1">发送消息</div>
+            <!-- layui-card-body -->
+            <div class="height"></div>
+            <div class="">
+              <form class="layui-form" action="">
+                <!-- 行 -->
+                <div class="layui-form-item">
+                  <div class="layui-inline">
+                    <label for="" class="layui-form-label">标题</label>
+                    <div class="layui-input-block" style="width: 100px;">
+                      <input type="text" class="layui-input">
+                    </div>
+                  </div>
+                  <div class="layui-inline">
+                    <label for="" class="layui-form-label">消息类型</label>
+                    <div class="layui-input-block" style="width: 100px;">
+                      <select name="modules" lay-verify="required" lay-search="">
+                        <option value="">隐患整改</option>
+                        <option value="1">整改</option>
+                        <option value="1">退回</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="layui-inline">
+                    <label for="" class="layui-form-label">发送人</label>
+                    <div class="layui-input-block">
+                      <input type="text" class="layui-input">
+                    </div>
+                  </div>
+                  <div class="layui-inline vertop" style="margin-left:10px;">
+                    <input type="checkbox" name="like1[write]" lay-skin="primary" title="包含删除" checked="">
+                    <button type="button" class="layui-btn layui-btn-sm">
+                      <i class="layui-icon">&#xe615;</i> 查询
+                    </button>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+          <table class="layui-hide" id="test2" lay-filter="test2"></table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="layui-tn-container" id="detail" style="padding-top:20px;display: none;">
+    <form class="layui-form" action="">
+      <!-- 行 -->
+      <div class="layui-form-item">
+        <div class="layui-inline">
+          <label for="" class="layui-form-label">消息标题</label>
+          <div class="layui-input-block" style="width: 210px;">
+            <input type="text" class="layui-input" id="title">
+          </div>
+        </div>
+        <!--  -->
+        <div class="layui-inline">
+          <label for="" class="layui-form-label">发送时间</label>
+          <div class="layui-input-block">
+            <input type="text" id="date3" class="layui-input">
+          </div>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-inline">
+          <label for="" class="layui-form-label">发送人</label>
+          <div class="layui-input-block" style="width: 210px;">
+            <input type="text" class="layui-input" id="jc">
+          </div>
+        </div>
+        <!--  -->
+        <div class="layui-inline">
+          <label for="" class="layui-form-label">发送部门</label>
+          <div class="layui-input-block">
+            <input type="text" id="bumen" class="layui-input">
+          </div>
+        </div>
+      </div>
+      <div class="layui-form-item">
+
+        <div class="layui-form-label">消息内容</div>
+        <div class="layui-input-block">
+          <textarea placeholder="请输入内容" id="content" class="layui-textarea"></textarea>
+        </div>
+
+      </div>
+    </form>
+  </div>
+  <div class="layui-tn-container" id="detail1" style="padding-top:20px;display: none;">
+    <form class="layui-form" action="">
+      <!-- 行 -->
+      <div class="layui-form-item">
+        <div class="layui-inline">
+          <label for="" class="layui-form-label">消息标题</label>
+          <div class="layui-input-block" style="width: 210px;">
+            <input type="text" class="layui-input" id="title1">
+          </div>
+        </div>
+        <!--  -->
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-inline">
+          <label for="" class="layui-form-label">发送人</label>
+          <div class="layui-input-block" style="width: 210px;">
+            <input type="text" class="layui-input" id="jc1">
+          </div>
+        </div>
+        <!--  -->
+      </div>
+      <div class="layui-form-item">
+
+        <div class="layui-form-label">类型</div>
+        <div class="layui-input-block">
+          <textarea placeholder="请输入内容" id="content1" class="layui-textarea"></textarea>
+        </div>
+
+      </div>
+    </form>
+  </div>
+  <!--  -->
+  <script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+      <button class="layui-btn layui-btn-sm" lay-event="getDown"> <i class="layui-icon">&#xe605;</i>标为已读</button>
+      <button class="layui-btn layui-btn-sm" lay-event="getDown"> <i class="layui-icon">&#xe615;</i>显示</button>
+      <button class="layui-btn layui-btn-sm" lay-event="goBack"> <i class="layui-icon">&#x1006;</i>删除</button>
+     
+    </div>
+  </script>
+  <script type="text/html" id="toolbarDemo1">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="show"> <i class="layui-icon">&#xe615;</i>显示</button>
+    <button class="layui-btn layui-btn-sm" lay-event="annal"> <i class="layui-icon">&#xe605;</i>消息发送记录</button>
+    <button class="layui-btn layui-btn-sm" lay-event="del"> <i class="layui-icon">&#x1006;</i>删除</button> 
+  </div>
+</script>
+  <script type="text/html" id="toolbarDemo2">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="add"> <i class="layui-icon">&#xe615;</i>新建</button>
+    <button class="layui-btn layui-btn-sm" lay-event="show"> <i class="layui-icon">&#xe615;</i>编辑</button>
+    <button class="layui-btn layui-btn-sm" lay-event="del"> <i class="layui-icon">&#x1006;</i>删除</button> 
+    <button class="layui-btn layui-btn-sm" lay-event="show"> <i class="layui-icon">&#xe615;</i>显示</button>
+
+  </div>
+</script>
+  <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">显示</a>
+    <!-- <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a> -->
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  </script>
+  <script type="text/html" id="usernameTpl">
+    <div class="layui-table-link" id='a_link'>{{ d.news }}</div>
+  </script>
+
+  <script src="../../layuiAdmin/layui/layui.all.js" charset="utf-8"></script>
+  <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+
+  <script>
+    layui.use(['form', 'layedit', 'laydate', 'table'], function () {
+      var table = layui.table
+        , form = layui.form
+        , layer = layui.layer
+        , layedit = layui.layedit
+        , laydate = layui.laydate
+        , $ = layui.jquery;
+      //日期
+      laydate.render({
+        elem: '#date'
+      });
+      laydate.render({
+        elem: '#date1'
+      });
+      laydate.render({
+        elem: '#date2'
+      });
+      laydate.render({
+        elem: '#date3'
+      });
+
+      //test
+      table.render({
+        elem: '#test'
+        , url: '/js/table.json'
+        , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+        , defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+          title: '提示'
+          , layEvent: 'LAYTABLE_TIPS'
+          , icon: 'layui-icon-tips'
+        }]
+        , title: '用户数据表'
+        , cols: [[
+          { type: 'numbers', fixed: 'left' },
+          { type: 'checkbox', fixed: 'left' }
+          , { field: 'news', title: '标题', fixed: 'left', unresize: true, templet: '#usernameTpl', event: 'openshow', }
+          , { field: 'content', title: '内容', fixed: 'left', sort: true }
+          , { field: 'jc', title: '接收人', fixed: 'left', }
+          , { field: 'bumen', title: '接收部门', fixed: 'left', event: 'jieshou' }
+          , { field: 'status', title: '消息状态', fixed: 'left', }
+          , { field: 'data', title: '消息读取时间', fixed: 'left', unresize: true, sort: true }
+          , { field: 'data', title: '消息接收时间', fixed: 'left', unresize: true, sort: true }
+          , { field: 'sfdbld', title: '设置过滤', fixed: 'left', }
+          , { field: 'msgtype', title: '消息类型', fixed: 'left', unresize: true, sort: true }
+          // , { field: 'sfdbld', title: '抄送部门', fixed: 'left', event: 'chaosong', unresize: true, sort: true }
+
+
+        ]]
+        , page: true
+      });
+      //test1
+      table.render({
+        elem: '#test1'
+        , url: '/js/table.json'
+        , toolbar: '#toolbarDemo1' //开启头部工具栏，并为其绑定左侧模板
+        , title: '用户数据表'
+        , cols: [[
+          { type: 'numbers', fixed: 'left' },
+          { type: 'checkbox', fixed: 'left' }
+          , { field: 'id', title: 'ID', fixed: 'left', unresize: true, }
+          , { field: 'unit', title: '标题', fixed: 'left', unresize: true, }
+          , { field: 'content', title: '内容', fixed: 'left', sort: true }
+          , { field: 'msgtype', title: '类型', fixed: 'left', unresize: true, sort: true }
+          , { field: 'jc', title: '发送人', fixed: 'left', }
+          , { field: 'bumen', title: '发送部门', fixed: 'left', event: 'jieshou' }
+          // , { field: 'pj', title: '接收人', fixed: 'left', }
+          , { field: 'bumen', title: '接收部门', fixed: 'left', event: 'jieshou' }
+          , { field: 'status', title: '消息状态', fixed: 'left', }
+          , { field: 'data', title: '消息读取时间', fixed: 'left', unresize: true, sort: true }
+          , { field: 'data', title: '消息接收时间', fixed: 'left', unresize: true, sort: true }
+          , { field: 'sfdbld', title: '设置过滤', fixed: 'left', }
+
+
+        ]]
+        , page: true
+      });
+      //test1
+      table.render({
+        elem: '#test2'
+        , url: '/js/table.json'
+        , toolbar: '#toolbarDemo2' //开启头部工具栏，并为其绑定左侧模板
+        , title: '用户数据表'
+        , cols: [[
+          { type: 'numbers', fixed: 'left' },
+          { type: 'checkbox', fixed: 'left' }
+          , { field: 'id', title: 'ID', fixed: 'left', unresize: true, }
+          , { field: 'unit', title: '标题', fixed: 'left', unresize: true, }
+          , { field: 'content', title: '内容', fixed: 'left', sort: true }
+          , { field: 'msgtype', title: '类型', fixed: 'left', unresize: true, sort: true }
+          , { field: 'jc', title: '发送人', fixed: 'left', }
+          , { field: 'bumen', title: '发送部门', fixed: 'left', event: 'jieshou' }
+          // , { field: 'pj', title: '接收人', fixed: 'left', }
+          , { field: 'bumen', title: '接收部门', fixed: 'left', event: 'jieshou' }
+          , { field: 'status', title: '消息状态', fixed: 'left', }
+          , { field: 'data', title: '消息读取时间', fixed: 'left', unresize: true, sort: true }
+          , { field: 'data', title: '消息接收时间', fixed: 'left', unresize: true, sort: true }
+          , { field: 'sfdbld', title: '设置过滤', fixed: 'left', }
+
+
+        ]]
+        , page: true
+      });
+      //头工具栏事件
+      table.on('toolbar(test)', function (obj) {
+        var checkStatus = table.checkStatus(obj.config.id);
+        switch (obj.event) {
+          case 'openshow':
+
+            break;
+          case 'goBack':
+            var data = checkStatus.data;
+            layer.msg('选中了：' + data.length + ' 个');
+            break;
+          //自定义头工具栏右侧图标 - 提示
+          case 'LAYTABLE_TIPS':
+            layer.alert('这是工具栏右侧自定义的一个图标按钮');
+            break;
+        };
+      });
+      //头工具栏事件
+      table.on('toolbar(test1)', function (obj) {
+        var checkStatus = table.checkStatus(obj.config.id);
+        switch (obj.event) {
+          case 'show':
+
+            break;
+          case 'annal':
+            var data = checkStatus.data;
+            console.log(data)
+            if (data.length < 1) { layer.msg('请选择数据', { icon: 5 }); return }
+            // 显示详细信息
+            layer.open({
+              type: 1,
+              zIndex: layer.zIndex, //重点1
+              title: '发送消息记录',
+              shadeClose: true,
+              shade: true,
+              maxmin: false, //开启最大化最小化按钮
+              area: ['60%', '60%'],
+              content: $('#detail'),
+              success: function (layero) {
+                $('#title').val(data[0].unit)
+                $('#date3').val(data[0].data)
+                $('#jc').val(data[0].jc)
+                $('#bumen').val(data[0].bumen)
+                $('#content').val(data[0].content)
+                layer.setTop(layero); //置顶
+              },
+              end: function () {
+                // window.location.reload();
+              }
+            })
+            break;
+          case "del":
+
+            break;
+        };
+      });
+      //头工具栏事件
+      table.on('toolbar(test2)', function (obj) {
+        var checkStatus = table.checkStatus(obj.config.id);
+        switch (obj.event) {
+          case 'add':
+            // 显示详细信息
+            layer.open({
+              type: 1,
+              zIndex: layer.zIndex, //重点1
+              title: '新建消息',
+              shadeClose: true,
+              shade: true,
+              maxmin: false, //开启最大化最小化按钮
+              area: ['100%', '100%'],
+              content: $('#detail1'),
+              success: function (layero) {
+
+                layer.setTop(layero); //置顶
+              },
+              end: function () {
+                // window.location.reload();
+              }
+            })
+            break;
+          case "del":
+
+            break;
+        };
+      });
+      //监听行工具事件
+      table.on('tool(test)', function (obj) {
+        var data = obj.data;
+        console.log(obj)
+        switch (obj.event) {
+          case "openshow":
+            layer.open({
+              type: 2,
+              zIndex: layer.zIndex, //重点1
+              title: '隐患整改',
+              shadeClose: true,
+              shade: true,
+              maxmin: false, //开启最大化最小化按钮
+              area: ['100%', '100%'],
+              content: '/page/隐患/隐患整改.html',
+              success: function (layero) {
+
+                layer.setTop(layero); //置顶
+              },
+              end: function () {
+                // window.location.reload();
+              }
+
+            })
+            break
+          case 'jieshou':
+            layer.open({
+              type: 2,
+              zIndex: layer.zIndex, //重点1
+              title: '选择接受部门',
+              shadeClose: true,
+              // shade: true,
+              maxmin: false, //开启最大化最小化按钮
+              area: ['50%', '50%'],
+              content: '/page/隐患/zRenBumen.html',
+              success: function (layero) {
+                //layer.setTop(layero); //重点2
+              },
+              end: function () {
+                // window.location.reload();
+              }
+            })
+            break;
+          case 'chaosong':
+            layer.open({
+              type: 2,
+              zIndex: layer.zIndex, //重点1
+              title: '选择抄送部门',
+              shadeClose: true,
+              // shade: true,
+              maxmin: false, //开启最大化最小化按钮
+              area: ['50%', '50%'],
+              content: '/page/隐患/zRenBumen.html',
+              success: function (layero) {
+                //layer.setTop(layero); //重点2
+              },
+              end: function () {
+                // window.location.reload();
+              }
+            })
+            break;
+
+        };
+
+      });
+    });
+  </script>
+
+</body>
+
+</html>

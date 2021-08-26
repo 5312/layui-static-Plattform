@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../layuiAdmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../src/all.css" media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+  <style>
+    .margin-top {
+      margin-top: 20px;
+    }
+
+    .h1 {
+      font-size: 20px;
+      /* padding-left: 50px; */
+    }
+
+    .layui-form-label {
+      white-space: nowrap;
+    }
+
+    .height {
+      height: 20px;
+    }
+  </style>
+</head>
+
+
+<body style="background-color: #fff;">
+
+  <div class="layui-fluid">
+    <div class="layui-card margin-top">
+      <!-- layui-card-body -->
+      <div class="">
+        <form class="layui-form" action="">
+          <!-- 行 -->
+          <div class="layui-form-item">
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">风险点</label>
+              <div class="layui-input-block" style="width:150px;">
+                <select name="modules" lay-verify="required" lay-search="">
+                  <option value="">直接选择或搜索选择</option>
+                  <option value="1">机电技术科</option>
+                  <option value="1">安全质量管理科</option>
+                </select>
+              </div>
+            </div>
+            <!--  -->
+            <!-- <div class="layui-inline">
+              <label for="" class="layui-form-label">风险类型</label>
+              <div class="layui-input-block">
+                <select name="modules" lay-verify="required" lay-search="">
+                  <option value="">直接选择或搜索选择</option>
+                  <option value="1">冲击地压</option>
+                  <option value="1">坍塌</option>
+                </select>
+              </div>
+            </div> -->
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">最高管控责任人</label>
+              <div class="layui-input-block">
+                <select name="modules" id="">
+                  <option value=""></option>
+                  <option value="">一般隐患</option>
+                  <option value="">重大隐患</option>
+                </select>
+              </div>
+            </div>
+            <!--  -->
+            <div class="layui-inline">
+              <label class="layui-form-label">评估日期</label>
+              <div class="layui-input-inline" style="width: 100px;">
+                <input type="text" name="date" id="date1" autocomplete="off" class="layui-input">
+              </div>
+
+            </div>
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">解除日期</label>
+              <div class="layui-input-inline" style="width: 100px;">
+                <input type="text" name="date" id="date2" autocomplete="off" class="layui-input">
+              </div>
+
+            </div>
+            <div class="layui-inline">
+              <label for="" class="layui-form-label">年度</label>
+              <div class="layui-input-inline" style="width: 100px;">
+                <input type="text" name="date" id="date3" autocomplete="off" class="layui-input">
+              </div>
+
+            </div>
+            <!--  -->
+          </div>
+        </form>
+      </div>
+    </div>
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+  </div>
+
+  <script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container cl">
+    <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="report">上报</button>
+    <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="dynamic">动态调整</button>
+    <!-- <button class="layui-btn layui-btn-sm layui-bg-green" lay-event="dttz">分析</button> -->
+    <!-- <button class="layui-btn layui-btn-sm layui-bg-orange" lay-event="adminEdit">研判</button> -->
+    <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="adminDel">删除</button>
+    <button class="layui-btn layui-btn-sm layui-bg-cyan" lay-event="admin">管控</button>
+    <button class="layui-btn layui-btn-sm layui-top-warm" lay-event="exportFile">导出</button>
+    <!-- cl-query -->
+    <button class="cl-query   layui-btn-sm " lay-event="a">
+      <span class="" >人</span>
+    </button>
+    <button class="cl-query  layui-btn-sm"  lay-event="b">
+      <span class="" >机</span>
+    </button>
+    <button class="cl-query  layui-btn-sm  " lay-event="c">
+      <span class="" >管</span>
+    </button>
+    <button class="cl-query  layui-btn-sm  " lay-event="d">
+      <span class="" >环</span>
+    </button>
+    <div class="layui-inline ">
+      <label for="" class="layui-form-label">等级</label>
+      <div class="layui-input-inline cl-select">
+        <select  name="interest" lay-filter="aihao">
+            <option value="1" selected="">所有</option>
+          <option value="0">重大风险</option>
+          <option value="1">较大风险</option>
+          <option value="2">一般风险</option>
+          <option value="3"  >低风险</option>
+        </select>
+      </div>
+    </div>
+    <div class="layui-inline cl-select">
+        <input type="text" style='width:200px;' class="layui-input" placeholder="请输入关键字">
+    </div>
+    <button class="layui-btn layui-btn-normal  layui-btn-sm " lay-event="select"> 搜索 </button>
+    <button  class="layui-btn layui-btn-normal layui-btn-sm" lay-event="reset" >
+      刷新
+    </button>
+    <!-- end -->
+  </div>
+</script>
+
+  <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">显示</a>
+    <!-- <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a> -->
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  </script>
+
+  <script type="text/html" id='a-link'>
+      <a href="javascript:;" class="layui-table-link">{{ d.dwfk }}</a>
+</script>
+  <script src="../../layuiAdmin/layui/layui.all.js" charset="utf-8"></script>
+  <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+
+  <script>
+    layui.use(['form', 'layedit', 'laydate', 'table'], function () {
+      var table = layui.table
+        , form = layui.form
+        , layer = layui.layer
+        , layedit = layui.layedit
+        , laydate = layui.laydate
+        , $ = layui.jquery
+      //日期
+      laydate.render({
+        elem: '#date1'
+      });
+      laydate.render({
+        elem: '#date2'
+      });
+      laydate.render({
+        elem: '#date3'
+        , type: 'year'
+      });
+      let tab = table.render({
+        elem: '#test'
+        , url: '/js/table.json'
+        , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+        , defaultToolbar: ['']
+        , title: '用户数据表'
+        , cols: [[
+          { type: 'checkbox', fixed: 'left' }
+          , { field: 'id', title: 'ID', width: 80, fixed: 'left', unresize: true, sort: true, hide: true }
+          , { field: 'point', title: '风险点', fixed: 'left', unresize: true, sort: true }
+          , { field: 'fxtype', title: '风险类型', edit: 'text' }
+          , {
+            field: 'content', title: '风险描述', edit: 'text'
+          }
+          , { field: 'fxgrade', title: '风险等级', edit: 'text', align: 'center', }
+          , { field: 'dwfk', title: '危害因素和管控措施', align: 'center', templet: '#a-link' }
+          , { field: 'hei', title: '最高管控层级', }
+          , { field: 'jc', title: '最高管控责任人', edit: 'text', sort: true }
+          , { field: 'data', title: '评估日期', edit: 'text', sort: true }
+          , { field: 'yq', title: '解除日期', edit: 'text', sort: true, hide: true }
+          , { field: 'yhs', title: '状态', edit: 'text', sort: true }
+        ]]
+        , page: true
+        , id: 'tab'
+      });
+
+      //头工具栏事件
+      table.on('toolbar(test)', function (obj) {
+        var checkStatus = table.checkStatus(obj.config.id);
+        switch (obj.event) {
+          case 'report':
+            let count = checkStatus.data.length
+            if (count > 0) {
+              layer.confirm('确认对选择的' + count + '条数据拟上报？', function (index) {
+
+              });
+            } else {
+              layer.msg('请选择一条数据');
+            }
+
+            break;
+          case 'a':
+            statusABC(0, 1, 2, 3)
+            break;
+          case 'b':
+            statusABC(1, 0, 2, 3)
+            break;
+          case 'c':
+            statusABC(2, 1, 0, 3)
+            break;
+          case 'd':
+            statusABC(3, 1, 0, 2)
+            break;
+          case 'dynamic':
+            parent.layer.open({
+              type: 2,
+              anim: 1,
+              zIndex: layer.zIndex, //重点1
+              title: '风险评级',
+              maxmin: false, //开启最大化最小化按钮
+              area: ['50%', '40%'],
+              content: '/page/风险/风险评级.html',
+              btn: ['确定'],
+              success: function (layero) {
+                // layer.setTop(layero); //重点2
+              },
+              end: function () {
+                table.reload('table', {
+                  url: TABLEURL
+                  , where: {} //设定异步数据接口的额外参数
+                  //,height: 300
+                });
+              }
+
+            });
+            break;
+          case 'exportFile':
+            table.exportFile('test', checkStatus.data, 'xls'); //data 为该实例中的任意数量的数据
+            break;
+
+        };
+      });
+      function statusABC(a, b, c, d) {
+        $('.cl-query:eq(' + a + ')').addClass('is-active')
+        $('.cl-query:eq(' + b + ')').removeClass('is-active')
+        $('.cl-query:eq(' + c + ')').removeClass('is-active')
+        $('.cl-query:eq(' + d + ')').removeClass('is-active')
+      }
+      //监听行工具事件
+      table.on('tool(test)', function (obj) {
+        var data = obj.data;
+        //console.log(obj)
+        if (obj.event === 'del') {
+          layer.confirm('真的删除行么', function (index) {
+            obj.del();
+            layer.close(index);
+          });
+        } else if (obj.event === 'edit') {
+          layer.prompt({
+            formType: 2
+            , value: data.email
+          }, function (value, index) {
+            obj.update({
+              email: value
+            });
+            layer.close(index);
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

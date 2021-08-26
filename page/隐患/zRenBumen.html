@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+  <link rel="stylesheet" href="../../src/all.css">
+  <title>选择部门</title>
+  <style>
+    .main {
+      width: 100%;
+      height: 100%;
+      margin: auto;
+    }
+
+    .box {
+      height: 300px;
+      overflow: auto;
+    }
+
+    .btn {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <div class="box">
+      <div id="test12" class="demo-tree-more"></div>
+    </div>
+    <button type="button" id='LAY-btn-add' class="layui-btn btn  layui-btn-normal">
+      <i class="layui-icon">&#xe608;</i> 添加
+    </button>
+  </div>
+</body>
+<script src="../../layuiadmin/layui/layui.js"></script>
+<script>
+  layui.use(['tree', 'layer', 'jquery'], function () {
+    var tree = layui.tree
+      , layer = layui.layer
+      , $ = layui.jquery
+    var checkData = ''
+    $.ajax({
+      url: '/js/bumentree.json',
+      success: function (e) {
+        //基本演示
+        tree.render({
+          elem: '#test12'
+          , data: e.data
+          , showCheckbox: false  //是否显示复选框
+          , id: 'demoId1'
+          , isJump: false //是否允许点击节点时弹出新窗口跳转
+          , click: function (obj) {
+            var data = obj.data;  //获取当前点击的节点数据
+            if (data.children && data.children.length != 0) {
+              return
+            } else {
+              checkData = data;
+
+            }
+          }
+        });
+      }
+    })
+    //获得选中的节点
+    // var checkData = tree.getChecked('demoId1');
+    window.check = function () {
+      if (!checkData) {
+        layer.msg('请选择')
+      } else {
+        return checkData;
+      }
+    }
+  })
+</script>
+
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../layuiAdmin/layui/css/layui.css" media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+  <style>
+    .margin-top {
+      margin-top: 20px;
+    }
+
+    .layui-form-label {
+      white-space: nowrap;
+      width: auto !important;
+    }
+
+    .height {
+      height: 20px;
+    }
+  </style>
+</head>
+
+
+<body>
+  <div class="layui-fluid">
+    <div class="layui-card margin-top">
+      <div class="height"></div>
+      <form class="layui-form" action="" style="padding:10px;">
+        <!-- 行 -->
+        <div class="layui-form-item">
+          <div class="layui-inline">
+            <label class="layui-form-label">检查日期</label>
+            <div class="layui-input-inline" style="width: 100px;">
+              <input type="text" name="date" id="date1" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid">-</div>
+            <div class="layui-input-inline" style="width: 100px;">
+              <input type="text" name="date" id="date" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label for="" class="layui-form-label">部门:</label>
+            <div class="layui-input-inline">
+              <select name="modules" lay-verify="required" lay-search="">
+                <option value="">请选择</option>
+                <option value="1">五矿</option>
+                <option value="1">采煤战线</option>
+              </select>
+            </div>
+          </div>
+          <div class="layui-inline">
+            <div class="layui-inline">
+              <input type="radio" id="a" name="like1[write]" lay-skin="primary" title="本部门" checked="">
+            </div>
+            <div class="layui-inline">
+
+              <input type="radio" id="a" name="like1[write]" lay-skin="primary" title="本部门及下级部门" checked="">
+            </div>
+          </div>
+          <!--  -->
+          <div class="layui-inline">
+            <label for="" class="layui-form-label">专业</label>
+            <div class="layui-input-inline">
+              <input type="text" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-inline">
+            <button type="button" class="layui-btn layui-btn-sm">
+              <i class="layui-icon">&#xe615;</i> 查询
+            </button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+    <div class="layui-row">
+      <div class="layui-col-md6">
+        <div class="layui-card">
+          <!-- <div class="layui-card-header">柱形图</div> -->
+          <div class="layui-card-body">
+            <div id="EchartZhu1" style="width: 100%;height: 500px;"> </div>
+          </div>
+        </div>
+      </div>
+      <div class="layui-col-md6">
+        <div class="layui-card">
+          <!-- <div class="layui-card-header">柱形图</div> -->
+          <div class="layui-card-body">
+            <div id="EchartZhu2" style="width: 100%;height: 500px;"> </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="layui-row">
+      <div class="layui-col-md12">
+        <div class="layui-card">
+          <!-- <div class="layui-card-header">柱形图</div> -->
+          <div class="layui-card-body">
+            <div id="EchartZhu3" style="width: 100%;height: 500px;"> </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../../layuiAdmin/layui/layui.all.js" charset="utf-8"></script>
+  <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+
+  <script>
+
+    layui.config({
+      base: '/layuiAdmin/lib/extend/' //这个就是你放Echart.js的目录
+    }).use(['form', 'table', 'echarts'], function () {
+      var form = layui.form
+        , $ = layui.jquery
+        , echarts = layui.echarts
+      var chartZhu1 = echarts.init(document.getElementById('EchartZhu1'))
+      var chartZhu2 = echarts.init(document.getElementById('EchartZhu2'))
+      var chartZhu3 = echarts.init(document.getElementById('EchartZhu3'))
+      //指定图表配置项和数据
+      var optionchart = {
+        title: {
+          text: ''
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#6a7985'
+            }
+          }
+        },
+        legend: {
+          data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
+        },
+        toolbox: {
+          feature: {
+            saveAsImage: {}
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: 'category',
+            boundaryGap: false,
+            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value'
+          }
+        ],
+        series: [
+          {
+            smooth: true,
+            name: '邮件营销',
+            type: 'line',
+            stack: '总量',
+            areaStyle: {},
+            emphasis: {
+              focus: 'series'
+            },
+            data: [120, 132, 101, 134, 90, 230, 210]
+          },
+          {
+            name: '联盟广告',
+            type: 'line',
+            stack: '总量',
+            areaStyle: {},
+            emphasis: {
+              focus: 'series'
+            },
+            data: [220, 182, 191, 234, 290, 330, 310]
+          },
+          {
+            name: '视频广告',
+            type: 'line',
+            stack: '总量',
+            areaStyle: {},
+            emphasis: {
+              focus: 'series'
+            },
+            data: [150, 232, 201, 154, 190, 330, 410]
+          },
+          {
+            name: '直接访问',
+            type: 'line',
+            stack: '总量',
+            areaStyle: {},
+            emphasis: {
+              focus: 'series'
+            },
+            data: [320, 332, 301, 334, 390, 330, 320]
+          },
+          {
+            name: '搜索引擎',
+            type: 'line',
+            stack: '总量',
+            label: {
+              show: true,
+              position: 'top'
+            },
+            areaStyle: {},
+            emphasis: {
+              focus: 'series'
+            },
+            data: [820, 932, 901, 934, 1290, 1330, 1320]
+          }
+        ]
+      };
+      let option1 = {
+        title: {
+          text: '隐患状态多维分析',
+          subtext: '分析',
+          left: 'center'
+        },
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'left',
+          data: ['新增', '提交', '下达']
+        },
+        series: [
+          {
+            name: '访问来源',
+            type: 'pie',
+            radius: '50%',
+            data: [
+              { value: 1048, name: '新增' },
+              { value: 735, name: '提交' },
+              { value: 580, name: '下达' },
+            ],
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
+        ]
+      };
+      let option2 = {
+        title: {
+          text: '隐患状态多维分析',
+          subtext: '分析',
+          left: 'center'
+        },
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'left',
+          data: ['处理中', '申诉', '完成']
+        },
+        series: [
+          {
+            name: '访问来源',
+            type: 'pie',
+            radius: '50%',
+            data: [
+              { value: 1048, name: '处理中' },
+              { value: 735, name: '申诉' },
+              { value: 580, name: '完成' },
+            ],
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
+        ]
+      };
+      chartZhu1.setOption(option1, true);
+      chartZhu2.setOption(option2, true);
+      chartZhu3.setOption(optionchart, true);
+    });
+  </script>
+</body>
+
+</html>
