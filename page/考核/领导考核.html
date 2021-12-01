@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="layuiadmin/style/admin1.css" media="all">
+    <link rel="stylesheet" href="src/all.css" media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+
+<body style="background:#FFF">
+    <!--<form method="post" action="$cls.getrooturl()?type=add&id=$!id&mid=${jb}!mid&tabid=${tabid}&job=${job}&tbname=${tbname}" class="pageForm required-validate" onsubmit="return validateCallback(this, $isAjaxDone);">-->
+    <!--navTabAjaxDone,dialogAjaxDone  -->
+    <!-- 正文开始 -->
+    <div class="layui-fluid">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <form class="layui-form" action="" lay-filter='form'>
+                    <div class="layui-fluid" style="margin-top: 10px;">
+                        <!--<input id="hpflownods" name="hpflownods" type="hidden" value="" />-->
+                        <input name="isadd" type="hidden" value="$!isadd" />
+                        <!--是否第一次添加 0第一次 1不是第一次-->
+                        <input name="add" type="hidden" value="l_depart" />
+                        <div class="layui-form-item">
+                            <label class="layui-form-label layui-form-required">单位</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="l_depart" id="l_depart" lay-verify="required" autocomplete="off" placeholder="请输入单位" class="layui-input" value="$!l_depart">
+                            </div>
+                        </div>
+                        <input name="l_depart_id" id="l_depart_id" type="hidden" value="$!l_depart_id" />
+                        <!-- 主体部门 -->
+                        <input name="add" type="hidden" value="l_main_depart_id" />
+                        <input name="l_main_depart_id" id="l_main_depart_id" type="hidden" value="$!l_main_depart_id" />
+                        <!--  -->
+                        <input name="add" type="hidden" value="l_postjob" />
+                        <div class="layui-form-item">
+                            <label class="layui-form-label layui-form-required">职务</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="l_postjob" lay-verify="required" autocomplete="off" placeholder="请输入职务" class="layui-input" value="$!l_postjob">
+                            </div>
+                        </div>
+                        <input name="add" type="hidden" value="l_name" />
+                        <div class="layui-form-item">
+                            <label class="layui-form-label layui-form-required">姓名</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="l_name" lay-verify="required" autocomplete="off" placeholder="请输入姓名" class="layui-input" value="$!l_name">
+                            </div>
+                        </div>
+                        <input name="add" type="hidden" value="l_all_score" />
+                        <div class="layui-form-item">
+                            <label class="layui-form-label layui-form-required">季度累计计分</label>
+                            <div class="layui-input-block">
+                                <input type="number" name="l_all_score" lay-verify="required|number" autocomplete="off" placeholder="请输入季度累计计分" class="layui-input" value="$!l_all_score">
+                            </div>
+                        </div>
+                        <input name="add" type="hidden" value="l_month" />
+                        <div class="layui-form-item">
+                            <label class="layui-form-label layui-form-required">月份</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="l_month" lay-verify="required" autocomplete="off" placeholder="请输入月份" class="layui-input date_lay_month" value="$!l_month">
+                            </div>
+                        </div>
+                        <input name="add" type="hidden" value="l_detail" />
+                        <div class="layui-form-item">
+                            <label class="layui-form-label layui-form-required">详情</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="l_detail" lay-verify="required" autocomplete="off" placeholder="请输入详情" class="layui-input" value="$!l_detail">
+                            </div>
+                        </div>
+                        <input name="add" type="hidden" value="l_origin" />
+                        <input type="hidden" name="l_origin" lay-verify="required" autocomplete="off" placeholder="请输入来源" class="layui-input" value="$cls.setck('department_name')">
+                        <!--  <div class="layui-form-item">
+                            <label class="layui-form-label layui-form-required">来源</label>
+                            <div class="layui-input-block">
+
+                                
+                            </div>
+                        </div> -->
+                        <input name="add" type="hidden" value="l_date" />
+                        <div class="layui-form-item">
+                            <label class="layui-form-label layui-form-required">日期</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="l_date" lay-verify="required" autocomplete="off" placeholder="请输入日期" class="layui-input date_lay" value="$!l_date">
+                            </div>
+                        </div>
+                        <input name="add" type="hidden" value="l_bassis" />
+                        <div class="layui-form-item">
+                            <label class="layui-form-label layui-form-required">计分依据</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="l_bassis" lay-verify="required" autocomplete="off" placeholder="请输入计分依据" class="layui-input" value="$!l_bassis">
+                            </div>
+                        </div>
+                        <input name="add" type="hidden" value="l_score" />
+                        <div class="layui-form-item">
+                            <label class="layui-form-label layui-form-required">计分</label>
+                            <div class="layui-input-block">
+                                <input type="number" name="l_score" lay-verify="required|number" autocomplete="off" placeholder="请输入计分" class="layui-input" value="$!l_score">
+                            </div>
+                        </div>
+                        <input name="add" type="hidden" value="l_address" />
+                        <div class="layui-form-item">
+                            <label class="layui-form-label layui-form-required">地点</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="address_name" name="l_address" lay-verify="required" autocomplete="off" placeholder="请输入地点" class="layui-input" value="$!l_address">
+                            </div>
+                        </div>
+
+                        <input name="add" type="hidden" value="l_address_id" />
+                        <input name="l_address_id" id="l_address_id" type="hidden" value="$!l_address_id" />
+
+                        <div class="layui-form-item btnbox" style="text-align:center;">
+                            <button type="submit" class="layui-btn submit " lay-submit="" lay-filter="layajax_add">立即提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="mask">
+        <i class="load layui-anim-loop layui-anim-rotate layui-anim layui-icon-loading layui-icon"></i>
+    </div>
+    <script src="layuiadmin/modules/axios.min.js"></script>
+    <script src="layuiadmin/layui/layui.js"></script>
+    <script>
+    layui.config({
+        base: 'layuiadmin/modules/'
+    }).use(['form', 'layedit', 'laydate', 'main','loadsearch','loading'], function() {
+        var form = layui.form,
+            $ = layui.jquery,
+            layer = layui.layer,
+            layedit = layui.layedit,
+            axios = layui.main,
+            laydate = layui.laydate,
+             loading = layui.loading,
+            loadsearch= layui.loadsearch
+        $('.mask:eq(0)').hide();
+        /* 日期 渲染 */
+        laydate.render({
+            elem: '.date_lay_month',
+            format: 'MM月',
+            type: 'month'
+        })
+        laydate.render({
+            elem: '.date_lay',
+            format: 'MM月dd日'
+        })
+        /* 继承 */
+        inherits(Click_Element, Select_Opener);
+        const click_ele = new Click_Element();
+        // 选择部门
+        click_ele.init();
+
+        //监听指定开关
+        form.on('switch(switchTest)', function(data) {
+            layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
+                offset: '6px'
+            });
+            layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+        });
+
+        //监听提交
+        form.on('submit(layajax_add)', function(data) {
+            axios({
+                method: 'post',
+                url: '$cls.getrooturl()?type=add&id=$!{id}&mid=$!{mid}&tabid=$!{tabid}&job=${job}&tbname=${tbname}',
+                data: $("form").serialize(),
+            }).then(res => {
+                parent.layer.closeAll();
+
+            })
+
+            return false;
+        });
+        /*  检查地点   */
+        loadsearch.render({
+            ele: '#address_name',
+            idele: '#l_address_id',
+            url: "${cls.getrooturl()}?type=sel&tabid=${tabid}&mid=${mid}&job=${job}&tbname=${tbname}&T=风险点管理SQL",
+            where: "keyword",
+            wherereq: function() {
+                return {
+                    ascription: $('#l_main_depart_id').val()
+                }
+            },
+            cententName: 'fxd_names',
+            template: `<div></div>`
+        })
+        /* 继承关系实现 */
+        function inherits(Child, Parent) {
+            var F = function() {};
+            F.prototype = Parent.prototype;
+            Child.prototype = new F();
+            Child.prototype.constructor = Child;
+        }
+        /* 点击元素 事件 */
+        function Click_Element() {
+            // 给弹窗类使用
+            this.ele = null;
+            this.ele_id = null;
+            this.min_dept_id = null;
+            // 继承部门弹窗 
+            Select_Opener.call(this);
+
+            this.init = function() {
+                this.duty();
+            }
+            // 责任部门
+            this.duty = function() {
+                let _this = this;
+                _this.ele = $('#l_depart');
+
+                this.ele.on('click', function() {
+                    _this.ele = $('#l_depart');
+                    _this.ele_id = $('#l_depart_id');
+                    _this.min_dept_id = $('#l_main_depart_id');
+                    _this.open()
+                })
+            };
+        }
+        /* 单选 弹窗 */
+        function Select_Opener(Parent) {
+            // 选择组织机构  单选
+            this.url = '${cls.getrooturl()}?type=ajaxshow&tabid=${tabid}&zr=&mid=${mid}&job=${job}&tbname=${tbname}&T=选择组织机构';
+            this.open = function() {
+                let _this = this;
+                layer.open({
+                    type: 2,
+                    zIndex: layer.zIndex, //重点1
+                    title: '选择所属部门',
+                    shadeClose: true,
+                    shade: true,
+                    maxmin: false, //开启最大化最小化按钮
+                    area: ['60%', '90%'],
+                    btn: ['确定', '取消'],
+                    content: _this.url,
+                    success: function(layero, index) {
+                        _this.success(layero, index)
+                    },
+                    yes: function(index) { _this.yes(index) }
+                })
+            };
+            this.success = function(layero, index) {
+                let _this = this
+                var iframeWindow = window['layui-layer-iframe' + index]
+                iframeWindow.addEventListener('dblclick', () => {
+                    var el = iframeWindow.layui.el;
+                    if (el) {
+                        let data = el.getRadioChecked()
+                        if (data.length == 1) {
+
+                            _this.ele_id.val(data[0].id)
+                            _this.ele.val(data[0].bumen_name)
+                            if (_this.min_dept_id) {
+                                // 主体部门
+                                _this.min_dept_id.val(data[0].pname_id);
+                            }
+
+                            layer.close(index)
+                        }
+                    }
+                })
+            };
+            this.yes = function(index) {
+                let _this = this
+
+                var iframeWindow = window['layui-layer-iframe' + index]
+                let data = iframeWindow.layui.el.getRadioChecked()
+                if (data.length <= 0) {
+                    layer.msg('请选择数据')
+                    return;
+                }
+                _this.ele_id.val(data[0].id)
+                _this.ele.val(data[0].bumen_name);
+                if (_this.min_dept_id) {
+                    _this.min_dept_id.val(data[0].pname_id);
+                }
+
+                layer.close(index)
+            }
+
+        }
+    });
+    </script>
+</body>
+
+</html>

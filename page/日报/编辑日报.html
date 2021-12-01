@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="src/all.css" media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <style>
+        .content{
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    .blod{
+    }
+    .titles{
+      text-align: center;
+
+    }
+    h1{
+      font-weight: 700;
+
+    }
+    .c_text{
+      text-align: justify;
+      text-indent: 30pt;
+      word-wrap: break-word;
+      font-size: 15.0pt;
+      width: 100%;
+    }
+    .textedit{
+        font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+    <div class="layui-fluid margin-top">
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md6">
+                <div class="layui-card">
+                  <input type="hidden" name="isadd" value="$!isadd">
+                    <div class="layui-card-body">
+                        <div class="layui-tab" lay-filter="tab1">
+                            #set($list=$cls.getpgdt("SELECT xt_dict_json ->> 'dict_name' as name, xt_dict_json ->> 'dict_text' as text ,xt_dict_json->>'sort' as sort,ROW_NUMBER () OVER (ORDER BY xt_dict_json ->> 'sort' asc) as num FROM xt_dict where xt_dict_json ->> 'type' = 'dailyType' ORDER BY xt_dict_json ->> 'sort' ASC"))
+                            <ul class="layui-tab-title">
+                                #foreach($rows in $list.Rows)
+                                #if( $rows.sort == '0')
+                                <li class="layui-this">$rows.name</li>
+                                #else
+                                <li>$rows.name</li>
+                                #end
+                                #end
+                            </ul>
+                            <div class="layui-tab-content">
+                                #foreach($rows in $list.Rows)
+                                #if( $rows.sort == '0')
+                                <div class="layui-tab-item layui-show">
+                                    <div class="content">
+                                        <div class='title'>$rows.name</div>
+                                        <textareas id="$rows.name" class="layui-textareas textedit" style="display: none">
+                                        </textareas>
+                                        <div class="layui-btn-group">
+                                            <button type="button" class="layui-btn layui-btn-primary layui-border-black  layui-btn-xs empty">清空</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                #else
+                                <div class="layui-tab-item">
+                                    <div class="content">
+                                        <div class='title'>$rows.name</div>
+                                        <textareas id="$rows.name" class="layui-textareas textedit" style="display: none">
+                      </textareas>
+                                        <div class="layui-btn-group">
+                                            <!-- <button type="button" class="layui-btn">保存</button> -->
+                                            <button type="button" class="layui-btn layui-btn-primary layui-border-black  layui-btn-xs empty">清空</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                #end
+                                #end
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  -->
+            <div class="layui-col-md3">
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        日报筛选
+                    </div>
+                    <div class="layui-card-body">
+                        <div class="content">
+                            <div class="layui-show">
+                                <table class="layui-hide" id="test" lay-filter="test"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  -->
+            <div class="layui-col-md3">
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        日报预览
+                    </div>
+                    <div class="titles">
+                      <h1>安  全  信  息</h1>
+
+                      <span style="margin-top:10px;">安全监察局 </span> <span id='time'> </span>
+                    </div>    
+                    <div class="layui-card-body">
+                        <div class="content">
+                            <div class="layui-show" id='overcenter' style="overflow: auto;height: 600px;">
+                               ## #foreach($rows in $list.Rows)
+                               <!--  <div class="content" id='$rows.num'>
+                                </div> -->
+                                ###end
+                                
+                            </div>
+                        </div>
+                        <div class="">
+                          <button type="button" class="layui-btn" id='save'>保存</button> 
+                           <!-- <button class="layui-btn layui-btn-primary layui-border-blue" id="prev">预览</button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+      <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container cl">
+          <button class="layui-btn layui-btn-sm layui-top-add" lay-event="add">追加到现有</button>
+        </div>
+      </script>
+    <script src="layuiadmin/modules/axios.min.js"></script>
+     <script src="layuiadmin/modules/qs.js"></script>
+    <script src="layuiadmin/layui/layui.js"></script>
+    <script>
+    layui.config({
+        base: 'layuiadmin/modules/'
+    }).use(['main', 'notice', 'element', 'layedit', 'util'], function() {
+        var table = layui.table,
+            $ = layui.jquery,
+            notice = layui.notice,
+            element = layui.element,
+            axios = layui.main,
+            layedit = layui.layedit;
+        var util = layui.util;
+        // 当前显示的编辑器
+        let editIndex = 1
+        // 最终数据
+        let resData = [];
+        //构建一个默认的编辑器
+        let indexArr = [];
+        // 回显!=
+        let center = '$!dd_content';
+        if(center != ''){
+          let json = JSON.parse(center)
+          console.log(json.data);
+          let arr = json;
+          for (var i = 0; i < arr.length; i++) {
+            const obj = arr[i]
+            let key = Object.keys(obj);
+            $(`#${key}`).val(obj[key])
+          }
+        }
+        Date.prototype.format = function(fmt) { 
+               var o = { 
+                  "M+" : this.getMonth()+1,                 //月份 
+                  "d+" : this.getDate(),                    //日 
+                  "h+" : this.getHours(),                   //小时 
+                  "m+" : this.getMinutes(),                 //分 
+                  "s+" : this.getSeconds(),                 //秒 
+                  "q+" : Math.floor((this.getMonth()+3)/3), //季度 
+                  "S"  : this.getMilliseconds()             //毫秒 
+              }; 
+              if(/(y+)/.test(fmt)) {
+                      fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length)); 
+              }
+               for(var k in o) {
+                  if(new RegExp("("+ k +")").test(fmt)){
+                       fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+                   }
+               }
+              return fmt; 
+          } 
+        // 时间效正
+        $('#time').text( new Date().format("yyyy年MM月dd日") )
+        $('.textedit').each(function(d, i) {
+            // console.log(d,i)
+            var index = layedit.build(i, {
+                height: 585 //设置编辑器高度
+            });
+            indexArr.push(index);
+            //编辑器外部操作
+            var active = {
+                content: function() {
+                    $('#' + (d + 1) + '').empty()
+                    let a = $('.title').eq(index - 1).text()
+
+                    $('#' + (d + 1) + '').append(`<h3 class='blod'>${a}</h2>`)
+
+                    $('#' + (d + 1) + '').append(layedit.getText(index))
+                },
+                empty: function() {
+                    $(i).innerHTML='';
+                    layedit.setContent(index,"") //清除编辑器内容
+
+                }
+            };
+            
+            // 清空
+            $('.empty:eq(' + d + ')').on('click', function(D) {
+                active.empty()
+            })
+
+        })
+        setInterval(() => {
+            prev();
+        }, 1000)
+        
+        $('#save').on('click',function(d){
+          let str  = JSON.stringify({data:resData})
+          const DUPLICATE = ` #set($dup=$cls.getpgval("SELECT count(*) FROM daily WHERE daily_createdate >= CURRENT_DATE")) `  
+          let num = '$dup'
+          // if(num > 0 ){ layer.msg('非当日日报不可重复提交') return }
+            axios({
+                method: 'post',
+                url: '$cls.getrooturl()?type=add&id=$!{id}&mid=$!{mid}&tabid=$!{tabid}&job=${job}&tbname=${tbname}',
+                data:Qs.stringify({
+                  isadd:'$isadd',
+                    add:['dd_content','dd_depname','dd_depid','dd_report_type'],
+                    dd_depname:'$cls.setck("department_name")',
+                    dd_depid:'$cls.setck("department_id")',
+                    dd_report_type:'0',// 上报状态
+                    dd_content:JSON.stringify(resData)
+                },{indices:false})
+            }).then(res => {
+
+            })
+        })
+        $('#prev').on('click',function(d){
+          const ref =  window.open('$cls.getrooturl()?type=ajaxshow&id=$!{id}&mid=$!{mid}&tabid=$!{tabid}&job=${job}&tbname=${tbname}&T=预览日报&prev=1')
+
+          if (ref && ref.setData) ref.setData();
+        })
+        // 预览
+        function prev() {
+            let arr = []
+            for (var i = 0; i < indexArr.length; i++) {
+                let index = indexArr[i];
+
+                let a = $('.title').eq(i).text()
+
+                let obj ={};
+                let textareasCenter = layedit.getText(index)
+                if(textareasCenter != ''){
+                   let str = textareasCenter.replace(/\s*/g,"");
+                   obj[a] = str;
+                   if(str != ''){
+                      arr.push(obj)
+                   }
+                }
+               
+                // // 页面显示
+                /****/ 
+            }
+            divShow(arr,()=>{
+              resData = arr;
+            })
+        }
+        function divShow(arr,callback){
+          // 页面显示方法
+          let obj = {
+            0:'一、',
+            1:'二、',
+            2:'三、',
+            3:'四、',
+            4:'五、',
+            5:'六、',
+          }
+          $(`#overcenter`).empty()
+
+          for (var i = 0; i < arr.length; i++) {
+                const elem = arr[i];
+                let t = obj[i]
+                let a = Object.keys(elem)
+                // 内容
+                let text = elem[a]
+                /**正则 */
+                let r = new RegExp("(丁|戌|已|己|庚)(([0-9][0-9]))((-[0-9])[\s\S]*)", 'g');
+                let html = text.replace(r,'$1<sub>$2</sub>-$3');
+
+                let j = /#/g
+                html = html.replace(j,'<sup>#</sup>');
+                // console.log(html)
+                /**正则 */
+                $(`#overcenter`).append(`<h3 class='blod'>${t}${a}</h3>`)
+                $(`#overcenter`).append(`<p class="c_text">${html}</p>`);
+          }
+
+
+          callback()
+        }
+        $('.site-demo-layedit').on('click', function() {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+          let types = $('.layui-this:eq(0)').text() 
+
+          table.render({
+              elem: '#test',
+              height: 'full-135',
+              toolbar: '#toolbarDemo' ,
+            defaultToolbar:[],
+              data:[],
+              title: '日报',
+              cols: [
+                  [
+                      { type: 'checkbox', fixed: 'left' },
+                      { field: 'ids', width: 80, title: 'ids', sort: true, hide: true },
+                      { field: 'dd_depname', title: '单位', align: 'center', sort: true },
+                      { field: 'dd_content', title: types, align: 'center', templet:function(d){
+                      } },
+                  ]
+              ],
+              id: 'table',
+              page: true
+          });
+        // 处罚切换
+        element.on('tab(tab1)', function(data){
+          editIndex = data.index*1 +1
+          // console.log(this); //当前Tab标题所在的原始DOM元素
+          // console.log(); //得到当前Tab的所在下标
+          // console.log(data.elem); //得到当前的Tab大容器
+          // console.log('编辑器index',indexArr)
+          initTable();
+
+        });
+        initTable()
+        async function initTable(){
+            const res = await axios({
+                  methods:'get',
+                  url: '$cls.getrooturl()?type=sel&tabid=safe_showfe5b6778-a751-4713-b167-99e3951c6be7&mid=0ec10a16-2ca2-4c77-961e-9b87dd54e1d1&job=demo_node_1&tbname=daily&T=日报查看sql&dept=$cls.setck("department_id")',
+                  data:Qs.stringify({
+                    time:new Date().format("yyyy-MM-dd")
+                  })
+            })
+            if(res.code == 0){
+                  let resData = res.data;
+                  // 查看列表
+                  let result = resData?reqData(resData):[];
+                  // 日报类型
+                  let type = $('.layui-this:eq(0)').text() 
+                  table.reload('table',{
+                      data:result,
+                      cols: [
+                          [
+                              { type: 'checkbox', fixed: 'left' },
+                              { field: 'ids', width: 80, title: 'ids', sort: true, hide: true },
+                              { field: 'dd_depname', title: '单位', align: 'center', sort: true },
+                              { field: 'dd_content', title: type, align: 'center', templet:function(d){
+                                let arr = d.dd_content;
+                                let str = '';
+                                for (var i = 0; i < arr.length; i++) {
+                                  const o = arr[i]
+                                  str += o[type]
+                                }
+                                return str
+                              } },
+                          ]
+                      ],
+                      id: 'table',
+                      page: true
+                  });
+            }
+        // end 
+        }
+        function reqData(array){
+          let arr = []
+          let type = $('.layui-this:eq(0)').text() 
+          // 表格数据
+          for (var i = 0; i < array.length; i++) {
+              const elem = array[i]
+              if(elem.dd_content){
+                 // 
+                 let c_arr = [];
+                 let formatData = JSON.parse(elem.dd_content)
+                  for (var x = 0; x < formatData.length; x++) {
+                    const obj = formatData[x]
+                    if(obj[type] && obj[type] != '' ){
+                      c_arr.push(obj);
+                    } 
+                  }
+                  elem.dd_content = c_arr;
+              }
+              if(elem.dd_content.length >0){
+                arr.push(elem)
+              }
+          }
+          return arr;
+        }
+        
+         //头工具栏事件
+        table.on('toolbar(test)', function(obj) {
+            let type = $('.layui-this:eq(0)').text() 
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+              case 'add':
+                  let data = table.checkStatus('table').data; //table.getData('table');
+                  console.log(data)
+                  let str = ''
+                  for (var i = 0; i < data.length; i++) {
+                      const obj = data[i]
+                      let t = obj.dd_content
+                      console.log(t)
+                      if(t){
+                        for (var x = 0; x < t.length; x++) {
+                          const element = t[x]
+                          str += element[type] +'<br>'
+                        }
+                      }
+                  } 
+                 layedit.setContent(editIndex,str) //清除编辑器内容
+                break;
+            }
+        })
+    });
+    </script>
+</body>
+
+</html>
