@@ -159,7 +159,6 @@
                     <input type="hidden" value="$cls.setck('names')" name="yh_enroll" />
                     <!-- 录入人所在部门 -->
                     <input type="hidden" value="$cls.setck('department_id')" name="yh_enroll_id" />
-                    <!-- <input type="hidden" value="yh_state" name="add" /> -->
                     <div class="layui-card-header">基础信息</div>
                     <div class="layui-card-body">
                         <div class="layui-form-item layui-row">
@@ -308,7 +307,7 @@
                                             <div class="layui-inline layui-col-md4 layui-col-sm12">
                                                 <label for="" class="layui-form-label">整改要求:</label>
                                                 <div class="layui-input-block">
-                                                    <textareas rows="2" placeholder="请输入内容" id="yh_rectify" name="yh_rectify" class="layui-textareas"></textareas>
+                                                    <textareas rows="2" placeholder="请输入内容" name="yh_rectify" class="layui-textareas"></textareas>
                                                 </div>
                                             </div>
                                             <!--  -->
@@ -536,26 +535,6 @@
             // 录入人
             this.yh_enroll = "$cls.setck('names')";
             this.yh_enroll_id = "$cls.setck('department_id')"; // 录入所在部门
-            // // 责任部门
-            // this.bumen_name = '';
-            // this.responsibledepartme = '';
-            // // 主体部门
-            // this.depart_pname = '';
-            // // 检查地点
-            // this.address = ''; // id
-            // this.address_name = ''; // name
-            // this.yh_address_all = ''; // 详细地点
-            // // 人
-            // this.inspeople = '';
-            // this.accompany = '';
-            // this.peerpeople = '';
-            // // 检查日期
-            // this.inspectiondate = '';
-            // this.oldofclass = ''
-            // // 检查类别
-            // this.yh_zhuanxiang = '';
-
-            // this.filePath = []; // 文件
 
             this.init = function() {
                 $('.mask:eq(0)').hide();
@@ -699,7 +678,7 @@
                     _this.open()
                 })
             };
-            // 销号部门
+            // 销号部门 选择
             this.sales = function() {
                 let _this = this;
                 _this.ele = $('#del_dm')
@@ -723,7 +702,7 @@
                     _this.ele_id = $('#del_dm_id')
 
                     let name = _this.user.department_name;
-                    let id = _this.user.name.department_id;
+                    let id = _this.user.department_id;
 
                     _this.ele.val(name)
                     _this.ele_id.val(id)
@@ -1017,6 +996,7 @@
                     el: '#yh_kind',
                     name: 'yh_kind',
                     layVerify: 'required',
+                    layReqText: '请选择隐患种类',
                     layVerType: 'msg',
                     direction: 'up',
                     prop: {
@@ -1252,7 +1232,12 @@
                 })
                 /* 事件委托  ---删除 */
                 $('#yhContent').on('click', '.del-row', function(e) {
+                    let target = e.target
                     const row = $(this).parents('.layui-active-row').eq(0);
+                    let i = $(this).attr('index');
+                    // console.log(i)
+                    _this.form.splice(i, 1)
+                    main._set('form', _this.form)
                     row.remove();
                 })
                 /* 事件委托  ---复制  */
@@ -1294,7 +1279,7 @@
                 main._set('form', this.form)
                 /*  单选问题 */
                 let input = $(ele).find('input')
-                let textarea = $(ele).find('textarea')
+                let textareas = $(ele).find('textareas')
 
                 input.each(function(index, element) {
                     let old = $(element).attr('name_data');
@@ -1307,7 +1292,7 @@
                     }
                     $(element).attr('label_radio', `${indexs}`)
                 })
-                textarea.each(function(index, element) {
+                textareas.each(function(index, element) {
                     if (clear) {
                         $(element).val('')
                     }
@@ -1316,6 +1301,7 @@
                 /* 按钮 */
                 let btn = $(ele).find('.config_btn')
                 $(btn).removeClass('layui-hide')
+                $(ele).find('.del-row').attr('index', indexs)
                 /* 内容 */
                 let center = $(ele).find('.yh_content')
 
@@ -1338,17 +1324,17 @@
                 let time = $(ele).find('input[name="yh_requesttime"]');
                 // 改变id
                 $(time).eq(0).attr('id', `yh_requesttime_${indexs}`);
-                // 多个时间的话，无法刷新最小 选择时间 
+                // 多个时间的话，无法刷新最小 选择时间  已解决
                 const date_time = new Select_Date()
                 date_time.res_time(`#yh_requesttime_${indexs}`, 'formAdvForm_' + indexs, "like_" + indexs, "radio_" + indexs)
-                // let old = $(time).eq(0).attr('id');
-                // $(time).eq(0).attr('id', `${old}_${indexs}`);
+
 
             }
         }
         /* 保存 */
         function Submit() {
             this.stateType = 0;
+            this.other_obj_params = {}; // 其他完整参数
             Main.call(this);
 
             this.init = function() {
@@ -1364,6 +1350,7 @@
                     /* 验证 */
                     if (_this.verifi()) {
                         _this._getParams();
+                        _this.eachAxios();
                     }
 
                     return false
@@ -1374,6 +1361,8 @@
                     /* 验证 */
                     if (_this.verifi()) {
                         _this._getParams();
+                        _this.eachAxios();
+
                     }
                     return false
                 })
@@ -1383,6 +1372,8 @@
                     /* 验证 */
                     if (_this.verifi()) {
                         _this._getParams();
+                        _this.eachAxios();
+
                     }
 
                     return false
@@ -1398,22 +1389,172 @@
                     }
                     return true;
                 };
+                if (form.val("formAdvForm_basis").inspeople == '') {
+                    notice.msg('请选择检查人', { icon: 3 })
+                    return false
+                }
                 return true;
 
             };
             /* 获取数据 */
             this._getParams = function() {
-                let array = main.form;
-                let defaultform = main.defaultform
-                // "formAdvForm_1"
-                array.push(...defaultform)
-                let params = []
-                for (var i = 0; i < array.length; i++) {
-                  const element = array[i]
-                  let formdata = form.val(element);
-                  params.push(formdata)
+                // 隐患状态
+                let stateType = this.stateType;
+                // 默认form
+                let defaultform = main.defaultform;
+
+                let obj = {
+                    level: '$cls.setck("level")', // 隐患等级
+                    /* 废弃 */
+                    yh_circuit: '{}', //废弃   
+                    yh_terms: '', //废弃
+                    personalfine: 0, // 废弃但不能删除，三违罚款统计里调用
+                    fine: 0, //废弃但不能删除，三违罚款统计里调用 
+                    /* 废弃 */
+                };
+                for (var i = 0; i < defaultform.length; i++) {
+                    const element = defaultform[i];
+                    let formdata = form.val(element);
+                    obj = Object.assign(obj, formdata)
                 }
-                console.log(params)
+                // 检查部门
+                let insBumenName = obj.inspeople.split('~')[2] ? obj.inspeople.split('~')[2] : '$cls.setck("department_name")';
+                let insBumenId = obj.inspeople.split('~')[3] ? obj.inspeople.split('~')[3] : '$cls.setck("department_id")';
+                let origin = obj + '~' + insBumenId;
+                obj.yh_origin = origin;
+                // 责任追究
+                if (!obj.accountability) {
+                    obj.accountability = '0';
+                } //12
+                this.other_obj_params = obj;
+
+                // 完整值
+                let params = []
+                // 隐患内容
+                let array = main.form;
+                for (var i = 0; i < array.length; i++) {
+                    const element = array[i]
+                    let formdata = form.val(element);
+                    if (i != 0) {
+                        let obj_key = `yh_level_${i}`
+                        formdata.yh_level = formdata[obj_key]
+                        delete formdata[obj_key];
+                    };
+                    let like = `like_${i}`
+
+                    let nowxh = $(`input[name=${like}]:checked`).attr('title');
+                    if (nowxh == '当班整改' && stateType != 0) {
+                        stateType = 8 //隐患状态 --当班整改 下达直接销号 8 保存不走
+                    }
+
+                    /* 隐患状态 */
+                    formdata.yh_state = stateType;
+                    params.push(formdata)
+                }
+                /* Array */
+                this.params = params;
+            }
+            this.eachAxios = async function() {
+                if (!this.params) return;
+                // 改变 this 
+                let _this = this;
+                // 获取 其他 name 值
+                let params_obj = this.other_obj_params;
+                /* 深拷贝  */
+                let copy = this.params;;
+                let array = JSON.parse(JSON.stringify(copy));
+                /* 加载动画 */
+                const index = layer.load();
+                for (var i = 0; i < array.length; i++) {
+                    const element = array[i];
+                    element.yh_content.replace(/[\r\n]/g, ' ');
+
+                    let newPromise = await _this.genNewYhCode(element)
+                    console.log(newPromise)
+                }
+                layer.close(index)
+
+            };
+            /* 获取code */
+            this.genNewYhCode = async function(content) {
+                let _this = this;
+                let res = null;
+                let params = this.other_obj_params;
+
+                let inspectiondate = params.inspectiondate || '';
+                try {
+                    res = await axios({
+                        url: '/api/GenNewYinHuanCode',
+                        method: 'post',
+                        data: Qs.stringify({
+                            date: inspectiondate
+                        }),
+                        load: true
+                    })
+                } catch (e) {
+                    res = { code: 1 };
+                    return false
+                }
+                if (res && res.code == 0) {
+                    let codeParam = JSON.parse(JSON.stringify(params));
+                    delete codeParam.yh_code;
+                    codeParam.yh_code = res.data;
+
+                    await _this.getAxios(codeParam)
+                }
+            }
+            /* 发送请求 */
+            this.getAxios = async function(close = false, params) {
+                let obj = {
+                    operating_json: JSON.stringify(params), // 保存历史记录
+                    operating_type: '隐患下达', //操作类型 -- 后台已判断
+                    filepath: filePath.join(','), // 文件路径
+                    id: close ? id : guid(), // 保存时不会关闭，所以刷新id
+                }
+                if ("$!{id}") { // 编辑
+                    const res = await axios({
+                        method: 'post',
+                        url: '$cls.getrooturl()?type=ajaxaddup&mid=$!{mid}&tabid=$!{tabid}&job=${job}&tbname=${tbname}&T=updateselsql',
+                        data: Qs.stringify(params),
+                        load: false
+                    }).catch(e => {
+                        layer.msg('编辑修改失败！', { icon: 5 })
+                    })
+                } else {
+                    // 请求开始--新建
+                    delete params.id;
+                    params.id = guid(); // 修改id
+                    const res = await axios({
+                        method: 'post',
+                        url: '$cls.getrooturl()?type=ajaxaddup&mid=$!{mid}&tabid=$!{tabid}&job=${job}&tbname=${tbname}&T=circuit',
+                        data: Qs.stringify(params),
+                        load: false,
+                    }).catch(e => {
+                        layer.msg('新增隐患失败')
+                    })
+                    // if (res) {
+                    //     notice.msg('添加成功', { icon: 1, displayMode: 0 });
+                    // }
+
+                    // if (close) {
+                    //     parent.layer.closeAll();
+                    // } else {
+                    //     // 重置隐患内容
+                    //     $('textareas[name=yh_content]').each(function() {
+                    //         this.value = ''
+                    //     })
+                    //     $('textareas[name=yh_content]').each(function() {
+                    //         this.value = ''
+                    //     })
+
+                    //     document.getElementById('yh_rectify').value = ''
+                    //     // 缓存隐患数据
+                    //     layui.data('yhadd', {
+                    //         key: 'yh',
+                    //         value: params
+                    //     })
+                    // }
+                }
             }
 
         }
@@ -1439,8 +1580,14 @@
             cententName: 'fxd_names',
             template: `<div></div>`
         })
-
-
+        /* 生成id */
+        function guid() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0,
+                    v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
     });
     </script>
 </body>

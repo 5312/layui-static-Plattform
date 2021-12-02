@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="src/all.css" media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <style>
+        .layui-btn{
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layui-fluid margin-top">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <!-- 表格工具栏 -->
+                <form class="layui-form toolbar">
+                    <div class="layui-form-item">
+                        <div class="layui-inline form-search-show-expand">
+                            <label class="layui-form-label">日报查询:</label>
+                            <div class="layui-input-inline">
+                                <input id="tbAdvSelDate" name="createTime" class="layui-input icon-date" placeholder="选择注册时间" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="layui-inline"> 
+                            <button class="layui-btn icon-btn" lay-filter="tbAdvTbSearch" lay-submit>
+                                <i class="layui-icon"></i>搜索
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <table class="layui-hide" id="test" lay-filter="test"></table>
+            </div>
+        </div>
+    </div>
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container cl">
+      <button class="layui-btn layui-btn-sm layui-top-add" lay-event="add">新建</button>
+        <button class="layui-btn layui-btn-sm layui-top-warm" lay-event="report">上报</button>
+      <!-- <button class="layui-btn layui-btn-sm layui-top-danger" lay-event="del">删除</button> -->
+      <!-- <div class="layui-inline cl-select">
+        <label for="" class="layui-form-label">关键字</label>
+        <div class="layui-input-inline ">
+          <input type="text" name='keyword' style='width:200px;' class="layui-input" placeholder="请输入关键字">
+        </div>
+      </div>
+      <button class="layui-btn layui-btn-normal  layui-btn-sm  " lay-event="search"> 搜索 </button>
+      <button  class="layui-btn layui-btn-primary layui-btn-sm" lay-event="refresh" >刷新 </button> -->
+    </div>
+     
+  </script>
+    <script type="text/html" id="barDemo">
+        {{# if(d.dd_report_type != 1){  }}
+        <a class="layui-link layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-link  layui-btn-xs" lay-event="del">删除</a>
+        {{# } }}
+        <a class="layui-link layui-btn-xs" lay-event="prev">预览</a>  
+ {{# if(d.fb == 'True'){  }}
+        <a class="layui-link layui-btn-xs" lay-event="zweb">发布</a>  
+ {{# } }}
+    </script>
+    <script type="text/html" id="report">
+        {{# if(d.dd_report_type == 1){  }}
+           <button type="button" class="layui-btn layui-btn-xs layui-btn-radius layui-btn">已上报</button>
+        {{# }else{ }}
+           <button type="button" class="layui-btn layui-btn-xs layui-btn-radius layui-btn-danger">未上报</button>
+        {{# } }}
+    </script>
+    <script type="text/html" id="center">
+        {{# let json = d.dd_content; }}
+        {{# if(json) { }}
+            {{# let a = JSON.parse(json); }}
+            {{#  let arr = a }}
+
+            {{#   for (var i = 0; i < arr.length; i++) { }}
+            {{#   const ele = arr[i] }}
+            {{#   let key = Object.keys(ele) }}
+            {{#   console.log(ele) }}
+            <button type="button" class="layui-btn layui-btn-xs layui-btn-radius layui-btn">{{=ele[key]    }}</button>
+           {{#    } }}
+        {{# }  }}
+  
+    </script>
+    <script src="layuiadmin/modules/axios.min.js"></script>
+    <script src="layuiadmin/layui/layui.js"></script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+    <script>
+    layui.config({
+        base: 'layuiadmin/modules/'
+    }).use(['main', 'notice', 'laydate', 'form'], function() {
+        var table = layui.table,
+            $ = layui.jquery,
+            notice = layui.notice,
+            axios = layui.main,
+            form = layui.form,
+            laydate = layui.laydate
+        /* 渲染laydate */
+        laydate.render({
+            elem: '#tbAdvSelDate',
+            value: new Date()
+        });
+        table.render({
+            elem: '#test',
+            url: '${cls.getrooturl()}?type=sel&tabid=${tabid}&mid=${mid}&job=${job}&tbname=${tbname}&T=日报列表sql&dept=$cls.setck("department_id")',
+            height: 'full-60',
+            where: {
+                time: $('#tbAdvSelDate').val()
+            },
+            cellMinWidth: 80,
+            toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板
+            defaultToolbar: ['filter', 'exports', 'print'],
+            title: '用户数据表',
+            cols: [
+                [
+                    { type: 'checkbox', fixed: 'left' },
+                    { field: 'ids', width: 80, title: 'ids', sort: true, hide: true },
+                    // {
+                    //     field: 'dd_content',
+                    //     title: '日报内容',
+                    //     align: 'center',
+                    //     templet: '#center'
+                    // },
+                    { field: 'dd_depname', title: '所属部门', align: 'center', sort: true },
+                    { field: 'dd_report_type', title: '是否上报', align: 'center', toolbar: '#report', },
+                    { field: 'createdate', align: 'center', title: '时间', width: 200, sort: true },
+                    { field: 'update', align: 'center', title: '更新时间', width: 200, sort: true },
+                    { fixed: 'right', align: 'center', title: '操作', toolbar: '#barDemo', width: 180 }
+                ]
+            ],
+            id: 'table',
+            page: true
+        });
+
+        /* 表格搜索 */
+        form.on('submit(tbAdvTbSearch)', function(data) {
+            table.reload('table', {
+                where: {
+                    time: $('#tbAdvSelDate').val()
+                },
+                page: {
+                    curr: 1
+                }
+            }, false);
+
+            return false;
+        });
+        //头工具栏事件
+        table.on('toolbar(test)', function(obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+
+                case 'add':
+                    parent.layer.open({
+                        type: 2,
+                        zIndex: layer.zIndex, //重点1
+                        title: '新建',
+                        shadeClose: true,
+                        // shade: true,
+                        maxmin: false, //开启最大化最小化按钮
+                        area: ['90%', '95%'],
+                        content: '${cls.getrooturl()}?type=addshow&tabid=${tabid}&mid=${mid}&job=${job}&tbname=${tbname}',
+                        success: function(layero, index) {
+                            var iframeWindow = window['layui-layer-iframe' + index]
+                            var submitID = 'LAY-user-back-submit'
+                            var input = layero.find('iframe').contents().find('#' + submitID);
+                        },
+                        end: function() {
+                            table.reload('table', {}, false)
+                        }
+
+                    });
+                    break;
+                case 'edit':
+                    var data = checkStatus.data;
+                    if (data.length != 1) { notice.msg('请选择一条数据', { icon: 2 }); return }
+                    layer.open({
+                        type: 2,
+                        zIndex: layer.zIndex, //重点1
+                        title: '编辑',
+                        shadeClose: true,
+                        maxmin: false, //开启最大化最小化按钮
+                        area: ['90%', '90%'],
+                        content: '${cls.getrooturl()}?type=addshow&id=' + data[0].ids + '&tabid=${tabid}&mid=${mid}&job=${job}&tbname=${tbname}',
+                        success: function(layero, index) {
+
+                        },
+                        end: function() {
+                            table.reload('table', {}, false)
+                        }
+                    });
+                    break;
+                case 'report':
+                    var data = checkStatus.data;
+                    if (data.length != 1) { notice.msg('请选择一条数据', { icon: 2 }); return }
+
+                    layer.confirm('确认上报选中数据？', function(ler) {
+                        axios({
+                            url: '$cls.getrooturl()?type=add&mid=$!{mid}&tabid=$!{tabid}&job=${job}&tbname=${tbname}',
+                            method: 'post',
+                            data: Qs.stringify({
+                                add: ['dd_report_type'],
+                                dd_report_type: '1', // 已上报
+                                id: data[0].ids //.join(',')
+                            }, { indices: false })
+                        }).then(data => {
+                            table.reload('table', {}, false)
+                            axios({
+                                url: '$cls.getrooturl()?type=ajaxaddup&mid=$!{mid}&tabid=$!{tabid}&job=${job}&tbname=${tbname}&t=上报下级部门的日报',
+                                method: 'post',
+                                data:Qs.stringify({
+                                    dept:'$cls.setck("department_id")'
+                                })
+                            }).then( ()=>{console.log('上报下级部门的日报')})
+                            layer.close(ler)
+                        })
+                    });
+                    break;
+                case 'del':
+                    var data = checkStatus.data;
+                    if (data.length < 1) { notice.msg('请选择数据', { icon: 2 }); return }
+                    let idsarr = [];
+                    for (var i = 0; i < data.length; i++) {
+                        let obj = data[i]
+                        idsarr.push(obj.ids);
+                    }
+                    layer.confirm('真的删除选中数据么', function(ler) {
+                        axios({
+                            url: '${cls.getrooturl()}?type=del&mid=${mid}&tabid=${tabid}&job=${job}&tbname=${tbname}',
+                            method: 'post',
+                            data:Qs.stringify({
+                                id:idsarr.join(',')
+                            })
+                        }).then(data => {
+                            table.reload('table', {}, false)
+                            layer.close(ler)
+                        })
+                    });
+                    break;
+            };
+        });
+
+        //监听行工具事件
+        table.on('tool(test)', function(obj) {
+            // console.log(obj)
+            var data = obj.data;
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function(index) {
+                    axios({
+                        url: '$cls.getrooturl()?type=del&id=' + data.ids + '&mid=$!{mid}&tabid=$!{tabid}&job=${job}&tbname=${tbname}',
+                        method: 'post',
+                        data: $("form").serialize(),
+                    }).then(data => {
+
+                        table.reload('table', {}, false)
+                        layer.close(index)
+
+                    })
+
+
+                });
+            } else if (obj.event === 'edit') {
+                layer.open({
+                    type: 2,
+                    zIndex: layer.zIndex, //重点1
+                    title: '编辑',
+                    shadeClose: true,
+                    maxmin: false, //开启最大化最小化按钮
+                    area: ['90%', '90%'],
+                    content: '${cls.getrooturl()}?type=addshow&id=' + data.ids + '&tabid=${tabid}&mid=${mid}&job=${job}&tbname=${tbname}',
+                    success: function(layero, index) {
+
+                    },
+                    end: function() {
+                        table.reload('table', {}, false)
+                    }
+                });
+            } else if (obj.event === 'show') {
+                layer.open({
+                    type: 2,
+                    zIndex: layer.zIndex, //重点1
+                    title: '查看',
+                    shadeClose: true,
+                    maxmin: false, //开启最大化最小化按钮
+                    area: ['100%', '100%'],
+                    content: '${cls.getrooturl()}?type=addshow&id=' + data.ids + '&tabid=${tabid}&mid=${mid}&job=${job}&tbname=${tbname}',
+                });
+            } else if (obj.event == 'prev') {
+                const ref = window.open('$cls.getrooturl()?type=ajaxshow&id=$!{id}&mid=$!{mid}&tabid=$!{tabid}&job=${job}&tbname=${tbname}&T=预览日报&prev=' + data.ids)
+
+                if (ref && ref.setData) ref.setData();
+
+            } else if (obj.event == 'zweb') {
+                const CENTER = data.dd_content != '' ? JSON.parse(data.dd_content) : [];
+                const P1toP7_OBJ = {
+                    "集团安全主要活动": 'p1',
+                    "安全督察信息": 'p2',
+                    "安全监管信息": 'p3',
+                    "业务保安信息": 'p4',
+                    "安全情况": 'p5',
+                    "责任追究": 'p6',
+                    "保留": 'p7',
+                };
+                let p1_p7 = {
+                    p1: '',
+                    p2: '',
+                    p3: '',
+                    p4: '',
+                    p5: '',
+                    p6: '',
+                    p7: ''
+                }
+                if (!Object.keys) { layer.msg('请更新浏览器！'); return }
+                for (var i = 0; i < CENTER.length; i++) {
+                    const type_item_obj = CENTER[i];
+
+                    let item = Object.keys(type_item_obj)
+
+                    let p_name = P1toP7_OBJ[item[0]]
+                    // console.log(p_name)
+                    if (p_name != '') {
+                        let str = Object.values(type_item_obj)[0];
+                        let text  = str.replace(/<[^>]+>/g,"");//去掉所有的html标记
+                        p1_p7[p_name] = text;
+                    }
+                }
+                // console.log(p1_p7)
+                // return
+                axios({
+                    url: 'http://w3.aq.zgpmsm.cn/zweb/aqrb.ashx',
+                    method: 'post',
+                    params: {
+                        appid: '278554ba360',
+                        secret: "e284d92c56cb1595372",
+                        data: {
+                            rq: data.createdate,
+                            tbr: '$cls.setck("users_name")',
+                            ...p1_p7
+                        }
+                    },
+                    load: true
+                }).then(res => {
+                    if (res.success) {
+                        layer.msg('发布成功', { icon: 1 })
+                    } else {
+                        layer.msg(res.errorMsg, { icon: 2 })
+                    }
+                    table.reload('table', {}, false)
+                })
+            }
+
+        });
+
+
+
+
+    });
+    </script>
+</body>
+
+</html>

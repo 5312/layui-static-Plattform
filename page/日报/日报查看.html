@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="src/all.css" media="all">
+    <style>
+    .c_text {
+        text-align: justify;
+        text-indent: 30pt;
+        word-wrap: break-word;
+        font-size: 15.0pt;
+        width: 100%;
+    }
+    </style>
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+
+<body>
+    <div class="layui-fluid margin-top">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <textareas id='textval' class="layui-textareas textedit" style="display: none">
+                </textareas>
+            </div>
+        </div>
+    </div>
+    <script src="layuiadmin/modules/axios.min.js"></script>
+    <script src="layuiadmin/layui/layui.js"></script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+    <script>
+    layui.config({
+        base: 'layuiadmin/modules/'
+    }).use(['main', 'notice', 'element', 'layedit'], function() {
+        var table = layui.table,
+            $ = layui.jquery,
+            notice = layui.notice,
+            axios = layui.main,
+            element = layui.element,
+            layedit = layui.layedit
+
+
+
+        let center = '$!dd_content';
+        if (center != '') {
+            let json = ''
+            try {
+                json = JSON.parse(center)
+            } catch (e) {
+                let base = decodeURIComponent(escape(window.atob(center)));
+                if (typeof base == 'string') {
+                    json = JSON.parse(`${base}`)
+                }
+            }
+            let arr = json;
+            let str = ''
+            for (var i = 0; i < arr.length; i++) {
+                const obj = arr[i]
+                let key = Object.keys(obj);
+                let t = `<h3>${key}</h3><br>`
+                let a = obj[key]
+                let v = `<p class="c_text">${a}</p>`;
+
+                str += t + v
+            }
+            console.log(str)
+            $(`#textval`).html(str)
+            // layedit.sync(index)
+        }
+        let index = layedit.build('textval', {
+            height: 600 //设置编辑器高度
+        });
+
+    });
+    </script>
+</body>
+
+</html>

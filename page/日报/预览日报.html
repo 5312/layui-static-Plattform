@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="src/all.css" media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <style>
+    html,
+    body {
+        height: 100%;
+    }
+
+    .content {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .blod {}
+
+    .titles {
+        text-align: center;
+        margin: auto;
+        font-size: 15.0pt
+    }
+
+    .titles h1 {
+        font-size: 64px;
+        letter-spacing: 10px;
+    }
+
+    h1 {
+        font-weight: 700;
+
+    }
+
+    .c_text {
+        text-align: justify;
+        text-indent: 30pt;
+        word-wrap: break-word;
+        font-size: 15.0pt;
+        width: 100%;
+        line-height: 31.0pt;
+
+    }
+
+    .uns {
+        text-decoration: underline;
+        margin-top: 20px;
+        font-weight: normal;
+    }
+
+    .blod {
+        font-size: 15.0pt;
+        font-family: 宋体;
+        text-indent: 30.1 pt;
+        mso-char-indent-count: 2.0;
+        line-height: 31.0pt;
+    }
+    #overcenter{
+    
+    		font-size: 15.0pt;
+    }
+    #overcenter p{
+    		text-indent:30pt;
+    }
+    </style>
+</head>
+
+<body style="background: #fff;">
+    <div class="layui-fluid ">
+        <div class="titles">
+            <h1>安 全 信 息</h1>
+            <div class="uns">
+                <span>安全监察局 </span>
+                <span lang="EN-US" style="font-size: 15.0pt; mso-bidi-font-size: 10.0pt"><span style="mso-spacerun: yes">                            </span></span>
+                <!-- #set($time=$cls.getpgval("SELECT to_char( daily_createdate, 'yyyy年mm月dd日'  ) AS createdate FROM daily WHERE daily_id = '$prev'")) -->
+                <span>$time</span>
+            </div>
+        </div>
+        <div class="layui-card-body">
+            <div class="content">
+                <div class="layui-show" id='overcenter' style="overflow: auto;height: 600px;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="layuiadmin/modules/axios.min.js"></script>
+    <script src="layuiadmin/modules/qs.js"></script>
+    <script src="layuiadmin/layui/layui.js"></script>
+    <script>
+    layui.config({
+        base: 'layuiadmin/modules/'
+    }).use(['main', 'notice', 'element', 'layedit', 'util'], function() {
+        var table = layui.table,
+            $ = layui.jquery,
+            notice = layui.notice,
+            element = layui.element,
+            axios = layui.main,
+            layedit = layui.layedit;
+        var util = layui.util;
+        // 当前显示的编辑器
+        let editIndex = 1
+        // 最终数据
+        let resData = [];
+        //构建一个默认的编辑器
+        let indexArr = [];
+        const centerData = `#set($val=$cls.getpgval("SELECT daily_json ->> 'dd_content' AS dd_content FROM daily WHERE daily_id = '$prev'")) `
+
+        let center = '';
+
+        let data = '$!val'
+
+        if (data && data != '') {
+            try {
+                center = JSON.parse(data);
+                divShow(center)
+            } catch (e) {
+                let base = decodeURIComponent(escape(window.atob(data)));
+                if (typeof base == 'string') {
+                    json = JSON.parse(`${base}`)
+                    divShow(json)
+                }
+            }
+        }
+ 
+
+        // 预览
+        function prev() {
+            let arr = []
+            for (var i = 0; i < indexArr.length; i++) {
+                let index = indexArr[i];
+
+                let a = $('.title').eq(i).text()
+
+                let obj = {};
+                let textareasCenter = layedit.getText(index)
+                if (textareasCenter != '') {
+                    let str = textareasCenter.replace(/\s*/g, "");
+                    obj[a] = str;
+                    if (str != '') {
+                        arr.push(obj)
+                    }
+                }
+
+                // // 页面显示
+                /****/
+            }
+            divShow(arr, () => {
+                resData = arr;
+            })
+        }
+
+        function divShow(arr, callback) {
+            // 页面显示方法
+            let obj = {
+                0: '一、',
+                1: '二、',
+                2: '三、',
+                3: '四、',
+                4: '五、',
+                5: '六、',
+            }
+            $(`#overcenter`).empty()
+
+            for (var i = 0; i < arr.length; i++) {
+                const elem = arr[i];
+                let t = obj[i]
+                let a = Object.keys(elem)
+                // 内容
+                let text = elem[a]
+                /**正则 */
+                let r = new RegExp("(丁|戌|已|己|庚)(([0-9][0-9]))((-[0-9])[\s\S]*)", 'g');
+                let html = text.replace(r, '$1<sub>$2</sub>-$3');
+
+                let j = /#/g
+                html = html.replace(j, '<sup>#</sup>');
+                // console.log(html)
+                /**正则 */
+                $(`#overcenter`).append(`<div><b><span class='blod'>${t}${a}</span></b></div>`)
+                $(`#overcenter`).append(`<p class="c_text">${html}</p>`);
+            }
+            callback()
+        }
+
+
+    });
+    </script>
+</body>
+
+</html>

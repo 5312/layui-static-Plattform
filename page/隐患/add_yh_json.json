@@ -1,0 +1,51 @@
+{
+	"isadd": "1",
+	"yh_enroll": "超级管理员",
+	"yh_enroll_id": "000000000000000000000000000000000001",
+	"bumen_name": "掘进二队",
+	"responsibledepartme": "000000000000000000000000000000000959",
+	"depart_pname": "000000000000000000000000000000000096",
+	"address": "dc6ab0ba-752c-410d-be40-3db21f5bd9b4",
+	"address_name": "己17—33010风巷",
+	"yh_address_all": "",
+	"inspeople": "超级管理员~8be85b60-85a1-4e71-bd77-308396f8d2ff~集团~000000000000000000000000000000000001",
+	"keyword": "",
+	"accompany": "",
+	"peerpeople": "",
+	"inspectiondate": "2021-12-02", //14 
+	"oldofclass": "八点班",
+	"yh_zhuanxiang": "067799be-8e32-48d9-ad81-cf6e9f60dd3c",
+	"yh_route": "",
+	"del_dept": "集团",
+	"del_dept_id": "000000000000000000000000000000000001",
+	"yh_kind": "防尘防灭火",
+	"yh_fine": "0",
+
+	"file": "",
+
+	"operating_json": "{\"isadd\":\"1\",\"yh_enroll\":\"超级管理员\",\"yh_enroll_id\":\"000000000000000000000000000000000001\",\"add\":\"yh_fine\",\"bumen_name\":\"掘进二队\",\"responsibledepartme\":\"000000000000000000000000000000000959\",\"depart_pname\":\"000000000000000000000000000000000096\",\"address\":\"dc6ab0ba-752c-410d-be40-3db21f5bd9b4\",\"address_name\":\"己17—33010风巷\",\"yh_address_all\":\"\",\"inspeople\":\"超级管理员~8be85b60-85a1-4e71-bd77-308396f8d2ff~集团~000000000000000000000000000000000001\",\"keyword\":\"\",\"accompany\":\"\",\"peerpeople\":\"\",\"inspectiondate\":\"2021-12-02\",\"oldofclass\":\"八点班\",\"yh_zhuanxiang\":\"067799be-8e32-48d9-ad81-cf6e9f60dd3c\",\"yh_route\":\"\",\"yh_content\":\"123\",\"yh_rectify\":\"123\",\"yh_level\":\"一般隐患~c~#a7b308\",\"del_dept\":\"集团\",\"del_dept_id\":\"000000000000000000000000000000000001\",\"yh_kind\":\"防尘防灭火\",\"yh_requesttime\":\"2021-12-02\",\"like1\":\"0\",\"yh_fine\":\"0\",\"file\":\"\",\"accountability\":\"0\"}",
+	"operating_type": "隐患下达",
+	"yh_circuit": "{\"0\":\"ABCDE\",\"1\":\"ABCDE\",\"2\":\"ABCDE\",\"3\":\"ABCDE\",\"4\":\"AABCDE\",\"5\":\"ABCDE\",\"6\":\"ABCDE\",\"7\":\"ABCDE\",\"8\":\"ABCDE\"}",
+	"yh_terms": "",
+	"id": "6812ecd3-a5ab-4803-8384-9464b9c8e8b6",
+	"level": "A",
+
+	"yh_state": "0",
+
+	"yh_rectify": "123",
+	"yh_level": "一般隐患~c~#a7b308",
+	"yh_requesttime": "2021-12-02",
+
+	"yh_content": "123",
+	"yh_code": "202112023247", //39
+
+	"accountability": "0", //27
+	"personalfine": "0",
+	"fine": "0",
+	"filepath": "",
+
+	"yh_origin": "集团~000000000000000000000000000000000001",
+
+}
+
+39

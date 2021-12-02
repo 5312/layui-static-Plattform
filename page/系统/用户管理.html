@@ -2,304 +2,271 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <title>Layui</title>
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <link rel="stylesheet" href="../../layuiAdmin/layui/css/layui.css" media="all">
-  <link rel="stylesheet" href="../../src/all.css">
-  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
-  <style>
-    .margin-top {
-      margin-top: 20px;
-    }
-
-    .h1 {
-      font-size: 20px;
-      /* padding-left: 50px; */
-    }
-
-    .layui-form-label {
-      white-space: nowrap;
-    }
-
-    .height {
-      height: 20px;
-    }
-
-    .layui-table-tool {
-      background-color: #fff;
-    }
-
-
-
-    .layui-table thead tr {
-      background-color: #fff;
-    }
-
-    .padding {
-      padding-top: 10px;
-    }
-
-    #test12 {
-      float: left;
-      vertical-align: top;
-    }
-
-    .box {
-      padding-right: 10px;
-    }
-
-    .line {
-      height: 745px;
-      width: 2px;
-      background-color: #ddd;
-      vertical-align: top;
-      cursor: w-resize;
-      float: right;
-    }
-
-    .layui-link {
-      color: #4165d7;
-    }
-  </style>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="src/all.css" media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <style>
+        .tb-img-circle {
+            width: 40px;
+            height: 40px;
+            cursor: zoom-in;
+            border-radius: 50%;
+            border: 2px solid #dddddd;
+        }
+        #test+.layui-table-view .layui-table-body tbody>tr>td>.layui-table-cell {
+            height: 70px;
+            line-height: 48px;
+        }
+        #test+.layui-table-view .layui-table-body tbody>tr>td {
+            padding: 0;
+        }
+        .layui-table-cell {
+            height: auto;
+        }
+    </style>
 </head>
 
-
-<body class=" h100">
-
-  <div class="layui-fluid ">
-    <div class="layui-row layui-active-fluid ">
-      <div class="layui-active-left layui-box box" id='box'>
-        <div class="layui-card " style="  overflow: hidden;">
-          <div class="layui-card-header">组织机构</div>
-          <div class="layui-card-body margin-top layui-clear">
-            <div id="test12" class="demo-tree-more" style=" height:745px;"></div>
-            <!-- <div class="line" lay-active='line'></div> -->
-          </div>
+<body>
+    <div class="layui-fluid margin-top">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <table class="layui-hide" id="test" lay-filter="test"></table>
+            </div>
         </div>
-      </div>
-      <div class="layui-active-right">
-        <div class="layui-card margin-top padding">
-          <!-- layui-card-body -->
-          <div class="">
-            <form class="layui-form" action="">
-              <!-- 行 -->
-              <div class="layui-form-item">
-                <div class="layui-inline">
-                  <label for="" class="layui-form-label">辨识活动类型</label>
-                  <div class="layui-input-block" style="width:150px;">
-                    <select name="d" lay-verify="required">
-                      <option value="">直接选择</option>
-                      <option value="1">机电技术科</option>
-                      <option value="1">安全质量管理科</option>
-                    </select>
-                  </div>
-                </div>
-                <!--  -->
-                <div class="layui-inline">
-                  <label class="layui-form-label">开始日期</label>
-                  <div class="layui-input-inline">
-                    <input type="text" name="date" id="date" autocomplete="off" class="layui-input">
-                  </div>
-                </div>
-                <div class="layui-inline">
-                  <label for="" class="layui-form-label">结束日期</label>
-                  <div class="layui-input-inline">
-                    <input type="text" name="date" id="date1" autocomplete="off" class="layui-input">
-                  </div>
-                </div>
-
-                <div class="layui-inline">
-                  <label for="" class="layui-form-label">任务状态：</label>
-                  <div class="layui-input-block">
-                    <select name="modules" lay-verify="required">
-                      <option value="">请选择</option>
-                      <option value="1">机电技术科</option>
-                      <option value="1">安全质量管理科</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="layui-btn-container" style="text-align: right;">
-                  <button type="button" class="layui-btn layui-btn-sm layui-btn-radius ">
-                    <i class="layui-icon">&#xe615;</i> 查询
-                  </button>
-                  <button type="button" class="layui-btn layui-btn-radius  layui-btn-warm  layui-btn-sm">
-                    <i class="layui-icon">&#xe666;</i> 重置
-                  </button>
-                </div>
-              </div>
-
-            </form>
-          </div>
-        </div>
-        <div class="layui-card" style="padding:10px;">
-          <table class="layui-hide" id="test" lay-filter="test"></table>
-        </div>
-      </div>
     </div>
-
-  </div>
-
-  <script type="text/html" id="toolbarDemo">
-  <div class="layui-btn-container" >
-    <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="add"><i class='layui-icon'>&#xe624;</i>新增</button>
-    <button class="layui-btn layui-btn-sm" lay-event="chakan"> <i class='layui-icon'>&#xe642;</i>修改</button>
-    <button class="layui-btn layui-btn-sm  layui-btn-warm" lay-event="adminEdit"><i class='layui-icon'>&#xe691;</i>导入</button>
-    <button class="layui-btn layui-btn-sm  layui-btn-warm" lay-event="adminDel"><i class='layui-icon'>&#xe67d;</i>导出</button>
-
-    <!--  <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button> -->
-  </div>
-</script>
-
-  <script type="text/html" id="barDemo">
-    <a class="layui-link layui-btn-xs" lay-event="shift">转移</a>
-    <a class="layui-link layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-link layui-btn-xs" lay-event="del">删除</a>
+    <script type="text/html" id="toolbarDemo">
+        <form action="layui-form" lay-filter='form'>
+          <div class="layui-btn-container cl">
+          <button class="layui-btn layui-btn-sm layui-top-add" lay-event="import">审核通过</button>
+          <button class="layui-btn layui-btn-sm layui-top-danger" lay-event="del">删除</button>
+          <input type="checkbox" id='status' name="sex" value="1" lay-skin="switch" lay-text="已导入|未导入" lay-filter="sexDemo">
+        </div>
+       </form>
+     
   </script>
-  <script type="text/html" id="status">
-    {{# if(d.status){ }}
-      <a class="layui-btn layui-btn-xs layui-top-success" lay-event="edit">启用</a>
-    {{# }else{ }}
-    <a class="layui-btn layui-btn-xs layui-top-danger" lay-event="edit">禁用</a>
-    {{# } }}
-  </script>
-  <script src="../../layuiAdmin/layui/layui.all.js" charset="utf-8"></script>
-  <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
-
-  <script>
+    <script type="text/html" id="barDemo">
+        <a class="layui-link layui-btn-xs" lay-event="edit">修改部门</a>
+        <a class="layui-link  layui-btn-xs" lay-event="del">删除</a>
+    </script>
+    <script src="layuiadmin/modules/axios.min.js"></script>
+    <script src="layuiadmin/layui/layui.js"></script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+    <script>
     layui.config({
-      base: '/layuiAdmin/modules/'
-    }).use(['form', 'layedit', 'activeElm', 'laydate', 'table', 'tree', 'util'], function () {
-      var table = layui.table
-        , form = layui.form
-        , layer = layui.layer
-        , activeElm = layui.activeElm
-        , layedit = layui.layedit
-        , laydate = layui.laydate
-        , tree = layui.tree
-        , util = layui.util
-        , $ = layui.jquery
-      //日期
-      laydate.render({
-        elem: '#date'
-        , range: true //或 range: '~' 来自定义分割字符
-      });
-      laydate.render({
-        elem: '#date1'
-        , range: true //或 range: '~' 来自定义分割字符
-      });
-      // 拖动元素
-      activeElm.render({
-        elem: '#box'
-      })
-      $.ajax({
-        url: '/js/bumentree.json',
-        success: function (e) {
-          //基本演示
-          tree.render({
-            elem: '#test12'
-            , data: e.data
-            , showCheckbox: true  //是否显示复选框
-            , id: 'demoId1'
-            , isJump: true //是否允许点击节点时弹出新窗口跳转
-            , click: function (obj) {
-              var data = obj.data;  //获取当前点击的节点数据
-              layer.msg('状态：' + obj.state + '<br>节点数据：' + JSON.stringify(data));
-            }
-          });
-        }
-      })
-      table.render({
-        elem: '#test'
-        , url: '/js/bumen.json' //'http://127.0.0.1:3000/xt/user'
-        , height: 'full-200'
-        , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
-        , title: '用户数据表'
-        , cols: [[
-          { type: 'checkbox', }
-          , { field: 'id', title: 'ID', width: 80, unresize: true, sort: true, hide: true }
-          , { field: 'name', title: '姓名 ', width: 150, unresize: true, sort: true, }
-          , { field: 'bst', title: '头像 ', width: 150, unresize: true, sort: true, }
-          , { field: 'name', title: '用户名', width: 150, edit: 'text' }
-          , { field: 'department', title: '部门 ', align: 'center', }
-          , { field: 'role', title: '角色 ', align: 'center', }
-          , { field: 'status', title: '状态 ', align: 'center', templet: '#status' }
-          , { field: 'phone', title: '手机号 ' }
-          , { title: '操作 ', width: 150, fixed: 'right', templet: '#barDemo', align: 'center', }
-
-        ]]
-        , page: true
-      });
-
-      //头工具栏事件
-      table.on('toolbar(test)', function (obj) {
-        var checkStatus = table.checkStatus(obj.config.id);
-        switch (obj.event) {
-          case 'zhuijiu':
-
-            break;
-          case 'add':
-            parent.layer.open({
-              type: 2,
-              anim: 1,
-              zIndex: layer.zIndex, //重点1
-              title: '新增用户',
-              shadeClose: true,
-              maxmin: false, //开启最大化最小化按钮
-              area: ['50%', '90%'],
-              content: '/page/系统/新增用户.html',
-              success: function (layero) {
-
-              },
-              end: function () {
-                // window.location.reload();
-              }
-            })
-            break;
-          case 'exportFile':
-            table.exportFile('test', checkStatus.data, 'xls'); //data 为该实例中的任意数量的数据
-            break;
-
-        };
-      });
-
-      //监听行工具事件
-      table.on('tool(test)', function (obj) {
-        var data = obj.data;
-        //console.log(obj)
-        if (obj.event === 'del') {
-          layer.confirm('真的删除行么', function (index) {
-            obj.del();
-            layer.close(index);
-          });
-        } else if (obj.event === 'edit') {
-
-          parent.layer.open({
-            type: 2,
-            anim: 1,
-            zIndex: layer.zIndex, //重点1
-            title: '新增用户',
-            shadeClose: true,
-            maxmin: false, //开启最大化最小化按钮
-            area: ['50%', '85%'],
-            content: '/page/系统/新增用户.html',
-            success: function (layero) {
-              console.log(data)
+        base: 'layuiadmin/modules/'
+    }).use(['main', 'notice', 'form'], function() {
+        var table = layui.table,
+            $ = layui.jquery,
+            notice = layui.notice,
+            axios = layui.main
+        form = layui.form;
+        table.render({
+            elem: '#test',
+            url: '${cls.getrooturl()}?type=sel&tabid=${tabid}&mid=${mid}&job=${job}&tbname=${tbname}&T=待导入人员sql',
+            where: {
+                status: 0
             },
-            end: function () {
-              // window.location.reload();
-            }
-          })
-        } else {
-          // 转移
+            height: 'full-40',
+            cellMinWidth: 120,
+            toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板
+            title: '用户数据表',
+            cols: [
+                [
+                    { type: 'checkbox', fixed: 'left' },
+                    { field: 'ids', width: 80, title: 'ids', sort: true, hide: true },
+                    { field: 'stay_name', title: '姓名', align: 'center', sort: true },
+                    { field: 'stay_dept', title: '部门', align: 'center', sort: true },
+                    { field: 'stay_jobnumber', title: '账号', align: 'center', sort: true },
+                    { field: 'stay_time', title: '登记时间', align: 'center', sort: true },
+                    { field: 'stay_qw_code', title: '微信用户编号', align: 'center', sort: true },
+                    { field: 'stay_id_code', title: '身份证号', align: 'center', sort: true },
+                    {
+                        field: 'stay_status',
+                        title: '状态',
+                        align: 'center',
+                        sort: true,
+                        templet: function(d) {
 
+                            if (d.stay_status == 0) {
+                                return '<button class="layui-btn layui-btn-normal  layui-btn-sm layui-bg-red" > 未导入</button>'
+                            } else {
+                                return '<button class="layui-btn layui-btn-normal  layui-btn-sm layui-bg-green" > 已导入</button>'
+
+                            }
+                        }
+                    },
+                    {
+                        field: 'stay_avatar',
+                        title: '头像',
+                        templet: function(d) {
+                            if (!d.stay_avatar) {
+                                return `<img class="tb-img-circle" src='/pic/moren.png' />`
+                            }
+                            return `<img class="tb-img-circle" src='${d.stay_avatar}' />`
+                        }
+                    },
+                    { field: 'createdate', align: 'center', title: '时间', width: 120, sort: true },
+                    { fixed: 'right', align: 'center', title: '操作', toolbar: '#barDemo', width: 140 }
+                ]
+            ],
+            id: 'table',
+            page: true
+        });
+        form.on('switch(sexDemo)', function(data) {
+            let t_or_f = data.elem.checked ? "1" : "0"
+            modifyUser(t_or_f, data.elem.checked)
+        });
+
+        function modifyUser(status, f) {
+            table.reload('table', {
+                where: {
+                    status: status
+                }
+            })
+            $('#status').prop('checked', f)
+            form.render()
+            // form.val('form', {
+            //     sex: t_or_f
+            // })
         }
-      });
-    });
-  </script>
+        //头工具栏事件
+        table.on('toolbar(test)', function(obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'import':
+                    var data = checkStatus.data;
+                    if (data.length <= 0) { layer.msg('请选择数据'); return };
 
+                    let ids = [];
+                    for (var i = 0; i < data.length; i++) {
+                        let obj = data[i]
+                        ids.push(obj.ids);
+                    }
+                    layer.confirm('确认导入吗', function(i) {
+                        axios({
+                            url: '/api/AcceptCreatingUserRequests',
+                            method: 'post',
+                            data: Qs.stringify({
+                                ids: ids.join(','),
+                                perms: '40cd419f-74aa-4afa-abc6-91fcc01727d2'
+                            })
+                        }).then(data => {
+                            table.reload('table', {}, false)
+                            layer.close(i)
+                        })
+                    })
+                    break;
+                case 'add':
+                    layer.open({
+                        type: 2,
+                        zIndex: layer.zIndex, //重点1
+                        title: '新建',
+                        shadeClose: true,
+                        // shade: true,
+                        maxmin: false, //开启最大化最小化按钮
+                        area: ['90%', '90%'],
+                        content: '${cls.getrooturl()}?type=addshow&tabid=${tabid}&mid=${mid}&job=${job}&tbname=${tbname}',
+                        success: function(layero, index) {
+                            var iframeWindow = window['layui-layer-iframe' + index]
+                            var submitID = 'LAY-user-back-submit'
+                            var input = layero.find('iframe').contents().find('#' + submitID);
+                        },
+                        end: function() {
+                            table.reload('table', {}, false)
+                        }
+
+                    });
+                    break;
+                case 'edit':
+                    var data = checkStatus.data;
+                    if (data.length != 1) { notice.msg('请选择一条数据', { icon: 2 }); return }
+                    layer.open({
+                        type: 2,
+                        zIndex: layer.zIndex, //重点1
+                        title: '编辑',
+                        shadeClose: true,
+                        maxmin: false, //开启最大化最小化按钮
+                        area: ['400px', '400px'],
+                        content: '${cls.getrooturl()}?type=addshow&id=' + data[0].ids + '&tabid=${tabid}&mid=${mid}&job=${job}&tbname=${tbname}',
+                        success: function(layero, index) {
+
+                        },
+                        end: function() {
+                            table.reload('table', {}, false)
+                        }
+                    });
+                    break;
+                case 'del':
+                    var data = checkStatus.data;
+                    if (data.length < 1) { notice.msg('请选择数据', { icon: 2 }); return }
+                    let idsarr = [];
+                    for (var i = 0; i < data.length; i++) {
+                        let obj = data[i]
+                        idsarr.push(obj.ids);
+                    }
+                    layer.confirm('真的删除选中数据么', function(ler) {
+                        axios({
+                            url: '${cls.getrooturl()}?type=del&id=' + idsarr.join(',') + '&mid=${mid}&tabid=${tabid}&job=${job}&tbname=${tbname}',
+                            method: 'post',
+                        }).then(data => {
+                            table.reload('table', {}, false)
+                            layer.close(ler)
+                        })
+                    });
+                    break;
+            };
+        });
+        //监听行工具事件
+        table.on('tool(test)', function(obj) {
+            var data = obj.data;
+            //console.log(obj)
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function(index) {
+                    axios({
+                        url: '$cls.getrooturl()?type=del&id=' + data.ids + '&mid=$!{mid}&tabid=$!{tabid}&job=${job}&tbname=${tbname}',
+                        method: 'post',
+                        data: $("form").serialize(),
+                    }).then(data => {
+
+                        table.reload('table', {}, false)
+                        layer.close(index)
+
+                    })
+
+                });
+            } else if (obj.event === 'edit') {
+                layer.open({
+                    type: 2,
+                    zIndex: layer.zIndex, //重点1
+                    title: '编辑',
+                    shadeClose: true,
+                    maxmin: false, //开启最大化最小化按钮
+                    area: ['90%', '90%'],
+                    content: '${cls.getrooturl()}?type=addshow&id=' + data.ids + '&tabid=${tabid}&mid=${mid}&job=${job}&tbname=${tbname}',
+                    success: function(layero, index) {
+                        var iframeWindow = window['layui-layer-iframe' + index]
+                        var name = 'dept'
+                        var id = 'bid'
+                        var dept_name = layero.find('iframe').contents().find('#' + name);
+                        var dept_id = layero.find('iframe').contents().find('#' + id);
+                        $(dept_name).val(data.stay_dept)
+                        $(dept_id).val(data.stay_deptid)
+                    },
+                    end: function() {
+                        table.reload('table', {}, false)
+                    }
+                });
+            }
+        });
+
+    });
+    </script>
 </body>
 
 </html>

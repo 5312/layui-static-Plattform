@@ -1,0 +1,2055 @@
+<!DOCTYPE html>
+<html>  
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="layuiadmin/style/admin.css" media="all">
+  <link rel="stylesheet" href="layuiadmin/style/admin1.css" media="all">
+  <link rel="stylesheet" href="layuiadmin/modules/loadsearch/load.css" media="all">
+
+  <link rel="stylesheet" href="src/all.css" media="all">
+
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+  <style>
+    #formAdvForm .layui-form-item {
+      margin-top: 20px;
+      margin-bottom: 0;
+    }
+
+    #formAdvForm .layui-form-item .layui-inline {
+      margin-bottom: 25px;
+      margin-right: 0;
+    }
+
+    .form-group-bottom {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 10px 20px;
+      background-color: #fff;
+      box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, .05);
+    }
+
+    .layui-form-label {
+      white-space: nowrap;
+    }
+
+    /* //css调整部分 */
+    xm-select{
+      border-color: #1890ff !important;
+    }
+    xm-select .scroll-body {
+      padding-left: 10px;
+      overflow: hidden;
+    }
+    xm-select .xm-body{
+        width: 100%;
+    }
+    @media screen and (max-width: 1280px) {
+          #peerpeople  xm-select .xm-body{
+            left :-200px
+        }  
+    }
+
+
+    .file-choose-list-item-img.img-icon {
+      /*background-size: cover;*/
+    }
+
+    #a {
+        height: 450px;
+    }
+    #b {
+        height: 450px;
+    }
+    #c {
+        height: 450px;
+    }
+    .load_textnext {
+      width: 100%;
+      height: 200px;
+      background-color: #fff;
+      border: 1px solid #eee;
+      border: 1px solid #d2d2d2;
+      box-shadow: 0 2px 4px rgb(0 0 0 / 12%);
+      background-color: #fff;
+      color: #666;
+      position: absolute;
+      z-index: 2;
+      overflow: auto;
+    }
+
+    .load_textnext div {
+      padding: 5px;
+    }
+
+    .load_textnext div:hover {
+      background-color: #FAFAFA;
+    }
+
+    .textnext {
+      width: 100%;
+      height: 200px;
+      background-color: #fff;
+      border: 1px solid #eee;
+      border: 1px solid #d2d2d2;
+      box-shadow: 0 2px 4px rgb(0 0 0 / 12%);
+      background-color: #fff;
+      color: #666;
+      position: absolute;
+      z-index: 2;
+      overflow: auto;
+
+    }
+
+    .textnext div {
+      padding: 5px;
+    }
+
+    .textnext div:hover {
+      background-color: #FAFAFA;
+    }
+
+    .cl-select {
+      margin-bottom: 0 !important;
+    }
+
+    .cl {
+      margin: 10px 0;
+      margin-bottom: 10px !important;
+    }
+
+    .hide {
+      display: none;
+    }
+    .layui-textareas{
+      min-height: auto;
+     border-color: #1890ff;
+    }
+    .layui-input, .layui-textareas {
+           border-color: #1890ff;
+    }
+    .layui-input:hover, .layui-textareas:hover {
+    border-color: #000!important;
+}
+  </style>
+</head>
+
+<body >
+
+  <!-- 正文开始 -->
+  <form class="layui-form" id="formAdvForm" lay-filter="formAdvForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;margin-top: 10px;">
+      <div class="layui-card">
+        <!-- hidden -->
+        <input type="hidden" value="$!isadd" name="isadd" />
+        <!-- 录入人 -->
+        <input type="hidden" value="$cls.setck('names')" name="yh_enroll" />
+        <!-- 录入人所在部门 -->
+        <input type="hidden" value="$cls.setck('department_id')" name="yh_enroll_id" />
+
+        <input type="hidden" value="yh_state" name="add" />
+
+        <div class="layui-card-header">基础信息</div>
+        <div class="layui-card-body">
+          <div class="layui-form-item layui-row">
+
+            <div class="layui-inline layui-col-md12 layui-col-sm12">
+              <label class="layui-form-label layui-form-required">责任部门:</label>
+              <!--责任部门  -->
+              <input type="hidden" value="responsibledepartme" name='add'>
+              <div class="layui-input-block">
+                <input type="text" autocomplete="off" class="layui-input" id='depart' value="" name='bumen_name'>
+              </div>
+              <!-- 部门id -->
+              <input type="hidden" id='depart_id' value="" name='responsibledepartme'>
+              <!-- 保存一个主体部门 -->
+              <input type="hidden" id='pname' value="" name='depart_pname'>
+
+            </div>
+            <div class="layui-inline layui-col-md6 layui-col-sm6">
+              <label class="layui-form-label layui-form-required">检查地点:</label>
+              <div class="layui-input-block">
+                <!-- 检查地点 -->
+                <input type="hidden" id='address_id' name='address' lay-reqText='请选择地点！' lay-verType='msg' value=""  lay-verify="required" placeholder="请输入" accept="off" class="layui-input">
+                <input type="text" id='address_name' name='address_name' lay-verType="tips" lay-verify="required"
+                  autocomplete="off" placeholder="请输入" accept="off" class="layui-input">
+              </div>
+            </div>
+            <div class="layui-inline layui-col-md6 layui-col-sm6">
+              <label class="layui-form-label ">详细地点:</label>
+              <div class="layui-input-block">
+                <!-- 详细地点 -->
+                <input type="hidden" value="yh_address_all" name='add'>
+                <input name="yh_address_all" value="$!yh_address_all" placeholder="请输入" class="layui-input" />
+              </div>
+            </div>
+            <div class="layui-inline layui-col-md4 layui-col-sm4">
+              <label class="layui-form-label layui-form-required">检查人:</label>
+              <div class="layui-input-block">
+                <!-- 检查人 -->
+                <input type="hidden" value="inspeople" name='add'>
+                <div id="inspeople"></div>
+              </div>
+            </div>
+            <div class="layui-inline layui-col-md4 layui-col-sm4">
+              <label class="layui-form-label ">陪检人:</label>
+              <div class="layui-input-block">
+                <!-- 陪检人 -->
+                <input type="hidden" value="accompany" name='add'>
+                <div id="accompany"></div>
+              </div>
+            </div>
+            <!--  -->
+             <div class="layui-inline layui-col-md4 layui-col-sm4">
+              <label class="layui-form-label ">同行人:</label>
+              <div class="layui-input-block">
+                <!-- 陪检人 -->
+                <input type="hidden" value="peerpeople" name='add'>
+                <div id="peerpeople"></div>
+              </div>
+            </div>
+            <!--  -->
+            <div class="layui-inline layui-col-md4 layui-col-sm4">
+              <label class="layui-form-label layui-form-required">检查日期:</label>
+              <div class="layui-input-block">
+                <!-- 检查日期 -->
+                <input type="hidden" value="inspectiondate" name='add'>
+                <input id="formAdvDateSel1" name="inspectiondate" value="$!inspectiondate" placeholder="请选择开始和结束日期"
+                  class="layui-input icon-date" autocomplete="off" lay-verType="tips" lay-verify="required" />
+              </div>
+            </div>
+            <div class="layui-inline layui-col-md7 layui-col-sm8">
+              <label class="layui-form-label">班次:</label>
+              <input type="hidden" value="oldofclass" name='add'>
+              <div class="layui-input-block" id='oldofclass'>
+              </div>
+            </div>
+          </div>
+          <div class="layui-row">
+            <div class="layui-inline layui-col-md7 layui-col-sm8">
+              <label class="layui-form-label">检查类别:</label>
+              <input type="hidden" value="yh_zhuanxiang" name='add'>
+              <!-- 所在部门 及顶级部门设置 -->
+              <div class="layui-input-block">
+                <!-- #set($list=$cls.getpgdt("SELECT yh_inspection_id AS ids, to_char(yh_inspection_createdate, 'yyyy-mm-dd hh24:mi:ss') AS createdate , yh_inspection_json ->> 'jiancha_name' AS jiancha_name, yh_inspection_json ->> 'star_time' AS star_time , yh_inspection_json ->> 'end_time' AS end_time, yh_inspection_json ->> 'link_depart' AS link_depart , yh_inspection_json ->> 'link_departname' AS link_departname FROM yh_inspection left JOIN xt_bumen on ( '$cls.setck('department_id')' = xt_bumen_id) WHERE   ( yh_inspection_json ->> 'link_depart' = '$cls.setck('department_id')' or yh_inspection_json ->> 'link_depart' = xt_bumen.xt_bumen_json->>'pname_id')  and LOCALTIMESTAMP(1) >= (yh_inspection_json ->> 'star_time')::TIMESTAMP AND LOCALTIMESTAMP(1) <= (yh_inspection_json ->> 'end_time')::TIMESTAMP ORDER BY yh_inspection_json ->> 'jancha_sort' ASC")) -->
+
+            <!-- #if( $cls.setck('department_id') != '000000000000000000000000000000000001')    -->
+                <!-- #set($listjt=$cls.getpgdt("SELECT yh_inspection_id AS ids, to_char(yh_inspection_createdate, 'yyyy-mm-dd hh24:mi:ss') AS createdate , yh_inspection_json ->> 'jiancha_name' AS jiancha_name, yh_inspection_json ->> 'star_time' AS star_time , yh_inspection_json ->> 'end_time' AS end_time, yh_inspection_json ->> 'link_depart' AS link_depart , yh_inspection_json ->> 'link_departname' AS link_departname FROM yh_inspection left JOIN xt_bumen on ( '000000000000000000000000000000000001' = xt_bumen_id) WHERE   ( yh_inspection_json ->> 'link_depart' = '000000000000000000000000000000000001' or yh_inspection_json ->> 'link_depart' = xt_bumen.xt_bumen_json->>'pname_id')  and LOCALTIMESTAMP(1) >= (yh_inspection_json ->> 'star_time')::TIMESTAMP AND LOCALTIMESTAMP(1) <= (yh_inspection_json ->> 'end_time')::TIMESTAMP ORDER BY yh_inspection_json ->> 'jancha_sort' ASC")) -->
+            <!-- #end -->
+                <select name="yh_zhuanxiang" lay-filter="aihao">
+                <!-- #if($cls.setck('department_id') != '000000000000000000000000000000000001')   -->
+                    <!-- #foreach($rows1 in $listjt.Rows) -->
+                      <option value="$!{rows.ids}">$!{rows1.jiancha_name}</option>
+                    <!-- #end -->
+                <!-- #end -->
+                  <!-- #foreach($rows in $list.Rows) -->
+                  <option value="$!{rows.ids}">$!{rows.jiancha_name}</option>
+                  <!-- #end -->
+                </select>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="layui-card">
+        <div class="layui-card-header">详细信息</div>
+        <div class="layui-card-body">
+          <div class="layui-form-item layui-row">
+            
+            <!-- #if("$cls.setck('level')" != "C" && "$cls.setck('level')" != "E") -->
+              <div class="layui-inline layui-col-md2 layui-col-sm2">
+                <label class="layui-form-label">带班领导:</label>
+                <div class="layui-input-block">
+                  <input type="hidden" value="leader" name='add'>
+                  <input type="checkbox" name="leader" lay-skin="switch" lay-text="ON|OFF" title="">
+                </div>
+              </div>
+              <div class="layui-inline layui-col-md10 layui-col-sm10">
+                <label class="layui-form-label">行走线路</label>
+                <div class="layui-input-block">
+                  <input type="hidden" value="yh_route" name='add'>
+                  <input type="text" autocomplete="off" id='yh_route' name="yh_route" value="" class="layui-input">
+                </div>
+              </div>
+            <!-- #end -->
+
+          
+            <div class="layui-inline layui-col-md12 layui-col-sm12">
+              <fieldset class="layui-elem-field">
+                <legend>隐患内容</legend>
+                <div class="layui-field-box">
+                  <!-- <label for="" class="layui-form-label layui-form-required">隐患内容</label> -->
+                  <!--  -->
+                  <button id="add_yh_content" class="layui-btn  layui-btn-sm  layui-btn-primary layui-border-orange" >添加隐患内容</button>
+                  <div class="layui-word-aux">点击即可录入多条隐患！</div>
+                  <!--  -->
+                  <div id='yhContent'>
+                    <div class="" style="position: relative;">
+                      <input type="hidden" value="yh_content" name='add'>
+                      <textareas placeholder="请输入内容" rows="2"   id="yh_content" lay-verify="required" name="yh_content"
+                        class="layui-textareas"></textareas>
+                      <div class="textnext hide"></div>
+                     
+                    </div>
+                  </div>
+                   <script>
+                      
+                   </script>
+                </div>
+              </fieldset>
+              
+            </div>
+            <div class="layui-inline layui-col-md6 layui-col-sm12">
+              <label for="" class="layui-form-label">整改要求</label>
+              <div class="layui-input-block">
+                <input type="hidden" value="yh_rectify" name='add'>
+                <textareas style="width:400px;" rows="2" placeholder="请输入内容" id="yh_rectify" name="yh_rectify"
+                  class="layui-textareas">
+                  </textareas>
+              </div>
+              <script type="">
+                try{
+
+                  document.getElementById('yh_rectify').value = '$!yh_rectify'
+                }catch(e){
+
+                }
+               </script>
+            </div>
+            <div class="layui-inline layui-col-md6 layui-col-sm12">
+              <label class="layui-form-label layui-form-required">隐患等级:</label>
+              <!-- 隐患等级 -->
+              <input type="hidden" value="yh_level" name='add'>
+              <div class="layui-input-block" id='yh_level'>
+              </div>
+            </div>
+             <div class="layui-form-item layui-row">
+                 <div id='del_dept' class="layui-inline layui-col-md6 layui-col-sm8">
+                      <label class="layui-form-label layui-form-required">销号部门:</label>
+                      <!-- 指定销号部门 -->
+                      <div class="layui-input-block">
+                        <input type="text" autocomplete="off" id='del_dm' readonly=""  class="layui-input" name='del_dept' lay-verType="tips" lay-verify="required"  value="" >
+                        <input type="hidden" autocomplete="off" class="layui-input" name='del_dept_id'  value="" >
+                      </div>
+                    </div>
+                    <div class="layui-inline layui-col-md6 layui-col-sm4">
+                        <button type="button" class="layui-btn layui-btn-normal" id="my_dept">本部门</button>
+                        <button type="button" class="layui-btn layui-btn-normal" id="res_dept">责任部门</button> 
+                    </div> 
+             </div>
+           
+            <div class="layui-inline layui-col-md12 layui-col-sm12">
+              <label class=" layui-form-label layui-form-required">隐患种类:</label>
+              <div class="layui-input-block">
+                <!-- 隐患种类  -->
+                <input type="hidden" value="yh_kind" name='add'>
+                <div id="yh_kind"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="layui-form-item layui-row">
+          <div class="layui-inline layui-col-md3 layui-col-sm3">
+            <label for="" class="layui-form-label">要求完成时间</label>
+            <div class="layui-input-block">
+              <input type="hidden" value="yh_requesttime" name='add'>
+              <input type="text" name="yh_requesttime" value="$!yh_requesttime" id="date1" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-inline layui-col-md6 layui-col-sm9">
+            <div class="layui-input-block">
+              <input type="radio" lay-filter="radio" name="like1" value="0" lay-skin="primary" title="当班整改" checked>
+
+              <input type="radio" lay-filter="radio" name="like1" value="0" lay-skin="primary" title="当天整改">
+              <input type="radio" lay-filter="radio" name="like1" value="1" lay-skin="primary" title="一天整改">
+              <input type="radio" lay-filter="radio" name="like1" value="2" lay-skin="primary" title="二天整改">
+              <input type="radio" lay-filter="radio" name="like1" value="3" lay-skin="primary" title="三天整改">
+              <div class="layui-hide">
+                <input type="radio" lay-filter="radio" name="like1" value="4" lay-skin="primary" title="其他整改">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="layui-collapse" lay-accordion style="background: #fff;">
+        <div class="layui-colla-item" >
+          <h2 class="layui-colla-title">补充信息</h2>
+          <div class="layui-colla-content ">
+            <div class="">
+              <!-- <div class="layui-card-body"> -->
+                <div class="layui-form-item layui-row">
+                     <div class="layui-inline layui-col-md3 layui-col-sm3">
+                         <label class=" layui-form-label layui-form-required">责任追究:</label>
+                         <div class="layui-input-block">
+                             <input type="checkbox" name="accountability" lay-skin="switch" value="1" lay-text="是|否" >
+                         </div>
+                         
+                     </div>
+                    <div class="layui-inline layui-col-md3 layui-col-sm3">
+                      <input type="hidden" value="yh_fine" name='add'>
+                      <label class="layui-form-label">资金:</label>
+                      <div class="layui-input-block">
+                       <input id='zj' type="number" lay-verify="required|number" class='layui-input' value="" name='yh_fine'>
+                      </div>
+                      <script>
+                         if('$!yh_fine' === ''){
+                          document.getElementById('zj').value = 0
+                         }else{
+                          document.getElementById('zj').value = '$!yh_fine'
+                         }
+                      </script>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-row">
+                  <div class="layui-inline layui-col-md8 layui-col-sm12">
+                    <fieldset class="layui-elem-field">
+                      <legend>上传文件</legend>
+                      <div class="layui-field-box">
+                        <div class="layui-upload">
+                          <button type="button" class="layui-btn layui-btn-normal" id="testList">选择多文件</button>
+                          <div class="layui-upload-list">
+                            <table class="layui-table">
+                              <colgroup>
+                                <col>
+                                <col width="150">
+                                <col width="260">
+                                <col width="150">
+                              </colgroup>
+                              <thead>
+                                <tr>
+                                  <th>文件名</th>
+                                  <th>大小</th>
+                                  <th>状态</th>
+                                  <th>操作</th>
+                                </tr>
+                              </thead>
+                              <tbody id="demoList"></tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
+                  <div class="layui-inline layui-col-md4 layui-col-sm12">
+                    <fieldset class="layui-elem-field">
+                      <legend>已传文件</legend>
+                      <div class="layui-field-box">
+                        <div id="file-list-group"></div>
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+              <!-- </div> -->
+            </div>
+            <!-- end -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group-bottom text-right">
+      <!-- #if(!$!id) -->
+      <button class="layui-btn submit" lay-filter="formAdvSubmit" lay-submit>提交并下达</button>
+      <button class="layui-btn submit layui-btn-normal" lay-filter="formAdvSubmitSave" lay-submit>保存</button>
+
+      <!-- #end -->
+
+      
+      <!-- #if($!id ) -->
+        <!-- #if($TY != '详情') -->
+      <button class="layui-btn submit layui-btn-normal" lay-filter="detailFormAdvSubmitSave" lay-submit>保存</button>
+        <!-- #end -->
+      <!-- #end -->
+      <button class="layui-btn submit layui-top-info" lay-filter="formAdvClose" lay-submit
+        onclick="parent.layer.closeAll()">关闭</button>
+    </div>
+  </form>
+  <div class="mask">
+    <i class="load layui-anim-loop layui-anim-rotate layui-anim layui-icon-loading layui-icon"></i>
+  </div>
+  <script type="text/html" id='jieshou'>
+          <form id="eDialogCouEditForm" lay-filter="eDialogCouEditForm" class="layui-form model-form layui-row">
+        <input name="schedulingId" type="hidden"/>
+        <div class="layui-row">
+            <div class="layui-col-md12">
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="padding-left: 0;padding-right: 0;width: 98px;">接收部门</label>
+                <div class="layui-input-block">
+                  <div id="js" class=""></div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="layui-form-item text-right">
+            <button class="layui-btn submit layui-btn-normal" lay-filter="jssave" lay-submit>保存</button>
+            <button class="layui-btn layui-btn-primary" lay-filter="close" type="button" lay-submit >取消</button>
+        </div>
+    </form>
+    </script>
+  <script type="text/html" id="toolbarDemo">
+      <div class="layui-btn-container cl">
+
+        <div class="layui-inline cl-select">
+            <input type="text" name='keyword' style='width:200px;' class="layui-input" placeholder="请输入关键字">
+        </div>
+        <button type="button" class="layui-btn layui-btn-normal  layui-btn-sm  " lay-event="search">  <i class="layui-icon layui-icon-search" ></i>  </button>
+        <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" lay-event="refresh" >
+        <i class="layui-icon layui-icon-refresh" ></i> 
+        </button>
+      </div>
+      
+    </script>
+  <script type="text/html" id='ifram'>
+          <video  controls='' autoplay > <source id='vsource' ></video>
+    </script>
+  <!-- 时间格式化插件 -->
+  <script src="layuiAdmin/plug/moment.min.js"></script>
+  <script src="layuiadmin/modules/axios.min.js"></script>
+  <script src="layuiadmin/modules/qs.js"></script>
+  <script src="layuiadmin/layui/layui.js"></script>
+  <script>
+    layui.config({
+      base: 'layuiadmin/modules/'
+    }).extend({
+      xmSelect: 'xm-select'
+    }).use(['form', 'loading','yutons_sug','loadLine', 'loadsearch', 'layedit', 'notice', 'laydate', 'main', 'table', 'xmSelect', 'treeTable', 'util', 'fileChoose'], function () {
+      var form = layui.form,
+        table = layui.table,
+        $ = layui.jquery,
+        jq = layui.jquery,
+        layer = layui.layer,
+        axios = layui.main,
+        table = layui.table,
+        notice = layui.notice,
+        xmSelect = layui.xmSelect,
+        treeTable = layui.treeTable,
+        util = layui.util,
+        upload = layui.upload,
+        element = layui.element,
+        transfer = layui.transfer,
+        fileChoose = layui.fileChoose,
+        laydate = layui.laydate,
+        loading = layui.loading,
+        loadsearch = layui.loadsearch,
+        loadLine = layui.loadLine,
+        yutons_sug = layui.yutons_sug
+      let filePath = []; // 文件路径
+
+      let data$sjs;
+      if('$!id'){
+        let SQL = ` #set($val = $cls.getpgval("SELECT row_to_json(ts) FROM ( SELECT  * ,to_char(inspectiondate,'yyyy-mm-dd hh24:mi:ss') AS inspectiondate FROM YH WHERE yh_id = '$id' ) ts"))`
+        data$sjs = $val
+        form.val('formAdvForm', $val);
+        let show = $val;
+        if(show.accountability == 0){
+            form.val('formAdvForm',{
+                accountability:0
+            })
+        }else{
+            form.val('formAdvForm',{
+                accountability:1
+            })
+        }
+      }
+      // 隐患内容回显
+      try{
+        if('$!yh_content' != ''){
+          document.getElementById('yh_content').value = '$!yh_content'
+        }
+      }catch(e){
+      }
+      const BASEURL = '${cls.getrooturl()}?type=sel&tabid=${tabid}&mid=${mid}&job=${job}&tbname=${tbname}&T=部门管理sql'
+      // 日期回显
+      let backData = ''
+      if ('$!id') {
+        // 时间处理
+        backData = $val
+
+        let stamp = moment(backData.yh_requesttime) - moment(backData.inspectiondate)
+        let difference = moment.duration(stamp).days()
+        // 要求完成时间后的单选框
+        form.val('formAdvForm', { like1: difference })
+      }
+      let insSaveTime = '$!id' ? moment(backData.inspectiondate).utcOffset( 480).format('YYYY-MM-DD') :moment().utcOffset( 480).format('YYYY-MM-DD');
+      /* 检查日期 */
+      laydate.render({
+        elem: '#formAdvDateSel1',
+        range: false,
+        trigger: 'click',
+        value: insSaveTime,
+        min: -2, //3天前
+        max: 0,//1天后
+        done: function (value, date) {
+          $('#date1').val(value)
+
+          let stamp = moment(value) - moment( $('#date1').val() )
+          let difference = moment.duration(Math.abs(stamp)).days()
+          // 要求完成时间后的单选框
+          form.val('formAdvForm', { like1: difference });
+          console.log('update')
+          //应该重新渲染 要求完成日期
+          update();
+        }
+      });
+
+      let yaoquiTime = '$!id' ? moment(backData.yh_requesttime).utcOffset(480).format('YYYY-MM-DD') : moment().utcOffset( 480).format('YYYY-MM-DD');
+      // 要求完成日期
+      let _lay_d = laydate.render({
+        elem: '#date1',
+        range: false,
+        trigger: 'click',
+        value: yaoquiTime,
+        showBottom: false,
+        isInitValue: true, //是否允许填充初始值，默认为 true
+        min: 0,
+        done: function (value, date) {
+          let stamp = moment(value) - moment($('#formAdvDateSel1').val())
+          let difference = moment.duration(Math.abs(stamp)).days()
+          // 要求完成时间后的单选框
+
+          if (difference > 3) {
+            difference = 4;
+          }
+          form.val('formAdvForm', { like1: difference })
+
+        }
+      });
+      function update() {
+        let min = $('#formAdvDateSel1').val()
+        _lay_d.config.min = {
+          year: moment(min).year(),
+          month: moment(min).utcOffset(480).month() , //关键
+          date: moment(min).utcOffset(480).date(),
+          hours: 0,
+          minutes: 0,
+          seconds: 0
+        };
+      }
+
+      // 要求整改时间
+      form.on('radio(radio)', function (data) {
+        // 基于检查时间
+        let inspectTime = new Date($('#formAdvDateSel1').val());
+        let nowDay = moment(inspectTime).add(data.value * 1, 'd').format('YYYY-MM-DD')
+        $('#date1').val(nowDay)
+      });
+      
+      //检查地点
+      loadsearch.render({
+        ele: '#address_name',
+        idele:'#address_id',
+        url: "${cls.getrooturl()}?type=sel&tabid=${tabid}&mid=${mid}&job=${job}&tbname=${tbname}&T=风险点管理SQL",
+        where: "keyword",
+        wherereq:function(){
+          return {
+            ascription:$('#pname').val()
+          }
+        },
+        cententName: 'fxd_names',
+        template: `<div ></div>`
+      })
+      /*地点验证*/
+      form.verify({
+        address:function(value, item){ //value：表单的值、item：表单的DOM对象
+           if(value === ''){
+               alert('用户名不能为敏感词');
+              return true;
+              // return '用户名不能有特殊字符';
+            }
+        }
+      })
+
+      /***************隐患内容搜索***************/
+      loadsearch.render({
+        ele: '#yh_content',
+        url: "${cls.getrooturl()}?type=sel&tabid=YH_lib0130efb6-968e-4abe-b1db-e6008414f97b&mid=e7d500ff-b985-4671-bb92-ac02059f28b7&job=demo_node_1&tbname=yh_lib&T=yhlibsql",
+        where: "keyword",
+        cententName: 'yh_lib_content'
+      })
+      // 添加多条隐患
+      $('#add_yh_content').on('click',function(e){
+        let fatherBox = $('#yhContent');
+        let ID = createRandomId();
+        let close = createRandomId();
+        let box = createRandomId();
+        let contentBox = `<div  id="${box}" style="position: relative;margin-top:20px;">
+                    <a class="layui-icon layui-icon-close" id="${close}" style="font-size: 18px; color: red;float: right;" href="javascript:;"></a>
+                      <input type="hidden" value="yh_content" name='add'>
+                      <textareas placeholder="请输入内容" rows="2"   id="${ID}" lay-verify="required" name="yh_content"
+                        class="layui-textareas"></textareas>
+                      <div class="textnext hide"></div>
+                    </div>`
+        fatherBox.append(contentBox);
+        $(`#${close}`).on('click',function(){
+            $(`#${box}`).remove()
+        })
+        loadsearch.render({
+          ele: `#${ID}`,
+          url: "${cls.getrooturl()}?type=sel&tabid=YH_lib0130efb6-968e-4abe-b1db-e6008414f97b&mid=e7d500ff-b985-4671-bb92-ac02059f28b7&job=demo_node_1&tbname=yh_lib&T=yhlibsql",
+          where: "keyword",
+          cententName: 'yh_lib_content'
+        })
+        return false
+      })
+      /**
+       * @description: 随机不重复的id
+       * @param {*}
+       * @return {*}
+       */
+      function createRandomId() {
+        return (Math.random() * 10000000).toString(16).substr(0, 4) + '-' + (new Date()).getTime() + '-' + Math.random().toString().substr(2, 5);
+      }
+      /******************************************/
+      if('$!id'){
+        // 隐患地点回显
+        let fxdSQL = `#set($n = $cls.getpgval("select fx_fxd_json->>'fxd_names' as n from fx_fxd where fx_fxd_id =  (SELECT address FROM YH WHERE yh_id = '$id')"))`
+        let fxfodSQL =  `#set($fxdids = $cls.getpgval("select fx_fxd_id as id from fx_fxd where fx_fxd_id =  (SELECT address FROM YH WHERE yh_id = '$id')"))`
+
+        if('$!n' != ''){
+          $('#address_name').val('$!n')
+        
+        }else{
+          let address_SQL = `#set($address_name = $cls.getpgval("SELECT address_name FROM YH WHERE yh_id = '$id'"))`
+
+          $('#address_name').val('$!address_name')
+        }
+          
+      }
+
+
+      // 隐患种类
+      var dangerTyoe = xmSelect.render({
+        el: '#yh_kind',
+        name: 'yh_kind',
+        layVerify: 'required',
+        layVerType: 'msg',
+        direction: 'up',
+        prop: {
+          name: 'dict_name',
+          value: 'dict_name',
+        },
+        radio: true,
+        clickClose: true,
+        tree: {
+          show: true,
+          strict: false,
+          expandedKeys: [-1],
+        },
+        height: '300px',
+        filterable: true,
+      })
+
+
+      
+      var yh = axios({
+        load: true,
+        method: 'post',
+        url: '${cls.getrooturl()}?type=sel&tabid=${tabid}&mid=${mid}&job=${job}&tbname=${tbname}&T=add_yhsql&level=$cls.setck("level")'
+      })
+      var yhType = axios({
+        load: true,
+        method: 'post',
+        url: '${cls.getrooturl()}?type=sel&tabid=YH_typee42dae76-066e-4d45-baa9-19193229c76c&mid=028e9fcb-ffd9-49e4-bc78-a7c26a5bf620&job=demo_node_1&tbname=xt_dict&T=隐患种类sql'
+      })
+      // 人员
+      let bmuser = axios({
+        method: 'post',
+        url: '${cls.getrooturl()}?type=sel&tabid=${tabid}&mid=${mid}&job=${job}&tbname=${tbname}&T=addpagesql&page=1&limit=10',
+      })
+
+      axios.all([yh,yhType, bmuser]).then( //
+        axios.spread((result_yh, result_type,result_xm) => {
+          yhInput(result_yh);
+
+          yhTypeFunc(result_type);
+
+          xmTree(result_xm);
+        })
+      )
+      // 条款
+      function tranTerms(res) {
+        let valu = []
+
+        if (data$sjs) {
+          let terms = data$sjs;
+          if (!terms) return
+          try {
+            let val = JSON.parse(terms.yh_terms);
+            for (let i = 0; i < val.length; i++) {
+              const objs = val[i];
+              valu.push(objs.value)
+            } //初始右侧数据
+          } catch (e) {
+
+          }
+
+        }
+
+        transfer.render({
+          elem: '#yh_terms',
+          width: 250,
+          id: 'key123' //定义唯一索引 
+          ,
+          data: res.data,
+          title: ['未关联', '已关联'],
+          parseData: function (res) {
+            return {
+              "value": res.ids //数据值 
+              ,
+              "title": res.file_name //数据标题 
+              ,
+              "disabled": res.disabled //是否禁用
+              ,
+              "checked": res.checked //是否选中 
+            }
+          },
+          value: valu
+        })
+      }
+      // 隐患种类
+      function yhTypeFunc(result){
+        let danger = result.data ;//隐患种类
+        
+        let dangerTree = treeTable.pidToChildren(danger, 'ids', 'dict_pid', 'children')
+        dangerTyoe.update({
+          data: dangerTree
+        });
+        let js = data$sjs
+
+        if (data$sjs) { // 编辑
+          dangerTyoe.setValue([
+            js.yh_kind
+          ])
+        } else { // 缓存数据
+          let cache = layui.data('yhadd');
+          if (cache.yh) {
+            dangerTyoe.setValue([
+              cache.yh.yh_kind
+            ])
+          }
+        }
+      }
+      // 隐患
+      function yhInput(result) {
+        let yhDict = result.data;
+        // let danger = [] //隐患种类
+        for (let i = 0; i < yhDict.length; i++) {
+          const objs = yhDict[i];
+          if (objs.type == "yh_grade") { // 隐患等级
+            let check = objs.sort == 1 ? "checked" : ""
+            // 隐患等级
+            $('#yh_level').append(
+              '<input ' + check + ' type="radio" name="yh_level" lay-filter="encrypt"  value="' + objs.dict_name + '~' + objs.dict_text + '~' + objs.color + '" title="' + objs.dict_name + '">'
+            )
+          } else if (objs.type == "oldofclass") {
+            let check = objs.sort == 1 ? "checked" : ""
+            $('#oldofclass').append(
+              '<input ' + check + ' type="radio" name="oldofclass" value="' + objs.dict_name + '" title="' + objs.dict_name + '" >'
+            )
+          }
+        }
+        // 回显数据
+        let js = data$sjs
+
+        if (data$sjs) { // 编辑
+          form.val('formAdvForm', {
+            oldofclass: js.oldofclass,
+            yh_level: js.yh_level
+          })
+          // 销号部门显示
+          // isXiaohao(js.yh_level)
+        } else { }
+
+        form.render('select')
+        form.render('radio')
+      }
+      /**
+       * @description: 隐患等级切换
+       * @param {*} str
+       * @return {*}
+       */      
+      // form.on('radio(encrypt)', function(data){
+      //   $('#del_dept').hide();
+      //   $('input[name=del_dept]:eq(0)').val('')
+      //   $('input[name=del_dept_id]:eq(0)').val('');
+      //   setRequired(false);
+
+      //   isXiaohao(data.value)
+      // });  
+      /**
+       * @description: 判断是否需要销号
+       * @param {*} value
+       * @return {*}
+       */      
+      function isXiaohao(value){
+        if(value == '较大隐患~b~#f78605'){
+          $('#del_dept').show()
+          setRequired(true)
+        }
+        if(value == '重大隐患~a~#f82707'){
+          $('#del_dept').show()
+          setRequired(true)
+
+        }
+      }
+      /**
+       * @description: 设置是否验证
+       * @param {*} val
+       * @return {*}
+       */      
+      function setRequired(val){
+        if(val){
+          $('input[name=del_dept]:eq(0)').attr('lay-verify','required') 
+          
+        }else{
+          $('input[name=del_dept]:eq(0)').attr('lay-verify','') 
+
+        }
+      }
+      /**
+       * @description: 字符串转化
+       * @param {*} str
+       * @return {*}
+       */      
+
+      function strSplit(str) {
+        let rArr = [];
+        if (str) {
+          let array = str.split(',')
+          for (let i = 0; i < array.length; i++) {
+            const obj = array[i];
+            if (obj.split('-')) {
+              rArr.push(obj.split('~')[1])
+            }
+          }
+        }
+        return rArr;
+      }
+      /**
+       * @description: 用户
+       * @param {*} result
+       * @return {*}
+       */
+      function xmTree(result) {
+        var list = result.data;
+        let js = data$sjs;
+        //检查人
+        instFunc(list,js)
+        // 陪检人
+        peiJianRen(list,js);
+        // 同行人
+        peerpeopleFunc(list,js);
+      }
+      /**
+       * @description: 检查人
+       * @param {*} list
+       * @param {*} js
+       * @return {*}
+       */      
+      function instFunc(list,js){
+        let  ins = xmSelect.render({
+          el: '#inspeople',
+          name: 'inspeople',
+          content: "<div id='a'><table id='transfer' lay-filter='transferTable'></table></div>",
+          height: '500px',
+          autoRow: true,
+          clickClose: true,
+          radio: true,
+          data: list,
+          prop: { name: 'title' },
+          on: function (data) {
+            ins.closed();
+            if (!data.isAdd) {
+
+            }
+          }
+        })
+        
+        if (!js) {
+
+          let users = isSelectName()
+          // 默认设置
+          ins.append([{
+            title:users[0] ,//"$cls.setck('users_name')",
+            value:users[0] + '~' + users[1] + '~' + "$cls.setck('department_name')" + '~' + "$cls.setck('department_id')" ,
+            //"$cls.setck('users_name')" + '~' + "$cls.setck('ids')" + '~' + "$cls.setck('department_name')" + '~' + "$cls.setck('department_id')",
+            department_name: "$cls.setck('department_name')",
+            department_id: "$cls.setck('department_id')",
+            level: "$cls.setck('level')"
+          }])
+          
+        } else {
+          // 陪检人
+          let accarr = js.accompany.split(',')
+          
+          let title = js.inspeople.split('~')[0];
+          let insid = js.inspeople
+          ins.setValue([
+            {
+              title: title,
+              value: insid
+            }
+          ]);
+        }
+
+        /****************行走路线*******************/
+        loadLine.render({
+            ele: '#yh_route',
+            url: "/api/RYDW-GetPersonLocaionData",
+            where: "keyword",
+            cententName: 'yh_lib_content',
+            local:true,
+            wherereq:function(){
+                let insValue = ins.getValue();
+                let usersId = insValue[0].value.split('~')[1]
+                return {
+                  userId:usersId
+                }
+            },
+        })
+        /******************************************/
+        // 执行渲染
+        table.render({
+          url: '${cls.getrooturl()}?type=sel&tabid=${tabid}&mid=${mid}&job=${job}&tbname=${tbname}&T=addpagesql',
+          elem: '#transfer', 
+          height: 390 ,//容器高度
+          width:430,
+          size:'sm',
+          even:true,
+          skin:'row',
+          toolbar: '#toolbarDemo',//开启头部工具栏，并为其绑定左侧模板
+          defaultToolbar: [],
+          id: 'transferTable',
+          cols: [
+            [ 
+              , { field: 'value', title: 'ID', hide: true },
+              {
+                field: 'title', title: '用户名', templet: function (d) {
+                  if (d.title) {
+                    return d.title
+                  } else {
+                    return d.users_name
+                  }
+                }
+              },
+              { field: 'department_name', title: '部门', },
+              { field: 'department_id', title: '部门id', hide: true },
+              { field: 'level', title: '级别', width: 120, hide: true }
+            ]
+          ]  ,
+          page: true,
+
+        })
+        table.on('toolbar(transferTable)', function (obj) {
+          var checkStatus = table.checkStatus(obj.config.id);
+          switch (obj.event) {
+            case 'addinsta':
+              let name = $('input[name="addname"]:eq(0)').val();
+              ins.setValue([
+                { title: name, value: name + '~' + guid() + '~' + '$cls.setck("department_name")' + '~' + '$cls.setck("department_id")' },
+              ])
+              ins.closed();
+
+              break;
+            case 'refresh':
+              table.reload('transferTable', {
+                where: {
+                  keyword: ''
+                },
+                page: {
+                  curr: 1
+                }
+              }, true)
+              break;
+            case 'search':
+              let old = $('input[name="keyword"]:eq(0)').val();
+
+              table.reload('transferTable', {
+                where: { keyword: old}, page: {curr: 1 },
+              }, true)
+              $('input[name="keyword"]:eq(0)').val(old)
+              break;
+          }
+        })
+        table.on('row(transferTable)', function (obj) {
+          ins.update({ data: [] })
+          var values = ins.getValue();
+          var item = obj.data;
+
+          var has = values.find(function (i) {
+            return i.value === item.value
+          })
+          if (has) {
+            ins.delete([item]);
+          } else {
+            ins.append([item]);
+          }
+
+        });
+      }
+      /*切换用户判断*/
+      function isSelectName(){
+          // 切换用户
+          let select_name = "$!cls.setck('second-user-name')"
+          let select_id = "$!cls.setck('second-user-id')";
+          // 原用户
+          let users_name = "$cls.setck('users_name')"
+          let ids = "$cls.setck('ids')";
+
+          if(select_name !== ''){
+            return [select_name,select_id]
+          }else{
+            return [users_name,ids]
+          }
+
+        }
+      /**
+       * @description: 陪检人 - 同检查人
+       * @param {*} list
+       * @param {*} js
+       * @return {*}
+       */      
+      function peiJianRen(list,js){
+        //accompany  陪检人
+            let accom = xmSelect.render({
+              el: '#accompany',
+              name: 'accompany',
+              content: "<div id='b'><table id='transfer1' lay-filter='transferTable1'></table></div>",
+              height: '500px',
+              autoRow: true,
+              clickClose: true,
+              // radio: true,
+              data: list,
+              prop: { name: 'title' },
+              on: function (data) {
+                accom.closed();
+                if (!data.isAdd) {
+
+                }
+              }
+            })
+            if (!js) {
+             //  let users = isSelectName();
+             //  accom.append([{
+             //    title: users[0],//"$cls.setck('users_name')",
+             //    value: users[0]+'~'+users[1] ,//"$cls.setck('users_name')" + '~' + "$cls.setck('ids')" ,
+             //    department_name: "$cls.setck('department_name')",
+             //    department_id: "$cls.setck('department_id')",
+             //    level: "$cls.setck('level')"
+             //  }])
+            } else {
+             
+              // 陪检人
+              let accarr = js.accompany.split(',')
+
+              let arr = accarr.map( d=>{
+                 if(d!= ''){
+                   return {
+                      title : d.split('~')[0],
+                      value:d
+                   }
+                 }
+                
+              })
+              accom.setValue(arr)
+     
+            }
+            // 执行渲染
+            table.render({
+              url: '${cls.getrooturl()}?type=sel&tabid=${tabid}&mid=${mid}&job=${job}&tbname=${tbname}&T=addpagesql',
+              elem: '#transfer1', //指定原始表格元素选择器（推荐id选择器）
+              height: 390 ,//容器高度
+          width:430,
+              size:'sm',
+              even:true,
+              skin:'row',
+              toolbar: '#toolbarDemo',//开启头部工具栏，并为其绑定左侧模板
+              defaultToolbar: [],
+              id: 'transferTable1',
+              cols: [
+                [ 
+                  , { field: 'value', title: 'ID',templet:function(d){
+                    return d.title+'~'+d.value.split('~')[1]
+                  }, hide: true },
+                  {
+                    field: 'title', title: '用户名', templet: function (d) {
+                      if (d.title) {
+                        return d.title
+                      } else {
+                        return d.users_name
+                      }
+                    }
+                  },
+                  { field: 'department_name', title: '部门', },
+                  { field: 'department_id', title: '部门id',  hide: true },
+                  { field: 'level', title: '级别', hide: true }
+                ]
+              ] ,
+              page: true
+            })
+            table.on('toolbar(transferTable1)', function (obj) {
+              var checkStatus = table.checkStatus(obj.config.id);
+              switch (obj.event) {
+                case 'addinsta':
+                  let name = $('input[name="addname"]:eq(0)').val();
+                  accom.setValue([
+                    { title: name, value: name + '~' + guid() + '~' + '$cls.setck("department_name")' + '~' + '$cls.setck("department_id")' },
+                  ])
+                  accom.closed();
+
+                  break;
+                case 'refresh':
+                  table.reload('transferTable1', {
+                    // url:'',
+                    where: {
+                      keyword: ''
+                    },
+                    page: {
+                      curr: 1
+                      //重新从第 1 页开始
+                    }
+                  }, true)
+                  break;
+                case 'search':
+                  let old = $('input[name="keyword"]:eq(1)').val();
+
+                  table.reload('transferTable1', {
+                    where: {
+                      keyword: old
+                    }, page: {
+                      curr: 1
+                    }
+                  }, true)
+                  $('input[name="keyword"]:eq(1)').val(old)
+                  break;
+              }
+            })
+            table.on('row(transferTable1)', function (obj) {
+              // 清空操作 多选就没有
+              // accom.update({ data: [] })
+              var values = accom.getValue();
+              var item = obj.data;
+
+              var has = values.find(function (i) {
+                return i.value === item.value
+              })
+              item.value =  item.title+'~'+item.value.split('~')[1]
+              if (has) {
+                accom.delete([item]);
+              } else {
+                accom.append([item]);
+              }
+
+            });
+        }
+        // 
+      /**
+       * @description: 同行人 - 同检查人
+       * @param {*} list
+       * @param {*} js
+       * @return {*}
+       */      
+      function peerpeopleFunc(list,js){
+            //peerpeople  同行人
+            let peer = xmSelect.render({
+              el: '#peerpeople',
+              name: 'peerpeople',
+              content: "<div id='c'><table id='transfer2' lay-filter='transferTable2'></table></div>",
+              height: '500px',
+              autoRow: true,
+              clickClose: true,
+              data: list,
+              prop: { name: 'title' },
+              on: function (data) {
+                peer.closed();
+                if (!data.isAdd) {
+
+                }
+              }
+            })
+            
+            if (js) {
+              // 陪检人
+              let peerpeoplearr =js.peerpeople? js.peerpeople.split(','):[]
+
+              let arr = peerpeoplearr.map( d=>{
+                 if(d!= ''){
+                   return {
+                      title : d.split('~')[0],
+                      value:d
+                   }
+                 }
+                
+              })
+              peer.setValue(arr)
+     
+            }
+            // 执行渲染
+            table.render({
+              url: '${cls.getrooturl()}?type=sel&tabid=${tabid}&mid=${mid}&job=${job}&tbname=${tbname}&T=addpagesql',
+              elem: '#transfer2',  
+              height: 390 ,//容器高度
+          width:430,
+              size:'sm',
+              even:true,
+              skin:'row',
+              toolbar: '#toolbarDemo', 
+               defaultToolbar: [],
+              id: 'transferTable2',
+              cols: [
+                [ 
+                  { field: 'value', title: 'ID', templet:function(d){
+                    return d.title+'~'+d.value.split('~')[1]
+                  }, hide: true },
+                  {
+                    field: 'title', title: '用户名',templet: function (d) {
+                      if (d.title) {
+                        return d.title
+                      } else {
+                        return d.users_name
+                      }
+                    }
+                  },
+                  { field: 'department_name', title: '部门', },
+                  { field: 'department_id', title: '部门id', hide: true },
+                  { field: 'level', title: '级别', hide: true }
+                ]
+              ] ,
+              page: true
+            })
+            table.on('toolbar(transferTable2)', function (obj) {
+              var checkStatus = table.checkStatus(obj.config.id);
+              switch (obj.event) {
+                case 'addinsta':
+                  let name = $('input[name="addname"]:eq(0)').val();
+                  peer.setValue([
+                    { title: name, value: name + '~' + guid() + '~' + '$cls.setck("department_name")' + '~' + '$cls.setck("department_id")' },
+                  ])
+                  peer.closed();
+
+                  break;
+                case 'refresh':
+                  table.reload('transferTable2', {
+                    // url:'',
+                    where: {
+                      keyword: ''
+                    },
+                    page: {
+                      curr: 1
+                      //重新从第 1 页开始
+                    }
+                  }, true)
+                  break;
+                case 'search':
+                  let old = $('input[name="keyword"]:eq(2)').val();
+                  table.reload('transferTable2', {
+                    where: {
+                      keyword: old
+                    }, page: {
+                      curr: 1
+                    }
+                  }, true)
+                  $('input[name="keyword"]:eq(2)').val(old)
+                  break;
+              }
+            })
+            table.on('row(transferTable2)', function (obj) {
+              // 清空操作 多选就没有
+
+              var values = peer.getValue();
+              var item = obj.data;
+
+              var has = values.find(function (i) {
+                return i.value === item.value
+              })
+          
+              item.value =  item.title+'~'+item.value.split('~')[1]
+              if (has) {
+                peer.delete([item]);
+              } else {
+                peer.append([item]);
+              }
+
+            });
+        }
+      /**
+       * @description: 陪检人 废弃
+       * @param {*}
+       * @return {*}
+       */      
+      function peiJianRenEOOER(list,js){
+        //accompany 
+        var demo1 = xmSelect.render({
+          el: '#accompany',
+          name: 'accompany',
+          content: "<div id='transfer1'></div>",
+          height: '400px',
+          autoRow: true,
+          clickClose: true,
+          //initValue: acc,
+          data: list,
+          prop: { name: 'title' },
+          on: function (data) {
+            if (!data.isAdd) {
+              layui.transfer.reload('transfer1', {
+                value: demo1.getValue('value')
+              })
+            }
+          }
+        })
+        let accValue = js ? js.accompany.split(',') : [];
+        layui.transfer.render({
+          id: 'transfer1',
+          elem: '#transfer1', //绑定元素
+          title: ['候选人', '陪检人'],
+          width: 300,
+          data: list,
+          showSearch: true,
+          value: accValue, //'$!accompany'.split(','),
+          parseData: function (res) {
+            return {
+              "value": res.value //数据值
+              ,
+              "title": res.title + '---' + res.department_name //数据标题
+              ,
+              "department_name": res.department_name,
+              "department_id": res.department_id,
+              "level": res.level
+            }
+          },
+          onchange: function (data, index) {
+            let newData = [];
+            for (let i = 0; i < data.length; i++) {
+              const element = data[i];
+              element.title = data[i].title.split("---")[0]
+              newData.push(element)
+            }
+            if (index == 0) {
+              demo1.append(newData)
+            } else {
+              demo1.delete(newData)
+            }
+          }
+        });
+      }
+      /************ end *****/
+      /**
+       * @description: 销号部门
+       * @param {*} on
+       * @param {*} function
+       * @return {*}
+       */  
+      $('#my_dept').on('click',function(d){ 
+                let name = '$cls.setck("department_name")';
+                let id ='$cls.setck("department_id")' ;
+                $('input[name=del_dept]:eq(0)').val( name )
+                $('input[name=del_dept_id]:eq(0)').val( id )
+      })
+      $('#res_dept').on('click',function(d){ 
+                let name = $('#depart').val()
+                let id = $('#depart_id').val();
+                  
+                $('input[name=del_dept]:eq(0)').val( name )
+                $('input[name=del_dept_id]:eq(0)').val( id )
+      })    
+      $('#del_dm').on('click',function(d){
+        layer.open({
+          type: 2,
+          zIndex: layer.zIndex, //重点1
+          title: '选择所属部门',
+          shadeClose: true,
+          shade: true,
+          maxmin: false, //开启最大化最小化按钮
+          area: ['60%', '90%'],
+          btn:['确定','取消'],
+          content: '${cls.getrooturl()}?type=ajaxshow&tabid=${tabid}&zr=1&mid=${mid}&job=${job}&tbname=${tbname}&T=选择组织机构',
+          success: function (layero,index) {
+            var iframeWindow = window['layui-layer-iframe' + index]
+            iframeWindow.addEventListener('dblclick', () => {
+              var el = iframeWindow.layui.el;
+              if(el){
+                let data = el.getRadioChecked()
+                if(data.length == 1){
+                  $('input[name=del_dept]:eq(0)').val( data[0].bumen_name )
+                  $('input[name=del_dept_id]:eq(0)').val( data[0].id )
+
+                  layer.close(index)
+                }
+              }
+            })
+          },
+          yes:function(index){
+            var iframeWindow = window['layui-layer-iframe' + index]
+              var el = iframeWindow.layui.el;
+              if(el){
+                let data = el.getRadioChecked()
+                if(data.length == 1){
+                  $('input[name=del_dept]:eq(0)').val( data[0].bumen_name )
+                  $('input[name=del_dept_id]:eq(0)').val( data[0].id )
+                  layer.close(index)
+                }
+              }
+          }
+        })
+      });
+      /**
+       * @description: 所属部门
+       * @param {*} click
+       * @param {*} function
+       * @return {*}
+       */          
+      $('#depart').on('click', function (d) {
+        layer.open({
+          type: 2,
+          zIndex: layer.zIndex, //重点1
+          title: '选择所属部门',
+          shadeClose: true,
+          shade: true,
+          maxmin: false, //开启最大化最小化按钮
+          area: ['60%', '90%'],
+          btn: ['确定', '取消'],
+          content: '${cls.getrooturl()}?type=ajaxshow&tabid=${tabid}&zr=1&mid=${mid}&job=${job}&tbname=${tbname}&T=选择组织机构&input_name='+$('#depart').val()+'&input='+ $('#depart_id').val(),
+          success: function (layero,index) {
+            //layer.setTop(layero); //重点2
+            var iframeWindow = window['layui-layer-iframe' + index]
+            iframeWindow.addEventListener('dblclick', () => {
+              var el = iframeWindow.layui.el;
+              if(el){
+                let data = el.getRadioChecked()
+                if(data.length == 1){
+
+                  $('#depart_id').val(data[0].id)
+                  $('#depart').val(data[0].bumen_name)
+                  // 主体部门
+                  $('#pname').val(data[0].pname_id)
+                  layer.close(index)
+                }
+              }
+            })
+          },
+          yes: function (index) {
+            var iframeWindow = window['layui-layer-iframe' + index]
+
+            let data = iframeWindow.layui.el.getRadioChecked()
+            if(data.length<=0) {
+              layer.msg('请选择数据') 
+              return;
+            }
+            $('#depart_id').val(data[0].id)
+            $('#depart').val(data[0].bumen_name)
+             $('#pname').val(data[0].pname_id)
+            layer.close(index)
+          }
+
+        })
+      })
+
+      let js = data$sjs // 回显的总数据
+
+      const OVERBUMENJSON = ` #set($bumen_name = $cls.getpgval("select xt_bumen_json->>'bumen_name' from xt_bumen where xt_bumen_id =  (SELECT responsibledepartme FROM YH WHERE yh_id = '$id')"))`
+      
+      const OVERBUMENJSONPNAME = ` #set($pbumenname = $cls.getpgval("select xt_bumen_json->>'pname_id' from xt_bumen where xt_bumen_id =  (SELECT responsibledepartme FROM YH WHERE yh_id = '$id')"))`
+
+
+      // 部门数据
+      axios({
+        url: BASEURL,
+        method: 'post'
+      }).then(result => {
+        $('.mask:eq(0)').hide();
+
+        let b = JSON.stringify(result.data)
+        let treeData = JSON.parse(b)
+        treeData.forEach(item => {
+          item.children = item.havechild ? [] : null;
+        })
+        let formAdvTableData = treeTable.pidToChildren(treeData, 'id', 'pid', 'children');
+
+        if (js && js.responsibledepartme) {  // 编辑
+          $('#depart').val('$!bumen_name')
+          $('#depart_id').val(js.responsibledepartme)
+          
+          $('#pname').val('$!pbumenname')
+
+        } else { // 缓存
+          let cache = layui.data('yhadd').yh;
+          if (cache) {
+            console.log('部门缓存显示----')
+            $('#depart').val(cache.bumen_name)
+            $('#depart_id').val(cache.responsibledepartme)
+            
+            $('#pname').val(cache.depart_pname)
+
+          } else {
+            // 默认 填入
+            $('#depart').val('$cls.setck("department_name")')
+            $('#depart_id').val('$cls.setck("department_id")')
+            const DEFAULT = ` #set($default= $cls.getpgval("select xt_bumen_json->>'pname_id' from xt_bumen where xt_bumen_id = '$cls.setck('department_id')' "))`
+            $('#pname').val('$!default')
+
+          }
+
+        }
+      })
+      /********************************************************文件********************************************************************/
+      /*** 渲染列表 ***/
+      let list = [];
+      // 回显数据
+      let fileShowImg = data$sjs
+      async function renderList(dataList) {
+        let file = dataList.filepath.split(',');
+        list = [];
+        file.forEach((url) => {
+          list.push({
+            "name": url.split('_')[1],
+            "isDir": false,
+            "type": url.split('.')[1],
+            url
+          })
+        })
+        var htmlStr = fileChoose.renderList({
+          data: list,
+          menu: [{
+            name: '预览',
+            event: 'preview'
+          },
+          {
+            name: '下载',
+            event: 'down'
+          }
+            , {
+            name: '<span style="color: red;">删除</span>',
+            event: 'del'
+          }
+          ]
+        });
+        $('#file-list-group').html(htmlStr);
+        // 点击空白隐藏下拉框
+        $(document).off('click.fclomp').on('click.fclomp', function (e) {
+          $('.file-choose-oper-menu').removeClass('show');
+        });
+
+        // 菜单事件监听
+        $(document).off('click.fclomip').on('click.fclomip', '#file-list-group .file-choose-oper-menu-item', function () {
+          var event = $(this).data('event');
+          var dataIndex = $(this).parent().parent().data('index');
+          if (event == 'del') { // 删除
+            layer.confirm('确定要删除此文件吗？', { shade: .1 }, function () {
+              layer.msg('操作成功', { icon: 1 });
+              let backPath = fileShowImg.filepath.split(',')
+              backPath.splice(dataIndex, 1)
+              fileShowImg.filepath = backPath.join(',')
+              filePath.splice(dataIndex, 1)
+              renderList(fileShowImg);
+            });
+          } else if (event == 'preview') {
+            if (list[dataIndex].type == 'mp4') {
+              let src =   list[dataIndex].url;
+              layer.open({
+                type: 1,
+                zIndex: layer.zIndex, //重点1
+                title: '视频预览',
+                shadeClose: true,
+                shade: true,
+                maxmin: true, //开启最大化最小化按钮
+                area: ['600px', '600px'],
+                content: $('#ifram').html(),
+                success: function () {
+                  $('#vsource').attr('src', src)
+                }
+              })
+
+            } else {
+              window.open(list[dataIndex].url);
+            }
+
+          } else {
+            downloadImg(list[dataIndex].url)
+          }
+        });
+      }
+      /**
+       * @description: 下载图片
+       * @param {*} url
+       * @return {*}
+       */      
+      function downloadImg(url) {
+        var img = document.getElementById('testImg'); // 获取要下载的图片
+        var a = document.createElement('a');          // 创建一个a节点插入的document
+        var event = new MouseEvent('click')           // 模拟鼠标click点击事件
+        a.download = '下载'                           // 设置a节点的download属性值
+        a.href = url;                                 // 将图片的src赋值给a节点的href
+        a.dispatchEvent(event)                        // 触发鼠标点击事件
+      }
+
+      if (fileShowImg && fileShowImg.filepath != "") {
+        renderList(fileShowImg);
+
+        // 列表点击事件
+        $(document).on('click', '#file-list-group .file-choose-list-item', function (e) {
+          var item = list[$(this).data('index')];
+          if (item.isDir) { // 是否是文件夹
+
+          } else {
+            var $cMenu = $(this).find('.file-choose-oper-menu');
+            $('.file-choose-oper-menu').not($cMenu).removeClass('show');
+            $cMenu.toggleClass('show');
+            e.stopPropagation();
+          }
+        });
+      } else {
+        $('#file-list-group').html('<div>暂无文件</div>');
+      }
+
+      let f = data$sjs;
+      if (f) {
+        if (f.filepath) {
+          filePath = f.filepath.split(',');
+        }
+      }
+
+      let stateType = '';
+      let isUpload = false;
+      //多文件列表
+      var uploadListIns = upload.render({
+        elem: '#testList',
+        elemList: $('#demoList') ,//列表元素对象
+        url: '../root/HandlerUpload.ashx?type=3',
+        accept: 'file',
+        multiple: true,
+        auto: false,
+        bindAction: '#testListAction',
+        before: function (obj) { //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+          // layer.load(); //上传loading
+          notice.msg('上传中...', { icon: 4, close: true, displayMode: 2 });
+        },
+        choose: function (obj) {
+          isUpload = true; // 是否选择了文件
+          var that = this;
+          var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+          //读取本地文件
+          obj.preview(function (index, file, result) {
+            var tr = $(['<tr id="upload-' + index + '">', '<td>' + file.name + '</td>', '<td>' + (file.size / 1014).toFixed(1) + 'kb</td>', '<td><div class="layui-progress" lay-filter="progress-demo-' + index + '"><div class="layui-progress-bar" lay-percent=""></div></div></td>', '<td>', '<button class="layui-btn layui-btn-xs demo-reload layui-hide">重传</button>', '<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>', '</td>', '</tr>'].join(''));
+
+            //单个重传
+            tr.find('.demo-reload').on('click', function () {
+              obj.upload(index, file);
+            });
+
+            //删除
+            tr.find('.demo-delete').on('click', function () {
+              delete files[index]; //删除对应的文件
+              tr.remove();
+              uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+            });
+
+            that.elemList.append(tr);
+            element.render('progress'); //渲染新加的进度条组件
+          });
+        },
+        done: function (res, index, upload) { //成功的回调
+          var that = this;
+          if (res.code == 200) { //上传成功
+            var tr = that.elemList.find('tr#upload-' + index),
+              tds = tr.children();
+            tds.eq(3).html(''); //清空操作
+            filePath.push(res.url)
+            delete this.files[index]; //删除文件队列已经上传成功的文件
+            return;
+          }
+          this.error(index, upload);
+        },
+        allDone: function (obj) { 
+          //多文件上传完毕后的状态回调
+          notice.destroy();
+          if (obj.successful == obj.total) {
+            ajaxForm();
+          }
+        },
+        error: function (index, upload) { //错误回调
+          var that = this;
+          var tr = that.elemList.find('tr#upload-' + index),
+            tds = tr.children();
+          tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
+        },
+        progress: function (n, elem, e, index) {
+          element.progress('progress-demo-' + index, n + '%'); //执行进度条。n 即为返回的进度百分比
+        }
+      });
+      // json
+      const json = { }
+      /***********************************************************************************************/
+
+      /**
+       * @description: 缓存回显
+       * @param {*}
+       * @return {*}
+       */      
+      function cacheBack() {
+        let cache = layui.data('yhadd');
+        let data = cache.yh
+        if (!'$!id' && data) { // 不是编辑状态
+          console.log('显示缓存信息-----')
+
+          data.yh_content = ''
+          data.id = ''
+          form.val('formAdvForm', {
+            "address_name": data.address_name,
+            "address": data.address,
+            "yh_address_all": data.yh_address_all,
+            "oldofclass": data.oldofclass,
+            "yh_route": data.yh_route,
+            "leader": data.leader,
+            "depart_pname": data.depart_pname
+          })
+        }
+      }
+      cacheBack()
+      /***********************************************************************************************/
+      /**
+       * @description:submit按钮
+       * @param {*} submit
+       * @param {*} function
+       * @return {*}
+       */      
+      form.on('submit(formAdvClose)', function () {
+        layer.closeAll();
+        return false
+      })
+
+      /* 监听表单提交 并下达*/
+      form.on('submit(formAdvSubmit)', function (data) {
+        stateType = 1;
+
+        if (form.val('formAdvForm').leader == 'on') {
+          if (!form.val('formAdvForm').yh_route) {
+            notice.msg('您是带班领导，请选择行走路线', { icon: 3 })
+            return false
+          }
+
+        }
+        if (emtype()) { // 流程判断
+          // 判空后开始上传
+          uploadListIns.upload();
+          if (!isUpload) {
+            ajaxForm(false);
+
+          }
+        }
+        return false;
+      });
+
+      //监听保存
+      form.on('submit(formAdvSubmitSave)', function (data) {
+        stateType = 0;
+        if (form.val('formAdvForm').leader == 'on') {
+          if (!form.val('formAdvForm').yh_route) {
+            notice.msg('您是带班领导，请选择行走路线', { icon: 3 })
+            return false
+          }
+        }
+        if (emtype()) { 
+          // 流程判断
+          // 判空后开始上传
+          uploadListIns.upload();
+
+          if (!isUpload) {
+            ajaxForm(false);
+          }
+        }
+
+        return false;
+      });
+      /**
+       * @description: 修改时的保存应该 关闭
+       * @param {*} submit
+       * @param {*} function
+       * @return {*} false
+       */      
+      form.on('submit(detailFormAdvSubmitSave)', function (data) {
+        stateType = 0;
+        if (form.val('formAdvForm').leader == 'on') {
+          if (!form.val('formAdvForm').yh_route) {
+            notice.msg('您是带班领导，请选择行走路线', { icon: 3 })
+            return false
+          }
+        }
+        if (emtype()) { // 流程判断
+          // 判空后开始上传
+          uploadListIns.upload();
+
+          if (!isUpload) {
+            ajaxForm();
+          }
+        }
+
+        return false;
+      })
+      /**
+       * @description: 空判断
+       * @param {*}
+       * @return {*}
+       */      
+      function emtype() {
+        let formData = form.val('formAdvForm')
+
+        return true
+      }
+
+      function ajaxForm(close = true) {
+        let formData = form.val('formAdvForm')
+        formData.yh_content = formData.yh_content.replace(/[\r\n]/g,' ')
+        // let prop = "$cls.setck('level')" + formData.yh_level.split('~')[1]
+        let nowxh = $('input[name=like1]:checked').attr('title')
+        if(nowxh == '当班整改' && stateType != 0){
+            stateType = 8 //隐患状态 --当班整改 下达直接销号 8 保存不走
+        }
+        // accountability
+        if(!formData.accountability){
+            formData.accountability = '0';
+        }
+
+        // 检查部门
+        let insBumenName = formData.inspeople.split('~')[2] ? formData.inspeople.split('~')[2] : '$cls.setck("department_name")';
+        let insBumenId = formData.inspeople.split('~')[3] ? formData.inspeople.split('~')[3] : '$cls.setck("department_id")';
+
+        let origin = insBumenName + '~' + insBumenId;
+        
+        let id = "$!{id}" ? "$!{id}" : '$guid';//编辑状态判断
+
+        let unding = { 0: 'ABCDE',  1: 'ABCDE', 2: 'ABCDE', 3: 'ABCDE',4: 'AABCDE', 5: 'ABCDE',6: 'ABCDE',7: 'ABCDE', 8: 'ABCDE'}
+        // // 验证表格选择 
+        let params = Object.assign(formData, {
+          personalfine:0,// 废弃但不能删除，三违罚款统计里调用
+          fine:0,//废弃但不能删除，三违罚款统计里调用 
+          operating_json: JSON.stringify(formData), // 保存历史记录
+          operating_type: '隐患下达', //操作类型 -- 后台已判断
+          yh_origin: origin, // 检查部门
+          filepath: filePath.join(','), // 文件路径
+          yh_state: stateType, // 隐患状态
+          yh_circuit:JSON.stringify(unding), //废弃  JSON.stringify(unding),
+          yh_terms: '',//废弃,
+          id: close ? id : guid(),// 保存时不会关闭，所以刷新id
+          bumen_name: $('#depart').val(),
+          level:'$cls.setck("level")'
+        })
+
+        // 多条隐患xiada
+        content(close, params)
+      }
+      // 多条隐患下达
+     async  function content(close, params) {
+        
+        let formValue= $('form').serializeArray();
+        // 隐患内容数组
+        let array = []
+        jq.each(formValue, function() {
+           if(this.name == "yh_content"){
+            array.push(this.value)
+           }
+        });
+         
+        if (array) {
+          //  构建参数 防止混哟昂
+          let allArray = []
+          array.forEach(d=>{
+            const  canshu = Object.assign({},params);
+            delete canshu.yh_content
+            canshu.yh_content = d.replace(/[\r\n]/g,' ')
+            allArray.push(canshu)
+          })
+          let axiosArray = []
+          for (let i = 0; i < allArray.length; i++) {
+            const ele = allArray[i];
+              let newPromise = await genNewYhCode(close, ele)
+          }
+        }
+      }
+
+      async function genNewYhCode(close, params) {
+
+        const res = await axios({
+          url:'/api/GenNewYinHuanCode', 
+          method: 'post',
+          data:Qs.stringify({
+            date: params.inspectiondate
+          }),
+          load:true
+        }).catch( e=>{
+           parent.layer.closeAll();
+           layer.msg('请求code失败')
+        })
+        if (res.code == 0) {
+            const  codeParam = Object.assign({},params);
+            delete codeParam.yh_code
+            codeParam.yh_code =  res.data;
+            await getAxios(close, codeParam)
+        }
+      }
+      // 请求开始
+      async function getAxios(close, params) {
+          $('.mask').show();
+
+        if ("$!{id}") { // 编辑
+          const res = await axios({
+            method: 'post',
+            url: '$cls.getrooturl()?type=ajaxaddup&mid=$!{mid}&tabid=$!{tabid}&job=${job}&tbname=${tbname}&T=updateselsql',
+            data: Qs.stringify(params),
+          }).catch( e=>{
+            $('.mask').hide();
+            layer.msg('编辑修改失败！')
+          })
+          $('.mask').hide();
+          parent.layer.closeAll();
+        } else { 
+          // 请求开始--新建
+          params.id = guid();// 修改id
+          const res = await axios({
+            method: 'post',
+            url: '$cls.getrooturl()?type=ajaxaddup&mid=$!{mid}&tabid=$!{tabid}&job=${job}&tbname=${tbname}&T=circuit',
+            data: Qs.stringify(params),
+            load:true,
+          }).catch( e=>{
+            $('.mask').hide();
+             
+            layer.msg('新增隐患失败')
+          })
+          if(res){
+            notice.msg('添加成功', { icon: 1, displayMode: 0 });
+          }
+          $('.mask').hide();
+            if (close) {
+              parent.layer.closeAll();
+            } else {
+              // 重置隐患内容
+              $('textareas[name=yh_content]').each(function(){
+                  this.value = ''
+              })
+              document.getElementById('yh_rectify').value = ''
+              // 缓存隐患数据
+              layui.data('yhadd', {
+                key: 'yh',
+                value: params
+              })
+            }
+        }
+      }
+      function guid() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+          var r = Math.random() * 16 | 0,
+            v = c == 'x' ? r : (r & 0x3 | 0x8);
+          return v.toString(16);
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>
